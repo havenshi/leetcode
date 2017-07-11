@@ -5,6 +5,7 @@ class Solution(object):
         :type k: int
         :rtype: List[List[int]]
         """
+
         self.result = []
         l = list(range(1, n + 1))
         for i in range(n):
@@ -16,6 +17,8 @@ class Solution(object):
             self.result.append(pre)
         else:
             for i in range(len(cur)):
+                if len(cur) - i < k - len(pre): # stop much earlier if number of remaining elements is smaller than needed to fill combination
+                    return
                 copypre = pre[:] + [cur[i]]
                 self.createcombine(copypre, cur[i+1:], k)
 

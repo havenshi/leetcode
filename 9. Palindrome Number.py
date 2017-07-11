@@ -4,20 +4,19 @@ class Solution(object):
         :type x: int
         :rtype: bool
         """
-        y = str(x)
-        if len(y)==1:
-            return True
-
-        else:
-            pal=True
-            i=0
-
-            while i < len(y)/2 and pal:
-                if y[i]==y[len(y)-1-i]:
-                    i+=1
-                else:
-                    pal=False
-            return pal
+        if x < 0:
+            return False
+        rev10 = 1
+        while x/rev10 >= 10:
+            rev10 *= 10
+        while x:
+            left = x/rev10
+            right = x%10
+            if left != right:
+                return False
+            x = (x %rev10)/10
+            rev10 /= 100
+        return True
 
 if __name__=="__main__":
     answer=Solution()

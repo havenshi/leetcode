@@ -24,6 +24,19 @@ class Solution(object):
                 temp_array2.append(rest_array[i])
                 self.recursive_comb(temp_array2, rest_array[:i] + rest_array[i + 1:], target)
 
+        # length = len(num)
+        # if length == 0: return []
+        # if length == 1: return [num]
+        # num.sort()
+        # res = []
+        # previousNum = None
+        # for i in range(length):
+        #     if num[i] == previousNum: continue
+        #     previousNum = num[i]
+        #     for j in self.permuteUnique(num[:i] + num[i+1:]):
+        #         res.append([num[i]] + j)
+        # return res
+
 if __name__ == "__main__":
     answer=Solution()
     print answer.permute([1,2])

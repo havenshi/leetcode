@@ -13,7 +13,7 @@ class Solution(object):
             mid = (start + end) / 2
             if target == nums[mid]:
                 return True
-            while start < mid and nums[start] == nums[mid]:  # tricky part
+            while start < mid and nums[start] == nums[mid]:  # tricky part 还可以用if A[left]==A[mid]==A[right]:left+=1; right-=1
                 start += 1
             if nums[mid] < nums[start]:   # right part is from small to large
                 if nums[mid] < target <= nums[end]: # normal sequence

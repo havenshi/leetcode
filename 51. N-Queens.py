@@ -8,23 +8,22 @@ class Solution(object):
         self.res = []
         for i in range(n):
             self.dfs([i] + array[1:], 1)
-        return self.res
-        # result = []
-        # for item in self.res:
-        #     board = [['.'] * n for _ in range(n)]
-        #     for i in range(n):
-        #         board[i][item[i]] = 'Q'
-        #     tmp = []
-        #     for i in range(n):
-        #         tmp.append(''.join(board[i]))
-        #     result.append(tmp)
-        # return result
+
+        result = []
+        for item in self.res:
+            board = [['.'] * n for _ in range(n)]
+            for i in range(n):
+                board[i][item[i]] = 'Q'
+            tmp = []
+            for i in range(n):
+                tmp.append(''.join(board[i]))
+            result.append(tmp)
+        return result
 
     def dfs(self, array, count):
         n = len(array)
         if count == n:
-            self.res.append(array)
-            print array,self.res
+            self.res.append(array[:])
             return True
         flag = False
         for i in range(n):

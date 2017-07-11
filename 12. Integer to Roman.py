@@ -23,7 +23,7 @@ class Solution(object):
         #             new.append(numerals[i])
         #         else:
         #             i+=1
-        # return new
+        # return ''.join(new)
 if __name__ == "__main__":
     answer=Solution()
     print answer.intToRoman(1996)

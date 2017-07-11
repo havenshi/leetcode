@@ -10,7 +10,7 @@ class Solution(object):
         :type intervals: List[Interval]
         :rtype: List[Interval]
         """
-        intervals.sort() # sort, firstly sort start, then end, example [2,19],[15,18]
+        intervals = sorted(intervals, key=lambda x: x.start) # sort, firstly sort start, then end, example [2,19],[15,18]
 
         if len(intervals)<=1:
             return intervals if len(intervals)==1 else []

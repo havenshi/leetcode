@@ -4,6 +4,22 @@ class Solution(object):
         :type s: str
         :rtype: int
         """
+        if s == "" or s[0] == '0':
+            return 0
+        dp = [0 for _ in range(len(s)+1)]
+        dp[0] = 1
+        dp[1] = 1
+        for i in range(1, len(s)):
+            if 10 <= int(s[i-1:i+1]) <= 26 and s[i] != '0': # 10-26 except 10 and 20
+                dp[i+1] = dp[i-1] + dp[i]
+            elif int(s[i-1:i+1]) == 10 or int(s[i-1:i+1]) == 20: # 10, 20
+                dp[i+1] = dp[i-1]
+            elif s[i] != '0': # two digits (except X0) or 00-09
+                dp[i+1] = dp[i]
+            else: # 00 or 30, 40 ...
+                return 0
+        return dp[len(s)]
+
     #     if s == '' or s[0] == '0':
     #         return 0
     #     return len(self.helper(s))
@@ -27,17 +43,17 @@ class Solution(object):
     #     return result
 
         # method 2
-        code = ['10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26']
-        if s == "" or s[0] == '0':
-            return 0
-        dp = [0 for x in range(len(s)+1)]
-        dp[0] = 1
-        for i in range(len(s)):
-            if s[i] != "0":  # exception is '0', since the number of 'X,X,X,0' is 0.
-                dp[i+1] += dp[i+1-1]    # 1.append s[-1] to each item of last layer, number doesn't change.
-            if s[i-1:i+1] in code:
-                dp[i+1] += dp[i+1 - 2]  # 2.if the last two digit is in code, add its number
-        return dp[len(s)]
+        # code = ['10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26']
+        # if s == "" or s[0] == '0':
+        #     return 0
+        # dp = [0 for x in range(len(s)+1)]
+        # dp[0] = 1
+        # for i in range(len(s)):
+        #     if s[i] != "0":  # exception is '0', since the number of 'X,X,X,0' is 0.
+        #         dp[i+1] += dp[i+1-1]    # 1.append s[-1] to each item of last layer, number doesn't change.
+        #     if s[i-1:i+1] in code:
+        #         dp[i+1] += dp[i+1 - 2]  # 2.if the last two digit is in code, add its number
+        # return dp[len(s)]
 if __name__ == '__main__':
     answer = Solution()
-    print answer.numDecodings('101')
+    print answer.numDecodings("12012")

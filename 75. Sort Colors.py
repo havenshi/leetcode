@@ -13,14 +13,15 @@ class Solution(object):
 
         red, blue = 0, len(nums)-1   # red means position which should be 0; blue means position which should be 2.
         i = 0
-        while i < blue + 1:
+        while i < blue + 1: # blue是新的位置，需要考虑进去
             if nums[i] == 0:
                 nums[i], nums[red] = nums[red], nums[i]
                 red += 1    # red index move forward
-                i += 1      # i move forward
+                i += 1      # i move forward，只要关心i位是否是0，此时一定不是0了，所以直接move
             elif nums[i] == 2:
                 nums[i], nums[blue] = nums[blue], nums[i]
                 blue -= 1   # blue index move forward.
                 # don't move i! since now nums[i] could be 0(smaller than the item before it) or 1, this item needs to be judged again.
+                # 此时虽然不是2了，但有可能是0，可能在1后面了，因此还要继续处理一下，所以不move
             else:
                 i += 1

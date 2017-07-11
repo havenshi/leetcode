@@ -6,51 +6,31 @@ class Solution(object):
         :type word: str
         :rtype: bool
         """
-        step = [[1, 0], [-1, 0], [0, 1], [0, -1]]
-        m = len(board)
-        n = len(board[0])
-        map = {}
-        for i in range(m):
-            for j in range(n):
-                if board[i][j] not in map:
-                    map[board[i][j]] = [[i,j]]
-                else:
-                    map[board[i][j]] = map[board[i][j]] + [[i, j]]
-
-        if m*n < len(word):   # judge if word length is greater than board
+        if not board:
             return False
-
-        if word[0] not in map:
-            return False
-        else:
-            if len(word) == 1:
-                return True
-            else:
-                for position in map[word[0]]:
-                    copy_map = copy.deepcopy(map)   # use deep copy!
-                    copy_map[word[0]].remove(position)  # remove the position it passes by, use copy! then we can return later.
-                    if self.existtest(position, word[1:], step, copy_map):
-                        return True
-                return False
-
-    def existtest(self, position, array, step, map):
-        if len(array) == 1:
-            for eachstep in step:
-                if array[0] in map and [position[0]+eachstep[0],position[1]+eachstep[1]] in map[array[0]]:  # 'array[0] in map' is important!
+        if not word:
+            return True
+        for i in xrange(len(board)):
+            for j in xrange(len(board[0])):
+                if self.dfs(board, i, j, word):
                     return True
-            return False
-        else:
-            for eachstep in step:
-                if [position[0]+eachstep[0],position[1]+eachstep[1]] in map[array[0]]:
-                    copy_position = [position[0]+eachstep[0],position[1]+eachstep[1]]  # attention! use copy!
-                    copy_map = copy.deepcopy(map)
-                    copy_map[array[0]].remove(copy_position)  # attention! use copy!
-                    if self.existtest(copy_position, array[1:], step, copy_map):  # attention! need 'if', or will return false even further option is true.
-                        return True
-            return False
+        return False
 
+    def dfs(self, board, i, j, word):
+        if not word:
+            return True
+        if i < 0 or i >= len(board) or j < 0 or j >= len(board[0]) or board[i][j] != word[0]:
+            return False
+        tmp = board[i][j]
+        board[i][j] = "#"
+        map = [[1, 0], [-1, 0], [0, 1], [0, -1]]
+        for m in map:
+            if self.dfs(board, i + m[0], j + m[1], word[1:]):
+                return True
+        board[i][j] = tmp
+        return False
 
-    # method2
+        # method2
     # def exist(self, board, word):
     #     if not board:
     #         return False
@@ -73,6 +53,52 @@ class Solution(object):
     #     or self.dfs(board, i, j+1, word[1:]) or self.dfs(board, i, j-1, word[1:])
     #     board[i][j] = tmp  # return back
     #     return res
+
+
+    # step = [[1, 0], [-1, 0], [0, 1], [0, -1]]
+    #     m = len(board)
+    #     n = len(board[0])
+    #     map = {}
+    #     for i in range(m):
+    #         for j in range(n):
+    #             if board[i][j] not in map:
+    #                 map[board[i][j]] = [[i,j]]
+    #             else:
+    #                 map[board[i][j]] = map[board[i][j]] + [[i, j]]
+    #
+    #     if m*n < len(word):   # judge if word length is greater than board
+    #         return False
+    #
+    #     if word[0] not in map:
+    #         return False
+    #     else:
+    #         if len(word) == 1:
+    #             return True
+    #         else:
+    #             for position in map[word[0]]:
+    #                 copy_map = copy.deepcopy(map)   # use deep copy!
+    #                 copy_map[word[0]].remove(position)  # remove the position it passes by, use copy! then we can return later.
+    #                 if self.existtest(position, word[1:], step, copy_map):
+    #                     return True
+    #             return False
+    #
+    # def existtest(self, position, array, step, map):
+    #     if len(array) == 1:
+    #         for eachstep in step:
+    #             if array[0] in map and [position[0]+eachstep[0],position[1]+eachstep[1]] in map[array[0]]:  # 'array[0] in map' is important!
+    #                 return True
+    #         return False
+    #     else:
+    #         for eachstep in step:
+    #             if [position[0]+eachstep[0],position[1]+eachstep[1]] in map[array[0]]:
+    #                 copy_position = [position[0]+eachstep[0],position[1]+eachstep[1]]  # attention! use copy!
+    #                 copy_map = copy.deepcopy(map)
+    #                 copy_map[array[0]].remove(copy_position)  # attention! use copy!
+    #                 if self.existtest(copy_position, array[1:], step, copy_map):  # attention! need 'if', or will return false even further option is true.
+    #                     return True
+    #         return False
+
+
 
 if __name__ == "__main__":
     answer=Solution()

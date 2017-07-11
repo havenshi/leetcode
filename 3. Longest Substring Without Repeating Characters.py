@@ -4,6 +4,26 @@ class Solution(object):
         :type s: str
         :rtype: int
         """
+        if not s:
+            return 0
+        ans = 0
+        start = 0
+        map = {}
+        for i in range(len(s)):
+            if s[i] in map and map[s[i]] >= start:
+                start = map[s[i]] + 1
+                map[s[i]] = i
+            else:
+                map[s[i]] = i
+            ans = max(ans, i - start + 1)
+        return ans
+
+class Solution(object):
+    def lengthOfLongestSubstring(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
         new=""
         list=[]
         i=0
