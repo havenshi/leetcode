@@ -4,7 +4,7 @@ class Solution(object):
         :type s: str
         :rtype: str
         """
-        # s = " ".join(s.split())  # replace interval with only one space. Create a new array! can't use it!
+        # return " ".join(s.split()[::-1])  # replace interval with O(1) space.
         s = s + ' '  # if not add ' ', the last word can not be extracted
         for i in range(len(s)):
             if s[i] != " ":      # 1.find start which is not " "

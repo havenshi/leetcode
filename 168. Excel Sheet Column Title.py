@@ -6,8 +6,10 @@ class Solution(object):
         """
         ans = ''
         while n > 0:
-            ans = chr(ord('A') + (n - 1) % 26) + ans
+            char = chr(ord('A') + (n - 1) % 26)
+            ans = char + ans
             n = (n - 1) / 26
         return ans
+
 if __name__ == "__main__":
     print Solution().convertToTitle(52)

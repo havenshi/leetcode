@@ -39,3 +39,29 @@ class Solution(object):
             cur = beforecur.next  # cur already removed, set cur as beforecur.next
 
         return head
+
+        # if not head or not head.next:
+        #     return head
+        # node = head.next  # node in range(1, n)
+        # prenode = head
+        # while node:
+        #     cur = head
+        #     pre = None
+        #     while cur.val < node.val:  # find cur greater than node
+        #         pre = cur
+        #         cur = cur.next
+        #
+        #     if cur < node:  # if find, (...pre,cur...prenode,node...) insert node between pre and cur
+        #         tmp = node
+        #         prenode.next = node.next
+        #         if pre:
+        #             pre.next = tmp
+        #             pre.next.next = cur
+        #         else:  # if pre still None
+        #             head = tmp
+        #             head.next = cur
+        #
+        #     prenode = node  # move node
+        #     node = node.next
+        #
+        # return head

@@ -17,32 +17,49 @@ class Solution(object):
         :type head: ListNode
         :rtype: TreeNode
         """
-        length = 0
-        cur = head
-        while cur:  # calculate the lenght of linked list
-            length += 1
-            cur = cur.next
-
-        if length == 0:
-            return None
-        if length == 1:
-            return TreeNode(head.val)
-        if length == 2:
-            root = TreeNode(head.next)
-            root.left = TreeNode(head)
-
-        left = head  # split left and right
-        count = 0
-        pre = None
-        while head and count < length / 2:
-            count += 1
-            pre = head
+        array = []
+        while head:
+            array.append(head.val)
             head = head.next
-        # now head is on the position of length/2
-        right = head.next  # right is after head
-        pre.next = None  # pre is before head, set its next as None, then will get left
+        return self.sortedArrayToBST(array)
 
-        root = TreeNode(head.val)
-        root.left = self.sortedListToBST(left)
-        root.right = self.sortedListToBST(right)
+    def sortedArrayToBST(self, array):
+        length = len(array)
+        if length == 0:
+            return
+        if length == 1:
+            return TreeNode(array[0])
+        root = TreeNode(array[length / 2])
+        root.left = self.sortedArrayToBST(array[:length / 2])
+        root.right = self.sortedArrayToBST(array[length / 2 + 1:])
         return root
+
+        # length = 0
+        # cur = head
+        # while cur:  # calculate the lenght of linked list
+        #     length += 1
+        #     cur = cur.next
+        #
+        # if length == 0:
+        #     return None
+        # if length == 1:
+        #     return TreeNode(head.val)
+        # if length == 2:
+        #     root = TreeNode(head.next)
+        #     root.left = TreeNode(head)
+        #
+        # left = head  # split left and right
+        # count = 0
+        # pre = None
+        # while head and count < length / 2:
+        #     count += 1
+        #     pre = head
+        #     head = head.next
+        # # now head is on the position of length/2
+        # right = head.next  # right is after head
+        # pre.next = None  # pre is before head, set its next as None, then will get left
+        #
+        # root = TreeNode(head.val)
+        # root.left = self.sortedListToBST(left)
+        # root.right = self.sortedListToBST(right)
+        # return root

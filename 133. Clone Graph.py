@@ -7,16 +7,17 @@
 class Solution:
     # @param node, a undirected graph node
     # @return a undirected graph node
-    def cloneGraph(self, node):
-        return self.clone(node, dict={})
 
-    def clone(self, node, dict):
+    def __init__(self):
+        self.dict = {}
+
+    def cloneGraph(self, node):
         if node == None:
             return None
-        if node.label in dict:
-            return dict[node.label]
+        if node.label in self.dict:
+            return self.dict[node.label]
         root = UndirectedGraphNode(node.label)
-        dict[node.label] = root
+        self.dict[node.label] = root
         for item in node.neighbors:
-            root.neighbors.append(self.clone(item, dict))
+            root.neighbors.append(self.cloneGraph(item))
         return root

@@ -7,46 +7,27 @@ class Solution(object):
         :type wordList: List[str]
         :rtype: int
         """
-    #     l = [beginWord] + wordList
-    #     count = [0] * (len(l))
-    #     count[0] = 1
-    #     for i in range(1, len(l)):
-    #         if l[i] == l[0]:  # if item equals to beginword, set it 1
-    #             count[i] = 1
-    #         for j in range(i):        # compare with all the element before j
-    #             if self.compare(l[i], l[j]):  # if only one item is different
-    #                 if count[j] != 0:   # count[j] == 0 means cannot cross this position
-    #                     if count[i] == 0:  # there must be 1 way to reach this position
-    #                         count[i] = count[j] + 1
-    #                     else:
-    #                         count[i] = min(count[i], count[j] + 1)   # min of count[i] itself and count[j] + 1
-    #     print count
-    #     for i in range(len(l)-1,0,-1):
-    #         for j in range(len(l)-1,i,-1):
-    #             if self.compare(l[i], l[j]):
-    #                 if count[j] != 0:   # count[j] == 0 means cannot cross this position
-    #                     if count[i] == 0:  # there must be 1 way to reach this position
-    #                         count[i] = count[j] + 1
-    #                     else:
-    #                         count[i] = min(count[i], count[j] + 1)   # min of count[i] itself and count[j] + 1
-    #     if endWord not in l:
-    #         return 0
-    #     print count
-    #     return count[l.index(endWord)]
-    #
-    # def compare(self, before, after):
-    #     if len(before) == len(after):
-    #         count = 0
-    #         for i in range(len(before)):
-    #             if before[i] != after[i]:
-    #                 count += 1
-    #         if count == 1:
-    #             return True
-    #         else:
-    #             return False
-    #     else:
-    #         return False
+#         TLE
+#         n = len(wordList)
+#         if n == 0:
+#             return []
+#         q = [(beginWord, 1)]
+#         while q:
+#             current = q.pop(0)
+#             currentWord = current[0]
+#             currentStep = current[1]
+#             if currentWord == endWord:
+#                 return currentStep
+#             for i in range(len(currentWord)):
+#                 for j in [chr(x) for x in range(ord('a'), ord('z')+1)]:
+#                     if j != currentWord[i]:
+#                         newWord = currentWord[:i] + j + currentWord[i+1:]
+#                         if newWord in wordList:
+#                             q.append((newWord, currentStep+1))
+#                             wordList.remove(newWord)
+#         return 0
 
+        # BFS
         wordSet = set([])
         for item in wordList:
             wordSet.add(item)   # transfer list into set

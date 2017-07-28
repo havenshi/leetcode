@@ -31,3 +31,28 @@ class Solution(object):
         if node.right:
             copytmp = tmp[:]
             self.dfs(node.right, result, copytmp, target)
+
+
+    # method 2
+    # def pathSum(self, root, sum):
+    #     """
+    #     :type root: TreeNode
+    #     :type sum: int
+    #     :rtype: List[List[int]]
+    #     """
+    #     if not root:
+    #         return []
+    #     self.result = []
+    #     nodes = [root]
+    #     value = root.val
+    #     self.helper(nodes, value, sum)
+    #     return self.result
+    #
+    # def helper(self, nodes, value, sum):
+    #     node = nodes[-1]
+    #     if value == sum and not node.left and not node.right:
+    #         self.result.append(nodes)
+    #     if node.left:
+    #         self.helper(nodes + [node.left], value + node.left.val, sum)
+    #     if node.right:
+    #         self.helper(nodes + [node.right], value + node.right.val, sum)

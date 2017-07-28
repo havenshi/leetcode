@@ -12,24 +12,19 @@ class Solution(object):
         :type root: TreeNode
         :rtype: List[List[int]]
         """
-        if root == None:
-            return []
-        queue = Queue.Queue()
-        queue.put(root)  # record each layer
-        allnode = []    # record val of item of each layer
-        while not queue.empty():
-            newlist = []
-            count = 0 # count number for pop
-            length = queue.qsize() # origin length
-            while count < length:
-                item = queue.get()
-                newlist.append(item.val) # all val of item of each layer
-                if item.left:                # add left
-                    queue.put(item.left)
-                if item.right:                # add right
-                    queue.put(item.right)
-                count += 1
-            allnode.append(newlist)
-
-            # now queue is empty
-        return allnode
+        res = []
+        if not root:
+            return res
+        q = [root]
+        while q:
+            newq = []
+            newr = []
+            for node in q:
+                newr.append(node.val)
+                if node.left:
+                    newq.append(node.left)
+                if node.right:
+                    newq.append(node.right)
+            res.append(newr)
+            q = newq
+        return res

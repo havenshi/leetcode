@@ -6,25 +6,20 @@ class Solution(object):
         """
         if s == "":
             return []
-        result = []
-        length = len(s)
-        for i in range(len(s)):
-            self.dfs(s[:i + 1], s[i + 1:], length, result, tmp=[])
-        return result
+        self.result = []
+        self.dfs(s, tmp=[])
+        return self.result
 
-    def dfs(self, before, after, length, result, tmp):
-        if self.palindrome(before):
-            tmp.append(before)
-            if len(after) == 0 and sum(len(i) for i in tmp) == length:
-                result.append(tmp)
-            else:
-                for i in range(len(after)):
-                    copytmp = tmp[:]
-                    self.dfs(after[:i + 1], after[i + 1:], length, result, copytmp)
+    def dfs(self, s, tmp):
+        if s == '':
+            self.result.append(tmp)
+        for i in range(1, len(s) + 1):
+            if self.isPalindrome(s[:i]):
+                self.dfs(s[i:], tmp + [s[:i]])
 
-    def palindrome(self, ss):
-        for i in range(len(ss) / 2):
-            if ss[i] != ss[len(ss) - 1 - i]:
+    def isPalindrome(self, s):
+        for i in range(len(s) / 2):
+            if s[i] != s[len(s) - 1 - i]:
                 return False
         return True
 

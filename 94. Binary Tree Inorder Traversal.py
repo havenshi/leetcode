@@ -11,7 +11,22 @@ class Solution(object):
         :type root: TreeNode
         :rtype: List[int]
         """
-        if root is None:
+        return self.iteration_inorder(root)
+
+    def iteration_inorder(self, root):
+        stack = []
+        res = []
+        while root or stack:
+            if root:
+                stack.append(root)
+                root = root.left
+            else:
+                root = stack.pop()
+                res.append(root.val)
+                root = root.right
+        return res
+
+    def recursion_inorder(self, root):
+        if not root:
             return []
-        return self.inorderTraversal(root.left) + [root.val]\
-            + self.inorderTraversal(root.right)
+        return self.recursion_inorder(root.left) + [root.val] + self.recursion_inorder(root.right)

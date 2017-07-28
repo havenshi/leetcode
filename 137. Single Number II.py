@@ -5,6 +5,7 @@ class Solution(object):
         :type nums: List[int]
         :rtype: int
         """
+        # method 1
         one = 0
         two = 0
         three = 0
@@ -15,6 +16,21 @@ class Solution(object):
             one &= three
             two &= three
         return one
+
+
+        # method 2
+        result = 0
+        for i in range(32):
+            count = 0
+            for num in nums:
+                count += (num >> i) & 1  # count of each bit
+            rem = count % 3
+            # deal with the negative situation
+            if i == 31 and rem:
+                result -= 1 << 31
+            else:
+                result |= rem << i
+        return result
 
 if __name__ == "__main__":
     answer = Solution()

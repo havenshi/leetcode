@@ -11,15 +11,22 @@ class Solution(object):
         :type root: TreeNode
         :rtype: List[int]
         """
+        return self.iteration_postorder(root)
+
+    def iteration_postorder(self, root):
+        stack = []
+        res = []
+        while root or stack:
+            if root:
+                res.insert(0, root.val)
+                stack.append(root)
+                root = root.right
+            else:
+                root = stack.pop()
+                root = root.left
+        return res
+
+    def recursion_postorder(self, root):
         if not root:
             return []
-        queue = [root]
-        result = []
-        while queue:
-            node = queue.pop()
-            result.insert(0,node.val)
-            if node.left:
-                queue.append(node.left)
-            if node.right:
-                queue.append(node.right)
-        return result
+        return self.recursion_postorder(root.left) + self.recursion_postorder(root.right) + [root.val]

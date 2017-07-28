@@ -17,8 +17,8 @@ class Solution(object):
         queue = [root]
         while queue:
             for i in range(len(queue)):
-                cur = queue.pop(0)
-                if i == 0:
+                cur = queue.pop(0) # for i in range(original queue), pop(0), pop all node of same layer
+                if i == 0:  # get the most right val of same layer
                     ans.append(cur.val)
                 if cur.right:
                     queue.append(cur.right)
