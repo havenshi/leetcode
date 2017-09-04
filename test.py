@@ -1,22 +1,20 @@
-def findPeakElement(nums):
-    """
-    :type nums: List[int]
-    :rtype: int
-    """
-    start, end = 0, len(nums) - 1
-    if start == end:
-        return start
-    if start + 1 == end:
-        return nums.index(max(nums[start], nums[end]))
+input = 'In the example of Figure 2 (b), according to the definition of the Topological Sort: "If there is an edge (X, Y), vertex (X) must appear before vertex (Y) in the sequence, (rice, rice), the sequence may be "fish, rice, meat, vegetables", but it also exists edge (rice, pork), the sequence may be "rice, meat, vegetables, fish", and the second sequence In violation of "the existence of edge (fish, rice), the fish to eat before eating" restrictions.'
+n = len(input)
+newinput = input.split(' ')
+result = []
+tmp = []
+count = 1
+i = 0
+while i < len(newinput):
+    newtmp1 = '(%d/%d)' % (count, n) + ' '.join(tmp)
+    newtmp2 = newtmp1 + ' ' + newinput[i]
+    if len(newtmp2) < 80:
+        tmp.append(newinput[i])
+        i += 1
+    else:
+        result.append(newtmp1)
+        tmp = []
+        count += 1
 
-    while start + 1 < end:
-        mid = start + (end - start) / 2
-        if nums[mid - 1] < nums[mid] and nums[mid] > nums[mid + 1]:
-            return mid
-        elif nums[mid] < nums[mid - 1]:
-            end = mid
-        elif nums[mid] < nums[mid + 1]:
-            start = mid
-    print start,end
-    return nums.index(max(nums[start], nums[end]))
-print findPeakElement([2,1,2])
+print result
+

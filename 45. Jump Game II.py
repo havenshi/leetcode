@@ -11,9 +11,9 @@ class Solution(object):
         last = 0
         curr = 0
         for i in range(len(nums)):
-            if i > last: # 之前跳res次的last可以管很多个i，到不了表示res需再加1
-                last = curr # 跳res次能到达的最大distance
-                ret += 1 # 这个新res可以管从i到(res-1)的last
+            if i > last: # 之前跳res-1次后继续跳的last可以管很多个i，到不了表示res需再加1才能达到i，即res次到达的距离开始记入
+                last = curr # 因为curr实时更新，因此记录的是跳res次能到达的最大distance
+                ret += 1 # 算上了第res次跳跃
             curr = max(curr, i+nums[i]) # 一直存储跳res+1能到达的最大distance
             print ret,last,curr
         return ret
