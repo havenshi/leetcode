@@ -1,20 +1,47 @@
-input = 'In the example of Figure 2 (b), according to the definition of the Topological Sort: "If there is an edge (X, Y), vertex (X) must appear before vertex (Y) in the sequence, (rice, rice), the sequence may be "fish, rice, meat, vegetables", but it also exists edge (rice, pork), the sequence may be "rice, meat, vegetables, fish", and the second sequence In violation of "the existence of edge (fish, rice), the fish to eat before eating" restrictions.'
-n = len(input)
-newinput = input.split(' ')
-result = []
-tmp = []
-count = 1
-i = 0
-while i < len(newinput):
-    newtmp1 = '(%d/%d)' % (count, n) + ' '.join(tmp)
-    newtmp2 = newtmp1 + ' ' + newinput[i]
-    if len(newtmp2) < 80:
-        tmp.append(newinput[i])
-        i += 1
-    else:
-        result.append(newtmp1)
-        tmp = []
-        count += 1
+# Definition for singly-linked list.
+class ListNode(object):
+    def __init__(self, x):
+        self.val = x
+        self.next = None
 
-print result
 
+class Solution(object):
+    def removeNthFromEnd(self, head, n):
+        """
+        :type head: ListNode
+        :type n: int
+        :rtype: ListNode
+        """
+        if n == 0:
+            return head
+        tmp = head
+        count = 0
+        while count < n:
+            tmp = tmp.next
+            count += 1
+        tmp2 = head
+        while tmp:
+            tmp = tmp.next
+            tmp2 = tmp2.next
+        if tmp2.next != None:
+            tmp2.val = tmp2.next.val
+            tmp2.next = tmp2.next.next
+        else:
+            tmp2 = None
+
+        while head:
+            print head.val
+            head = head.next
+
+if __name__ == '__main__':
+    head = ListNode(1)
+    tmp = head
+    tmp.next = ListNode(2)
+    tmp = tmp.next
+    tmp.next = ListNode(3)
+    tmp = tmp.next
+    tmp.next = ListNode(4)
+    tmp = tmp.next
+    tmp.next = ListNode(5)
+
+    Solution().removeNthFromEnd(head, 1)
