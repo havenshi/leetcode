@@ -29,7 +29,40 @@ class Solution(object):
             head1.next.next = tmp
         return dummy.next
 
+        # method 2!!!
+        # def reverseKGroup(self, head, k):
+        #     """
+        #     :type head: ListNode
+        #     :type k: int
+        #     :rtype: ListNode
+        #     """
+        #     dummy = ListNode(0)
+        #     dummy.next = head
+        #     start, end = dummy, dummy
+        #     while start:
+        #         for i in range(k):
+        #             end = end.next
+        #             if not end: return dummy.next
+        #         self.helper(start, end, k)
+        #         for i in range(k):
+        #             start = start.next
+        #         end = start
+        #     return dummy.next
+        #
+        # def helper(self, start, end, k):
+        #
+        #     cur = start.next
+        #     tail = end.next
+        #     for i in range(k):
+        #         tmp = cur.next
+        #         cur.next = tail
+        #         tail = cur
+        #         cur = tmp
+        #     start.next.next = cur
+        #     start.next = tail
+        #
 
+        # method 3
         # if m == n:
         #     return head
         #

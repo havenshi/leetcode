@@ -5,46 +5,22 @@ class Solution(object):
         :type b: str
         :rtype: str
         """
-        alist = [int(i) for i in list(str(a))]
-        blist = [int(i) for i in list(str(b))]
-
-        lengtha = len(alist)
-        lengthb = len(blist)
-        if lengtha < lengthb:
-            alist, blist = blist, alist
-            lengtha, lengthb = lengthb, lengtha
-
-        c=''
+        indexa = len(a) - 1
+        indexb = len(b) - 1
         carry = 0
-        for i in range(lengthb):
-            if alist[::-1][i] + blist[::-1][i] + carry >= 2:
-                tmp = str(alist[::-1][i] + blist[::-1][i] + carry - 2)
-                c += tmp
-                carry = 1
+        sum = ""
+        while indexa >= 0 or indexb >= 0:
+            x = int(a[indexa]) if indexa >= 0 else 0
+            y = int(b[indexb]) if indexb >= 0 else 0
+            if (x + y + carry) % 2 == 0:
+                sum = '0' + sum
             else:
-                tmp = (alist[::-1][i] + blist[::-1][i] + carry)
-                tmp = str(tmp)
-                c += tmp
-                carry = 0
-
+                sum = '1' + sum
+            carry = (x + y + carry) / 2
+            indexa, indexb = indexa - 1, indexb - 1
         if carry == 1:
-            for i in range(lengthb,lengtha):
-                if alist[::-1][i] + carry == 2:
-                    c += '0'
-                    carry = 1
-                else:
-                    tmp = (alist[::-1][i] + carry)
-                    tmp = str(tmp)
-                    c += tmp
-                    carry = 0
-            if carry == 1:
-                c += '1'
-
-        else:
-            for i in range(lengthb,lengtha):
-                c += str(alist[::-1][i])
-
-        return c[::-1]
+            sum = '1' + sum
+        return sum
 
 if __name__ == "__main__":
     answer=Solution()
