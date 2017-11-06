@@ -1,29 +1,29 @@
-def quick_sort(ary):
-    return qsort(ary,0,len(ary)-1)
+class Solution():
+    def toll_road(self, x, t, n):
+        l = [None] * n
+        for j in range(n-1, -1, -1):
+            for i in range(j - 1, -1, -1):  # reversed traversal
+                if x[j] - x[i] >= 10:
+                    l[j] = i+1  # set the value of l[j] as the index i
+                    break
+        # l = [None, None, 1, 2]
 
-def qsort(ary,left,right):
-    # Quick row function, ary to sort the array, left to be sorted to the left border, right for the right border
-    if left >= right:
-        return ary      # If the array is empty or only one element
-    key = ary[left]     # Take the leftmost as the baseline
-    smaller = left           # left pointer
-    greater = right          # right pointer
-    i = left
-    while i < greater + 1:  # greater is the new position that needs to be taken into account
-        if ary[i] < key:
-            ary[i], ary[smaller] = ary[smaller], ary[i]
-            smaller += 1  # red index move forward
-            i += 1  # i move forward, only concern about if i position is smaller. This time is not smaller, so directly move one step
-        elif ary[i] > key:
-            ary[i], ary[greater] = ary[greater], ary[i]
-            greater -= 1  # blue index move forward.
-            # don't move i! since now nums[i] could be 0(smaller than the item before it) or 1, this item needs to be judged again.
-            # At this time although not greater, but there may be smaller, may be behind key, so also need modification, do not move
-        else:
-            i += 1
-    ary[left],ary[smaller] = ary[smaller],ary[left]    # left and right after all the exchange, the left border left and the left of the number of exchange
-    print left,smaller,greater
-    qsort(ary,left,smaller-1)    # left interval to do the same sort
-    qsort(ary,smaller+1,right)   # right interval to do the same sort
-    return ary
-print quick_sort([1,3,2,5,6,4])
+        a = [0] * n
+        for j in range(n):
+            if j == 0 or l[j] == None:
+                # initial a, if distance x1 is greater than 10, the revenue equals to value t1
+                # if not, the initial revenue is 0
+                a[j] = t[j] if x[j] >= 10 else 0
+
+            else:
+                # revenue is the maximum of:
+                # a.the last revenue
+                # b.and the last toll booths it can reach plus the value of jth itself
+                a[j] = max(a[j - 1], a[l[j]-1] + t[j])
+        # a = [50, 60, 100, 100]
+        return a[-1]
+
+
+if __name__ == '__main__':
+    answer = Solution()
+    print answer.toll_road([10,15,23,30],[50,60,50,10],4)

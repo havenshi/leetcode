@@ -28,3 +28,15 @@ class Solution(object):
     #     tmp = head.next
     #     head.next = newhead
     #     return self.helper(tmp, head)
+
+    #     # recursion
+    #     return self.helper(head, ListNode(0))
+    #
+    #     def helper(self, head, dummy):
+    #         if head == None:
+    #             return dummy.next
+    #         tmp = head.next
+    #         head.next = dummy.next
+    #         dummy.next = head
+    #         head = tmp
+    #         return self.helper(head, dummy)

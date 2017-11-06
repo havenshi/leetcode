@@ -11,6 +11,28 @@ class Solution(object):
                 res.append(item + [num])
         return res
 
+        # bfs
+        res = [[]]
+        for num in nums:
+            queue = res[:]
+            while queue:
+                q = queue.pop(0)
+                res.append(q + [num])
+        return res
+
+        # dfs
+        nums.sort()
+        self.res = []
+        self.dfs(nums, [], 0)
+        return self.res
+
+    def dfs(self, nums, tmp, layer):
+        if layer == len(nums):
+            self.res.append(tmp)
+            return
+        self.dfs(nums, tmp + [nums[layer]], layer + 1)
+        self.dfs(nums, tmp, layer + 1)
+
     #     total = [[]]
     #     for i in range(1, len(nums) + 1):
     #         total += self.subsets_each(nums, i)

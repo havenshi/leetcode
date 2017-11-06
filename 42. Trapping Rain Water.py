@@ -20,5 +20,23 @@ class Solution(object):
                 res += rightmax - height[right] # current maximum height from right side(from A[b,b+1...n-1])
                 right -= 1
         return res
+
+        # dp
+        # res = 0
+        # mx = 0
+        # n = len(height)
+        # dp = [0] * n
+        # for i in range(n):  # tranversal, find max of left part
+        #     dp[i] = mx
+        #     mx = max(mx, height[i])
+        #
+        # mx = 0
+        # for i in range(n - 1, -1, -1):  # tranversal, find max of right part
+        #     dp[i] = min(dp[i], mx)  # min between left and right max
+        #     mx = max(mx, height[i])
+        #     if dp[i] > height[i]:  # if min > actual height, can store water
+        #         res += dp[i] - height[i]
+        #
+        # return res
 if __name__ == "__main__":
     print Solution().trap([0,1,0,2,1,0,1,3,2,1,2,1])
