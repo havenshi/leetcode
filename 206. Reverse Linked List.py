@@ -19,24 +19,13 @@ class Solution(object):
             head = tmp
         return dummy.next
 
-        # recursion
-    #     return self.helper(head, None)
-    #
-    # def helper(self, head, newhead):
-    #     if head == None:
-    #         return newhead
-    #     tmp = head.next
-    #     head.next = newhead
-    #     return self.helper(tmp, head)
 
-    #     # recursion
-    #     return self.helper(head, ListNode(0))
-    #
-    #     def helper(self, head, dummy):
-    #         if head == None:
-    #             return dummy.next
-    #         tmp = head.next
-    #         head.next = dummy.next
-    #         dummy.next = head
-    #         head = tmp
-    #         return self.helper(head, dummy)
+        # recursion
+        return self.doReverse(head, None)
+
+    def doReverse(self, head, newHead):
+        if head is None:
+            return newHead
+        next = head.next
+        head.next = newHead
+        return self.doReverse(next, head)

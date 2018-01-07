@@ -10,28 +10,57 @@ class Solution(object):
         :type head: ListNode
         :rtype: void Do not return anything, modify head in-place instead.
         """
-        if not head:
-            return None
-        slow = head
-        fast = head
-        while fast and fast.next:  # split list into part1 and part2. 1-2,3-4;1-3,4-5.
-            slow = slow.next
-            fast = fast.next.next
-        part2 = slow.next
-        slow.next = None
-        part1 = head
+        if None == head or None == head.next:
+            return
 
-        revpart2 = ListNode(0)  # reverse part2
-        while part2:
-            tmp = ListNode(part2.val)
-            tmp.next = revpart2.next
-            revpart2.next = tmp
-            part2 = part2.next
-        revpart2 = revpart2.next
+        pfast = head
+        pslow = head
 
-        while revpart2 and part1:  # merge part1 and revpart2
-            tmp = ListNode(revpart2.val)
-            tmp.next = part1.next
-            part1.next = tmp
-            part1 = part1.next.next
-            revpart2 = revpart2.next
+        while pfast.next and pfast.next.next:
+            pfast = pfast.next.next
+            pslow = pslow.next
+        pfast = pslow.next
+        pslow.next = None
+
+        cur = pfast
+        tail = None
+        while cur:
+            tmp = cur.next
+            cur.next = tail
+            tail = cur
+            cur = tmp
+        pfast = tail
+
+        pslow = head
+        while pfast:
+            tmp = ListNode(pfast.val)
+            tmp.next = pslow.next
+            pslow.next = tmp
+            pslow = pslow.next.next
+            pfast = pfast.next
+
+        # if not head:
+        #     return None
+        # slow = head
+        # fast = head
+        # while fast and fast.next:  # split list into part1 and part2. 1-2,3-4;1-3,4-5.
+        #     slow = slow.next
+        #     fast = fast.next.next
+        # part2 = slow.next
+        # slow.next = None
+        # part1 = head
+        #
+        # revpart2 = ListNode(0)  # reverse part2
+        # while part2:
+        #     tmp = ListNode(part2.val)
+        #     tmp.next = revpart2.next
+        #     revpart2.next = tmp
+        #     part2 = part2.next
+        # revpart2 = revpart2.next
+        #
+        # while revpart2 and part1:  # merge part1 and revpart2
+        #     tmp = ListNode(revpart2.val)
+        #     tmp.next = part1.next
+        #     part1.next = tmp
+        #     part1 = part1.next.next
+        #     revpart2 = revpart2.next

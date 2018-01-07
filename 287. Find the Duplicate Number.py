@@ -4,33 +4,29 @@ class Solution(object):
         :type nums: List[int]
         :rtype: int
         """
-        low, high = 1, len(nums) - 1
-        while low <= high:
-            mid = (low + high) >> 1
-            cnt = sum(x <= mid for x in nums)
-            if cnt > mid:
-                high = mid - 1
-            else:
-                low = mid + 1
-        return low
+        if len(nums) <= 1:
+            return -1
 
-        # slow = 0
-        # fast = 0
-        #
-        # while True:
-        #     slow = nums[slow]  # move 1 step
-        #     fast = nums[nums[fast]]  # move 2 steps
-        #
-        #     if slow == fast:
-        #         break
-        #
-        # # Start up another pointer from the end of the array and march it forward
-        # # until it hits the pointer inside the array.
-        # finder = 0
-        # while True:
-        #     slow = nums[slow]
-        #     finder = nums[finder]
-        #
-        #     # If the two hit, the intersection index is the duplicate element.
-        #     if slow == finder:
-        #         return slow
+            # same as linked list cycle
+            # the duplicate number must be the entry point of the circle when visiting the array from nums[0]
+        slow = nums[0]
+        fast = nums[nums[0]]
+        while slow != fast:
+            slow = nums[slow]
+            fast = nums[nums[fast]]
+        # when slow == fast, let slow be the nums[0]
+        slow = 0
+        while slow != fast:
+            slow = nums[slow]
+            fast = nums[fast]
+        return slow
+
+        # low, high = 1, len(nums) - 1
+        # while low <= high:
+        #     mid = (low + high) >> 1
+        #     cnt = sum(x <= mid for x in nums)
+        #     if cnt > mid:
+        #         high = mid - 1
+        #     else:
+        #         low = mid + 1
+        # return low

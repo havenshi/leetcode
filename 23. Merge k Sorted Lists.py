@@ -50,7 +50,7 @@ class Solution(object):
         # for node in lists:
         #     if node:
         #         heap.append((node.val, node))
-        # heapq.heapify(heap) #压入堆中
+        # heapq.heapify(heap) #压入堆中,Transform list heap into a heap, in-place, in linear time.
         # head = ListNode(0); curr = head
         # while heap:
         #     pop = heapq.heappop(heap) #从h中删除最小的(linear时间)，并返回该值

@@ -38,3 +38,20 @@ class Solution(object):
         pold.next = None
         pnew.next = None
         return newhead
+
+        # dummy = RandomListNode(0)
+        # curr, prev, copies = head, dummy, {}
+        #
+        # while curr:
+        #     copied = RandomListNode(curr.label)
+        #     copies[curr] = copied  # hash table 中记录原node和新node的关系
+        #     prev.next = copied
+        #     prev, curr = prev.next, curr.next
+        #
+        # curr = head
+        # while curr:
+        #     if curr.random:  # 再遍历一遍原list，如果存在random，就在hash table里面找到对应的加上去
+        #         copies[curr].random = copies[curr.random]
+        #     curr = curr.next
+        #
+        # return dummy.next

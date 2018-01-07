@@ -26,6 +26,6 @@ class Solution(object):
             for y in range(3):
                 xx = i / 3 * 3 + x
                 yy = j / 3 * 3 + y
-                if board[i][j] == board[xx][yy] and i != xx and j != yy:
+                if board[i][j] == board[xx][yy] and not (i == xx and j == yy):
                     return False
         return True
