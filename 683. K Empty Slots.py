@@ -179,7 +179,7 @@ class Solution(object):
         # method2
         # days = [0] * len(flowers)
         # for i in range(len(flowers)):
-        #     days[flowers[i]-1] = i # days = [0, 2, 1], which flower bloom on that day
+        #     days[flowers[i]-1] = i # days = [1, 4, 0, 3, 2], which flower bloom on that day
         #
         # result = float("inf")
         # i, left, right = 0, 0, k+1

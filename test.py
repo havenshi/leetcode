@@ -1,29 +1,43 @@
-#!/usr/bin/env python
+class Solution(object):
+    def kEmptySlots(self, flowers, k):
+        """
+        :type flowers: List[int]
+        :type k: int
+        :rtype: int
+        """
+        days = [0] * len(flowers)
+        for i in range(len(flowers)):
+            days[flowers[i] - 1] = i  # days = [1, 4, 0, 3, 2], which flower bloom on that day
 
-import numpy as np
-import tensorflow as tf
+        dict = {}
+        length = 0
+        array = []
 
-# Prepare train data
-train_X = np.linspace(-1, 1, 100)
-train_Y = 2 * train_X + np.random.randn(*train_X.shape) * 0.33 + 10
 
-# Define the model
-X = tf.placeholder("float")
-Y = tf.placeholder("float")
-w = tf.Variable(0.0, name="weight")
-b = tf.Variable(0.0, name="bias")
-loss = tf.square(Y - X * w - b)
-train_op = tf.train.GradientDescentOptimizer(0.01).minimize(loss)
+        i, left, right = 0, 0, k + 1
+        while right < len(days):
+            for l in dict:
+                if days[i] > l and days[i] < dict[l]:
+                    del dict[l]
+                    length -= 1
 
-# Create session to run
-with tf.Session() as sess:
-    sess.run(tf.initialize_all_variables())
+            if days[i] > days[left] and days[i] > days[right]:
+                pass # not influence pair
+            elif days[i] < max(days[left], days[right]) and days[i] > min(days[left], days[right]):
+                left = right
+                right = k + 1 + left
 
-    epoch = 1
-    for i in range(10):
-        for (x, y) in zip(train_X, train_Y):
-            _, w_value, b_value = sess.run([train_op, w, b],
-                                           feed_dict={X: x,
-                                                      Y: y})
-        print("Epoch: {}, w: {}, b: {}".format(epoch, w_value, b_value))
-        epoch += 1
+            if days[i] == days[right]:
+                dict[min(days[left],days[right])] = max(days[left],days[right])
+                length += 1
+                left = right
+                right = k + 1 + left
+
+            array.append(length)
+            i += 1
+            print array,dict
+        return array
+
+if __name__ == "__main__":
+    answer = Solution()
+    print answer.kEmptySlots([3,1,5,4,2], 1)
