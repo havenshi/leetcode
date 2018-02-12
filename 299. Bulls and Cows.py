@@ -17,4 +17,5 @@ class Solution(object):
         for k in dict_gue.keys():
             number = dict_sec.get(k, 0)
             cows += min(number, dict_gue[k])
+
         return str(bulls) + 'A' + str(cows - bulls) + 'B'
