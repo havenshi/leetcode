@@ -15,8 +15,9 @@ class Solution(object):
             return (smaller + bigger) / 2.0
 
     # A分成Section1和Section2，B分成Section3和Section4
-    # 如果(m / 2 + n / 2) > k，那么意味着，当前中位数取高了，正确的中位数要么在
-    # Section1或者Section3中。如果A[m / 2] > B[n / 2], 意味着中位数肯定不可能在Section2
+    # 如果(m / 2 + n / 2) > k，那么意味着，当前中位数取高了，正确的中位数为以下两种情况：
+    # section 1, section 2, section 3 或者 section 1, section 3, section 4。
+    # 如果A[m / 2] > B[n / 2], 意味着中位数肯定不可能在Section2
     # 里面，那么新的搜索可以丢弃这个区间段了。同理可以推断出余下三种情况，如下所示：
     #
     # If(m / 2 + n / 2 + 1) > k & & am / 2 > bn / 2, drop Section2

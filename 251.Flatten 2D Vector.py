@@ -15,7 +15,9 @@ By calling next repeatedly until hasNext returns false, the order of elements
 returned by next should be: [1,2,3,4,5,6].
 '''
 
-
+# 不直接转换为一维数组，而是维护两个变量x和y，我们将x和y初始化为0，对于hasNext函数，我们检查当前x是否小于总行数，
+# y是否和当前行的列数相同，如果相同，说明要转到下一行，则x自增1，y初始化为0，若此时x还是小于总行数，说明下一个值可以被取出来，
+# 那么在next函数就可以直接取出行为x，列为y的数字，并将y自增1
 class Vector2D(object):
     # @param vec2d {List[List[int]]}
     def __init__(self, vec2d):

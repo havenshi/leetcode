@@ -29,7 +29,7 @@ class Solution(object):
             return 0
         k = len(costs[0])
 
-        dp = [[0]*k for dummy in range(n)]
+        dp = [[0]*k for x in range(n)]
         dp[0] = costs[0][:]
         for i in range(1,n):
             array = sorted(dp[i-1])
@@ -40,6 +40,7 @@ class Solution(object):
                     dp[i][j] = dp[i-1][last1] + costs[i][j]
                 else:
                     dp[i][j] = dp[i-1][last2] + costs[i][j]
+            print dp
         return min(dp[-1])
 
 if __name__ == '__main__':

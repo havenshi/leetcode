@@ -26,6 +26,6 @@ class Solution(object):
     def doReverse(self, head, newHead):
         if head is None:
             return newHead
-        next = head.next
+        tmp = head.next
         head.next = newHead
-        return self.doReverse(next, head)
+        return self.doReverse(tmp, head)

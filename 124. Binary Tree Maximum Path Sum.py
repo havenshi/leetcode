@@ -24,16 +24,12 @@ class Solution(object):
     def helper(self, root):
         if root == None:
             return 0
-        tmp = root.val
-        lmax = 0
-        rmax = 0
+        cur = root.val
+        lmax = float('-inf')
+        rmax = float('-inf')
         if root.left:
             lmax = self.helper(root.left)
-            if lmax > 0:
-                tmp += lmax
         if root.right:
             rmax = self.helper(root.right)
-            if rmax > 0:
-                tmp += rmax
-        self.res = max(tmp, self.res)
-        return max(root.val, root.val + lmax, root.val + rmax)
+        self.res = max(self.res, cur, cur + lmax, cur + rmax, cur + lmax + rmax, lmax, rmax)
+        return max(cur, cur + lmax, cur + rmax)  # can only return root + one side

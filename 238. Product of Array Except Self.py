@@ -9,9 +9,9 @@ class Solution(object):
         dp_before = [1] * n
         dp_after = [1] * n
         for i in range(1, n):
-            dp_before[i] = dp_before[i-1] * nums[i-1]
+            dp_before[i] = dp_before[i-1] * nums[i-1] # dp_before=[1, 1, 2, 6]
         for i in range(n-2, -1, -1):
-            dp_after[i] = dp_after[i+1] * nums[i+1]
+            dp_after[i] = dp_after[i+1] * nums[i+1] # dp_after=[24, 12, 4, 1]
         for i in range(n):
             dp_before[i] *= dp_after[i]
         return dp_before
@@ -26,3 +26,6 @@ class Solution(object):
         #     dp[i] *= right
         #     right *= nums[i]
         # return dp
+
+if __name__ == '__main__':
+    print Solution().productExceptSelf([1,2,3,4])

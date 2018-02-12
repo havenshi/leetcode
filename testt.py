@@ -1,66 +1,62 @@
-# def qsort_py(items):
-#     sort(items, 0, len(items) - 1)
-#     return items
-#
-# def sort(items, left, right):
-#     if left >= right:
-#         return
-#
-#     pivot = partition(items, left, right)
-#     sort(items, left, pivot - 1)
-#     sort(items, pivot + 1, right)
-#
-# def partition(items, lo, hi):
-#     left = lo + 1
-#     right = hi
-#     while True:
-#
-#         while items[left] < items[lo]:
-#             # find item on left to swap
-#             left += 1
-#             if left >= hi:
-#                 break
-#
-#         while items[right] > items[lo]:
-#             # find item on right to swap
-#             right -= 1
-#             if right <= lo:
-#                 break
-#
-#         # if we have already gone through all items
-#         if left >= right:
-#             break
-#
-#         # swap items
-#         items[left], items[right] = items[right], items[left]
-#
-#     # swap partitioning item with the biggest on the left side (which is less than lo)
-#     items[lo], items[right] = items[right], items[lo]
-#     return right
+class BinHeap:
+    def __init__(self):
+        self.heapList = [0]
+        self.currentSize = 0
 
-def qsort_3w(array):
-    return sort_3w(array, 0, len(array) - 1)
 
-def sort_3w(array, left, right):
-    if left >= right:
-        return
-    smaller = left
-    greater = right
-    pivot = array[left]
-    i = left
-    while i <= greater: # greater is the new position that needs to be taken into account
-        if array[i] < pivot:
-            array[smaller], array[i] = array[i], array[smaller] # swap
-            smaller += 1 # smaller index move forward
-            i += 1
-        elif array[i] > pivot:
-            array[greater], array[i] = array[i], array[greater] # swap
-            greater -= 1 # greater index move forward
-            # don't move i! since now nums[i] could be smaller than pivot, this item needs to be judged again.
+
+    def percUp(self, i):
+        while i // 2 > 0:
+            if self.heapList[i] < self.heapList[i // 2]:
+                tmp = self.heapList[i // 2]
+                self.heapList[i // 2] = self.heapList[i]
+                self.heapList[i] = tmp
+            i = i // 2
+
+    def insert(self, k):
+        self.heapList.append(k)
+        self.currentSize = self.currentSize + 1
+        self.percUp(self.currentSize)
+
+
+
+    def percDown(self, i):
+        while (i * 2) <= self.currentSize:
+            mc = self.minChild(i)
+            if self.heapList[i] > self.heapList[mc]:
+                tmp = self.heapList[i]
+                self.heapList[i] = self.heapList[mc]
+                self.heapList[mc] = tmp
+            i = mc
+
+    def minChild(self, i):
+        if i * 2 + 1 > self.currentSize:
+            return i * 2
         else:
-            i += 1
-    sort_3w(array, left, smaller - 1)
-    sort_3w(array, greater + 1, right)
-    return array
+            if self.heapList[i * 2] < self.heapList[i * 2 + 1]:
+                return i * 2
+            else:
+                return i * 2 + 1
 
-print qsort_3w([1,3,2,5,6,4])
+    def delMin(self):
+        retval = self.heapList[1]
+        self.heapList[1] = self.heapList[self.currentSize]
+        self.currentSize = self.currentSize - 1
+        self.heapList.pop()
+        self.percDown(1)
+        return retval
+
+
+
+    def buildHeap(self, alist):
+        i = len(alist) // 2
+        self.currentSize = len(alist)
+        self.heapList = [0] + alist[:]
+        while (i > 0):
+            self.percDown(i)
+            i = i - 1
+        print self.heapList
+
+if __name__ == "__main__":
+    answer=BinHeap()
+    print answer.buildHeap([2,3,5,6,3,4,1,7,4,8])

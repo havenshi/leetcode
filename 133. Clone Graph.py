@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Definition for a undirected graph node
 # class UndirectedGraphNode:
 #     def __init__(self, x):
@@ -8,16 +9,39 @@ class Solution:
     # @param node, a undirected graph node
     # @return a undirected graph node
 
-    def __init__(self):
-        self.dict = {}
-
+    # dfs
     def cloneGraph(self, node):
         if node == None:
             return None
-        if node.label in self.dict:
-            return self.dict[node.label]
-        root = UndirectedGraphNode(node.label)
-        self.dict[node.label] = root
-        for item in node.neighbors:
-            root.neighbors.append(self.cloneGraph(item))
-        return root
+        return self.dfs(node, {})
+
+    def dfs(self, node, map):
+        if node in map:
+            return map[node]
+        copynode = UndirectedGraphNode(node.label)
+        map[node] = copynode   # map来存储原图中的节点和新图中的节点的一一映射
+        for neighbor in node.neighbors:
+            copynode.neighbors.append(self.dfs(neighbor, map))
+        return copynode
+
+    # bfs
+        if node == None:
+            return None
+        queue = []
+        map = {}
+        copynode = UndirectedGraphNode(node.label)
+        queue.append(node)
+        map[node] = copynode
+        while queue:
+            curr = queue.pop()
+            for neighbor in curr.neighbors:
+                if neighbor not in map:
+                    copyneighbor = UndirectedGraphNode(neighbor.label)
+                    map[curr].neighbors.append(copyneighbor)
+                    map[neighbor] = copyneighbor
+                    queue.append(neighbor)
+                else:
+                    # turn directed graph to undirected graph
+                    copyneighbor = map[neighbor]
+                    map[curr].neighbors.append(copyneighbor)
+        return copynode

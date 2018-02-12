@@ -201,3 +201,83 @@ if __name__ == "__main__":
 # 需要返回满足条件的最后一天而不是第一天。
 # 比如：([3,1,5,4,2],1)
 # leetcode原题应该返回2，但是变形后应该返回4。
+
+
+def solution(P, K):
+    len_P = len(P)
+    if len_P <= 1 or K >= len_P - 1:
+        return -1
+    space_array = [0] * len_P
+    left_array = [-1] * len_P
+    right_array = [len_P] * len_P
+    for i in range(1, len_P):
+        left_array[i] = i-1
+    for i in range(0, len_P-1):
+        right_array[i] = i + 1
+    # left_array=[-1, 0, 1, 2, 3]
+    # right_array=[1, 2, 3, 4, 5]
+    for i in range(len_P):
+        position = P[i-1] - 1 #第几盆花bloom
+        if position > 0 and position < len_P - 1: #如果种花的位置不是首位
+            space_array[position] = 1 + space_array[position-1] + space_array[position+1]
+            if space_array[position-1] != 0:
+                left_array[position] = left_array[position-1]
+                space_array[left_array[position]+1] = space_array[position]
+            if space_array[position+1] != 0:
+                right_array[position] = right_array[position+1]
+                space_array[right_array[position]-1] = space_array[position]
+            # if space_array[position] == K and left_array[position] != -1 and right_array[position] != len_P:
+            #     return i - 1
+        elif position == 0:
+            space_array[position] = 1 + space_array[position+1]
+            right_array[position] = right_array[position+1]
+            space_array[right_array[position]-1] = space_array[position]
+        elif position == len_P - 1:
+            space_array[position] = 1 + space_array[position-1]
+            left_array[position] = left_array[position-1]
+            space_array[left_array[position]+1] = space_array[position]
+        print  space_array , left_array,right_array
+    return -1
+
+def kv_solution(P, K):
+    kv = {}
+    len_p = len(P)
+    for i in range(len_p - 1, -1, -1):
+        position = P[i]
+        kv[position] = position
+        # 把左右边的空白位置接上
+        low = kv.get(position-1, position)
+        high = kv.get(position+1, position)
+        kv[low] = high
+        kv[high] = low
+        print position,kv
+        # high,low记录该位置不放花的时候，该位置左右边空白的位置
+        # 2{2：2}
+        # 4{2：2, 4：4}
+        # 5{2：2, 4：5, 5：4}
+        # 1{1：2，2：1, 4：5, 5：4}
+        # 3{1：5, 2：1, 3：3, 4：5, 5：1}
+        if abs(high - low)+1 == K and max(high, low) != len_p and min(high, low) != 1:
+            return i
+    return -1
+
+
+if __name__ == "__main__":
+    # print solution([3,1,5,4,2],1)
+    print kv_solution([3,1,5,4,2],1)
+    # print solution([1,2,3], 1)
+    # print kv_solution([1,2,3], 1)
+    # print solution([1,3,2], 1)
+    # print kv_solution([1,3,2], 1)
+    # print solution([], 5)
+    # print kv_solution([], 5)
+    # print solution([1,3,2], 0)
+    # print kv_solution([1,3,2], 0)
+    # print solution([1,3,5,7,9,8,6,4,2], 1)
+    # print kv_solution([1,3,5,7,9,8,6,4,2], 1)
+    # print solution([1,8,7,5,11,3,4,6,2,10,9], 2)
+    # print kv_solution([1,8,7,5,11,3,4,6,2,10,9], 2)
+    # print solution([1,8,7,5,11,4,3,6,9,10,2], 2)
+    # print kv_solution([1,8,7,5,11,4,3,6,9,10,2], 2)
+    # print solution([1,8,7,5,11,4,10,6,9,3,2], 3)
+    # print kv_solution([1,8,7,5,11,4,10,6,9,3,2], 3)

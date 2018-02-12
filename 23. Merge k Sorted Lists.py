@@ -42,23 +42,25 @@ class Solution(object):
         return res.next
 
         # method 2
+        # time: nO(k)
         # 维护一个大小为k的堆，每次取堆顶的最小元素放到结果中， 然后读取该元素的下一个元素放入堆中，重新维护好。
         # 因为每个链表是有序的，每次又是去当前k个元素中最小的，所以当所有链表都读完时结束，这个时候所有元 素按从小到大放在结果链表中。
         # 这个算法每个元素要读取一次，即是k*n次，然后每次读取元素要把新元素插入堆中要logk的复杂度，所以总时间复杂度是 O(nklogk)。
         # 空间复杂度是堆的大小，即为O(k)。
-        # heap = []
-        # for node in lists:
-        #     if node:
-        #         heap.append((node.val, node))
-        # heapq.heapify(heap) #压入堆中,Transform list heap into a heap, in-place, in linear time.
-        # head = ListNode(0); curr = head
-        # while heap:
-        #     pop = heapq.heappop(heap) #从h中删除最小的(linear时间)，并返回该值
-        #     curr.next = ListNode(pop[0])
-        #     curr = curr.next
-        #     if pop[1].next: #被删除的node
-        #         heapq.heappush(heap, (pop[1].next.val, pop[1].next)) #向堆中增加该node的next
-        # return head.next
+        heap = []
+        for node in lists:
+            if node:
+                heap.append((node.val, node))
+        heapq.heapify(heap) #压入堆中,Transform list heap into a heap, in-place, in linear time.
+        dummy = ListNode(0)
+        curr = dummy
+        while heap:
+            pop = heapq.heappop(heap) #从h中删除最小的(linear时间)，并返回该值
+            curr.next = ListNode(pop[0])
+            curr = curr.next
+            if pop[1].next: #被删除的node
+                heapq.heappush(heap, (pop[1].next.val, pop[1].next)) #向堆中增加该node的next
+        return dummy.next
 
         # LTE
         # n = len(lists)

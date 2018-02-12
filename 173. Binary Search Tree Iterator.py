@@ -11,7 +11,7 @@ class BSTIterator(object):
         :type root: TreeNode
         """
         self.stack = []
-        self.pushleft(root)
+        self.push(root)
 
     def hasNext(self):
         """
@@ -23,11 +23,14 @@ class BSTIterator(object):
         """
         :rtype: int
         """
-        tmp = self.stack.pop()
-        self.pushleft(tmp.right)
-        return tmp.val
+        if self.hasNext():
+            node = self.stack.pop()
+            self.push(node.right)
+            return node.val
+        else:
+            return None
 
-    def pushleft(self, node):
+    def push(self, node):
         while node:
             self.stack.append(node)
             node = node.left

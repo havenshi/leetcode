@@ -10,13 +10,14 @@ class Solution(object):
         for word in words:
             self.trie.insert(word) # 将待查找的单词储存在字典树Trie中
 
+
         self.result = []
         for i in range(len(board)):
             for j in range(len(board[0])):
                 self.dfs(board[i][j], board, i, j, self.trie.root)
         return sorted(self.result)
 
-    def dfs(self, word, board, i, j, node):
+    def dfs(self, word, board, i, j, node):# dfs时，如果当前形成的单词不在Trie里，就没必要继续dfs下去了。如果当前字符串在trie里，就说明board可以形成这个word。
         node = node.children.get(board[i][j])
         if node is None: # 使用DFS（深度优先搜索）在格板中查找，利用字典树剪枝
             return
