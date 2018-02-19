@@ -1,19 +1,16 @@
-# Complete the function below.
-# this is dfs and combination
-# we can use from scipy.special import comb in other IDE, but it's not a basic module so we can't use here
 import operator
 
 
-def dfs(grid, i, j):
-    if i > len(grid) - 1 or i < 0 or j > len(grid[0]) - 1 or j < 0:
+def dfs(grid_matrix, i, j):
+    if i > len(grid_matrix) - 1 or i < 0 or j > len(grid_matrix[0]) - 1 or j < 0:
         return
-    if grid[i][j] == 'N':
+    if grid_matrix[i][j] == 'N':
         return
-    grid[i][j] == 'N'
-    dfs(grid, i + 1, j)
-    dfs(grid, i, j + 1)
-    dfs(grid, i - 1, j)
-    dfs(grid, i, j - 1)
+    grid_matrix[i][j] = 'N'
+    dfs(grid_matrix, i + 1, j)
+    dfs(grid_matrix, i, j + 1)
+    dfs(grid_matrix, i - 1, j)
+    dfs(grid_matrix, i, j - 1)
 
 
 def combination(count, i):
@@ -22,18 +19,21 @@ def combination(count, i):
 
 def Group(grid):
     ans = 0
-    if not len(grid):
+    grid_matrix = [list(x) for x in grid]
+    print grid_matrix
+    if not len(grid_matrix):
         ans = 0
     else:
-        m = len(grid)
-        n = len(grid[0])
+        m = len(grid_matrix)
+        n = len(grid_matrix[0])
         for i in range(m):
             for j in range(n):
-                if grid[i][j] == 'Y':
-                    dfs(grid, i, j)
+                if grid_matrix[i][j] == 'Y':
+                    dfs(grid_matrix, i, j)
                     ans += 1
 
     count = 0
     for i in range(ans / 2 * 2 + 1):
         count += combination(count, i)
     return count
+
