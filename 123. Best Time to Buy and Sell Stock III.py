@@ -25,5 +25,36 @@ class Solution(object):
         res = 0
         for i in range(n):
             res = max(res, p1[i] + p2[i])
-        print p1, p2
+
         return res
+
+
+        # method2 快一些，此时profit1和profit2代表两边分别操作一支股票的最大利润，方法类似121. Best Time to Buy and Sell Stock
+
+        # if not prices:
+        #     return 0
+        #
+        # profit1 = [0] * len(prices)
+        # profit2 = [0] * len(prices)
+        #
+        # tmp = 0
+        # buy = prices[0]
+        # for i in range(1, len(prices)):
+        #     if prices[i] > buy:
+        #         tmp = (prices[i] - buy)
+        #     else:
+        #         buy = prices[i]
+        #     profit1[i] = max(tmp, profit1[i - 1])
+        # tmp = 0
+        # sell = prices[-1]
+        # for i in range(len(prices) - 2, -1, -1):
+        #     if prices[i] < sell:
+        #         tmp = (sell - prices[i])
+        #     else:
+        #         sell = prices[i]
+        #     profit2[i] = max(tmp, profit2[i + 1])
+        #
+        # res = 0
+        # for i in range(len(prices)):
+        #     res = max(res, profit1[i] + profit2[i])
+        # return res

@@ -14,23 +14,20 @@ class Solution(object):
         """
         if root == None:
             return []
-        _result = []
-        self.dfs(root, _result, tmp=[], target=sum)
-        return _result
+        self.res = []
+        self.dfs(root, tmp=[], target=sum)
+        return self.res
 
-    def dfs(self, node, result, tmp, target):
-        tmp.append(node.val)
-        if not node.left and not node.right:
-            if sum(tmp) == target:
-                result.append(tmp)
+    def dfs(self, root, tmp, target):
+        if not root:
+            return
 
-        if node.left:
-            copytmp = tmp[:]
-            self.dfs(node.left, result, copytmp, target)
-
-        if node.right:
-            copytmp = tmp[:]
-            self.dfs(node.right, result, copytmp, target)
+        newtmp = tmp[:]
+        newtmp.append(root.val)
+        if sum(newtmp) == target and not root.left and not root.right:
+            self.res.append(newtmp)
+        self.dfs(root.left, newtmp, target)
+        self.dfs(root.right, newtmp, target)
 
 
     # method 2

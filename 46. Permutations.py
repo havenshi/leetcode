@@ -4,31 +4,27 @@ class Solution(object):
         :type nums: List[int]
         :rtype: List[List[int]]
         """
-
         self.result = []
         nums.sort()
-        for i in range(len(nums)):
-            length=len(nums)
-            self.recursive_comb([nums[i]], nums[:i] + nums[i + 1:], length)
+        self.recursive_comb([], nums, len(nums))
         return self.result
 
+    def recursive_comb(self, temp_array, rest_array, target):
+        if target == 0:
+            self.result.append(temp_array)
+            return
+        for i in range(len(rest_array)):
+            temp_array2 = temp_array[:]
+            temp_array2.append(rest_array[i])
+            self.recursive_comb(temp_array2, rest_array[:i] + rest_array[i + 1:], target - 1)
 
-    def recursive_comb(self,temp_array, rest_array, target):
-        if len(temp_array) == target:
-            if temp_array not in self.result:
-                self.result.append(temp_array)
-        else:
-            for i in range(len(rest_array)):
-                temp_array2 = temp_array[:]
-                temp_array2.append(rest_array[i])
-                self.recursive_comb(temp_array2, rest_array[:i] + rest_array[i + 1:], target)
-
-        # if len(num) == 0: return []
-        # if len(num) == 1: return [num]
+        # method2 快一些
+        # if len(nums) <= 1:
+        #     return [nums]
         # res = []
-        # for i in range(len(num)):
-        #     for j in self.permute(num[:i] + num[i+1:]):
-        #         res.append([num[i]] + j)
+        # for i,num in enumerate(nums):
+        #     for y in self.permute(nums[:i]+nums[i+1:]):
+        #         res.append([num]+y)
         # return res
 
 if __name__ == "__main__":
