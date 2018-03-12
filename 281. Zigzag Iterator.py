@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Given two 1d vectors, implement an iterator to return their elements alternately.
 #
 # For example, given two 1d vectors:
@@ -35,8 +36,7 @@ class ZigzagIterator(object):
     # or false
     def hasNext(self):
         # Write your code here
-        while self.col < len(self.vec2d[self.row]) and \
-                        self.row >= len(self.vec2d):
+        while self.col < len(self.vec2d[self.row]) and self.row >= len(self.vec2d):
             self.row, self.col = 0, self.col + 1
         return self.col < len(self.vec2d[self.row])
 
@@ -66,3 +66,25 @@ class ZigzagIterator(object):
 # Your ZigzagIterator object will be instantiated and called as such:
 # i, v = ZigzagIterator(v1, v2), []
 # while i.hasNext(): v.append(i.next())
+
+
+# 普通的遍历
+def zigzag(matrix):
+    m = len(matrix)
+    n = max(len(row) for row in matrix)
+    row, col = 0, 0
+    step = 1
+    ans = []
+    while col < n:
+        while 0 <= row < m:
+            if col < len(matrix[row]):
+                ans.append(matrix[row][col])
+            row += step
+        step *= (-1)
+        row += step
+        col += 1
+    return ans
+
+print zigzag([[1,2,3],
+               [4,5,6,7],
+               [8,9]])

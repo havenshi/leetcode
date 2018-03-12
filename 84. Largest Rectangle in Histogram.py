@@ -5,6 +5,7 @@ class Solution(object):
         :type heights: List[int]
         :rtype: int
         """
+        # 栈内保留递增的序列
         n = len(heights)
         maxArea = 0
         stackHeight = []

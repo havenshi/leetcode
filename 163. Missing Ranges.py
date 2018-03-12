@@ -15,11 +15,11 @@ class Solution(object):
         res = []
         start = lower
         end = start
-        while end < min(nums[-1],upper):
+        while end < min(nums[-1],upper+1):
             while start in nums:
                 start += 1
             end = start
-            while end + 1 not in nums and end < upper:
+            while end + 1 not in nums and end+1 <= upper:
                 end += 1
             if start == end:
                 res.append(str(start))

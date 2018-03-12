@@ -40,6 +40,37 @@ class Solution(object):
         return res
 
 
+        # if not nums:
+        #     return 0
+        # dict_l = {}
+        # dict_r = {}
+        # res = 0
+        # for num in nums:
+        #     key, value = num, num
+        #     if (key - 1) not in dict_r and (value + 1) not in dict_l:
+        #         dict_l[key] = value
+        #         dict_r[value] = key
+        #         res = max(res, 1)
+        #         continue
+        #     while (key - 1) in dict_r or (value + 1) in dict_l:
+        #         if (key - 1) in dict_r:
+        #             index_l = dict_r[key - 1]
+        #             dict_l[index_l] = value  # 左dict直接变化value
+        #             del dict_r[key - 1]  # 右dict需要删了原keyvalue后重新添加
+        #             dict_r[value] = index_l
+        #             res = max(res, dict_l[index_l] - index_l + 1)
+        #             key, value = index_l, dict_l[index_l]
+        #         elif (value + 1) in dict_l:
+        #             index_r = dict_l[value + 1]
+        #             dict_r[index_r] = key
+        #             del dict_l[value + 1]
+        #             dict_l[key] = index_r
+        #             res = max(res, index_r - dict_r[index_r] + 1)
+        #             key, value = dict_r[index_r], index_r
+        #
+        #             # 这个方法不正确，因为发现key-1或value+1时，如果是新的数字，左右dict都对；但如果是已存在的已经变化的数对，没法从dict中删除
+        # return res
+
 if __name__ == '__main__':
     answer = Solution()
     print answer.longestConsecutive([100, 4, 200, 1, 3, 2])

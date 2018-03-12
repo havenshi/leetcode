@@ -20,7 +20,7 @@ class Solution:
             # 删字符时，应该删光最后出现位置在最左的字符（如“abac”应删所有b即ab而不是所有a即aba），可保证被全部删除后所减小的长度越少
             if len(last) == 2 and s[i] not in last:
                 minlast = min(last.values()) # 选择last中value最小的
-                minkey = [k for k, v in last.items() if v == minlast][0] # 找到该value的key
+                minkey = min(last, key=last.get) # 找到该value的key
                 left = minlast + 1 # 从该key向右移动
                 del last[minkey] # 删除该字符
             last[s[i]] = i

@@ -33,7 +33,7 @@ class Solution:
         queue.append(node)
         map[node] = copynode
         while queue:
-            curr = queue.pop()
+            curr = queue.pop(0)
             for neighbor in curr.neighbors:
                 if neighbor not in map:
                     copyneighbor = UndirectedGraphNode(neighbor.label)
