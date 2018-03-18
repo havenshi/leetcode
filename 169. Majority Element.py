@@ -4,6 +4,8 @@ class Solution(object):
         :type nums: List[int]
         :rtype: int
         """
+        # Time:  O(n)
+        # Space: O(1)
         candidate = None
         count = 0
         for num in nums:

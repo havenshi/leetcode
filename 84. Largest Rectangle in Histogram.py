@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+# Time:  O(n)
+# Space: O(n)
 class Solution(object):
     def largestRectangleArea(self, heights):
         """

@@ -1,3 +1,5 @@
+# Time:  O(n)
+# Space: O(1)
 # create a linked list
 # head=ListNode(0)
 # cur=head

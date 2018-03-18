@@ -1,4 +1,11 @@
 # -*- coding: utf-8 -*-
+# Time:  O(k * n^k)
+# 搜索的时间复杂度是O(解的个数 * 每个解生成的复杂度)
+# 假设长度为n的数组全都是1，比如{1, 1, 1, 1,...}，target是k
+# 那么一共有n^k个不同的解（假设每位的1都不同，则第一位可能有n种可能，第二位有n种可能，以此类推）
+# 每种解的最大耗时为k（就是循环到底）
+# 因此时间复杂度的upper bound情况是O(kn^k)
+# Space: O(k)
 class Solution(object):
     def combinationSum(self, candidates, target):
         """

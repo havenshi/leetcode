@@ -1,3 +1,5 @@
+# Time:  O(n * 4^n)
+# Space: O(n)
 class Solution(object):
     def letterCombinations(self, digits):
         """

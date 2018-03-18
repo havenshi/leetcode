@@ -1,3 +1,5 @@
+# Time:  O(m * n)
+# Space: O(m * n)
 class Solution(object):
     def numIslands(self, grid):
         """

@@ -1,3 +1,5 @@
+# Time:  O(n!)
+# Space: O(n)
 class Solution(object):
     def solveNQueens(self, n):
         """

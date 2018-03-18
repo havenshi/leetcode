@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+# Time:  O(n)
+# Space: O(n)
 # Definition for a undirected graph node
 # class UndirectedGraphNode:
 #     def __init__(self, x):

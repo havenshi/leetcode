@@ -1,3 +1,5 @@
+# Time:  O(n)
+# Space: O(1)
 # Definition for singly-linked list.
 # class ListNode(object):
 #     def __init__(self, x):
@@ -11,28 +13,27 @@ class Solution(object):
         :type k: int
         :rtype: ListNode
         """
-        if not head:
-            return
         dummy = ListNode(0)
         dummy.next = head
-        start = dummy
-        while start.next:
-            end = start
-            for i in range(k - 1):
+        start, end = dummy, dummy
+        while start:
+            for i in range(k):
                 end = end.next
-                if not end.next:
-                    return dummy.next  # no k-group
-            res = self.reverse(start.next, end.next)
-            start.next = res[0]  # new start = original end
-            start = res[1]  # start from new end = original start
+                if not end:
+                    return dummy.next
+            new_head = start
+            new_start = new_head.next
+            self.helper(new_head, new_start, end)  # change start and end
+
+            for i in range(k):  # move start to k steps
+                start = start.next
+            end = start
         return dummy.next
 
-    def reverse(self, start, end):
-        head = ListNode(0)
-        head.next = start
-        while head.next != end:  # exchange start and start.next several times. cannot use 'start.next', since there might be nodes after start.
-            tmp = start.next
-            start.next = tmp.next
-            tmp.next = head.next
-            head.next = tmp
-        return [end, start]
+    def helper(self, head, start,
+               end):  # 0,1,2,3, exchange 1 and 2 then put 2 to front; exchange 2 and 3 then put 3 to front
+        while head.next != end:
+            mid = start.next
+            start.next = mid.next
+            mid.next = head.next
+            head.next = mid

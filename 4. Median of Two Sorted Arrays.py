@@ -1,4 +1,6 @@
 # -*- coding:utf8 -*-
+# Time:  O(log(m+n))
+# Space: O(1)
 class Solution(object):
     def findMedianSortedArrays(self, nums1, nums2):
         """

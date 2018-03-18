@@ -1,3 +1,5 @@
+# Time:  O(n)
+# Space: O(1)
 # Definition for a binary tree node.
 # class TreeNode(object):
 #     def __init__(self, x):
@@ -16,12 +18,17 @@ class Solution(object):
         self.FindTwoNodes(root)
         self.n1.val, self.n2.val = self.n2.val, self.n1.val
 
+    # 只有一组逆序，如124356的43，把p=3，q=4，那么最后交换p和q即可。
+    # 如果有两个逆序，如163452的63和52，当我们发现第一个逆序63时，把p=6，q=3，然后发现第二个逆序52时，把q=2，最后交换p和q。
     def FindTwoNodes(self, root):
+        if not root:
+            return
         if root:
             self.FindTwoNodes(root.left)
             if self.prev and self.prev.val > root.val:
-                self.n2 = root
-                if self.n1 == None: self.n1 = self.prev
+                if self.n1 == None: # 第一组逆序的时候，更改n1值
+                    self.n1 = self.prev
+                self.n2 = root # 只要有逆序，更改n2值
             self.prev = root
             self.FindTwoNodes(root.right)
 

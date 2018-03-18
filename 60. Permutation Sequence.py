@@ -1,3 +1,5 @@
+# Time:  O(n)
+# Space: O(n)
 class Solution(object):
     def getPermutation(self, n, k):
         """
@@ -5,6 +7,20 @@ class Solution(object):
         :type k: int
         :rtype: str
         """
+        # 自己的方法
+        array = range(1, n+1)
+        res = ''
+        index = n
+        while index > 1:
+            items = reduce(lambda x,y:x*y, range(1, index))
+            group = (k-1)/items # 5/2是第二组，但1/1是第0组，所以要调整一下
+            res += str(array[group])
+            del array[group]
+            k %= items
+            index -= 1
+        res += str(array[0]) # k==0时还有最后一个元素
+        return res
+
     # method 1 time limit exceeded
     #     self.result = []
     #     nums=[i for i in range(1,n+1)]
@@ -27,16 +43,16 @@ class Solution(object):
     # method 2
     # if n=3, we have (3-1)! start with 1/2/3, and for 1/2/3+left part, left part have (2-1)! start with what is left
     # check the region that the sequence number falls in and get the starting digit
-        elements = range(1, n + 1)  # [1,2,3]
-        NN = reduce(lambda x, y: x * y, elements)  # n!
-        k, result = k - 1, ''  # k is starting digit
-        while len(elements) > 0:
-            NN = NN / len(elements)  # the length of  the remain part, NN / len(elements)=(n-1)!
-            print NN,k
-            i, k = k / NN, k % NN    # i is index of the value of this loop, k is how many k left
-            print elements,i,k
-            result += str(elements.pop(i)) # delete the used item from element
-        return result
+    #     elements = range(1, n + 1)  # [1,2,3]
+    #     NN = reduce(lambda x, y: x * y, elements)  # n!
+    #     k, result = k - 1, ''  # k is starting digit
+    #     while len(elements) > 0:
+    #         NN = NN / len(elements)  # the length of  the remain part, NN / len(elements)=(n-1)!
+    #         print NN,k
+    #         i, k = k / NN, k % NN    # i is index of the value of this loop, k is how many k left
+    #         print elements,i,k
+    #         result += str(elements.pop(i)) # delete the used item from element
+    #     return result
 
 
 if __name__ == "__main__":

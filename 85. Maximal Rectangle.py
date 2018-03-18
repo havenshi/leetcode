@@ -1,3 +1,5 @@
+# Time:  O(n^2)
+# Space: O(n)
 class Solution(object):
     def maximalRectangle(self, matrix):
         """
@@ -16,7 +18,7 @@ class Solution(object):
                     a[j] += 1
                 else:
                     a[j] = 0
-            maxRec = max(maxRec, self.largestRectangleArea(a))  # 对于每行行程的矩形图，求最大面积
+            maxRec = max(maxRec, self.largestRectangleArea(a))  # 对于每行行程的矩形图，求最大面积，就是84题
         return maxRec
 
     def largestRectangleArea(self, heights):
@@ -78,3 +80,56 @@ class Solution(object):
                     right = j
 
         return result
+
+
+        # method3 自己的dp方法 有点慢。。。
+        # 用三个dp矩阵，分别存储一直到左边、上边的最长长条和以该点为右下角的rectangle
+
+        m = len(matrix)
+        if not m:
+            return 0
+        n = len(matrix[0])
+        matrix = [[int(x) for x in row] for row in matrix]
+
+        dp_hor = [[0] * n for x in range(m)]
+        for i in range(m):
+            dp_hor[i][0] = matrix[i][0]
+        for i in range(m):
+            for j in range(1, n):
+                if matrix[i][j]:
+                    dp_hor[i][j] = dp_hor[i][j - 1] + 1
+
+        dp_ver = [[0] * n for x in range(m)]
+        for j in range(n):
+            dp_ver[0][j] = matrix[0][j]
+        for i in range(1, m):
+            for j in range(n):
+                if matrix[i][j]:
+                    dp_ver[i][j] = dp_ver[i - 1][j] + 1
+
+        dp = [[0] * n for x in range(m)]
+        res = 0
+        for i in range(m):
+            for j in range(n):
+                if matrix[i][j]:
+                    if m == 0:
+                        dp[0][j] = [dp_hor[0][j], 1]
+                    elif n == 0:
+                        dp[i][0] = [1, dp_ver[i][0]]
+                    else:
+                        tmp = 1
+                        dp[i][j] = [1, 1]
+                        if dp[i - 1][j - 1] and dp_hor[i][j] and dp_ver[i][j]:
+                            # rectangle的情况下肯定好些
+                            tmpv = min(dp_hor[i][j], dp[i - 1][j - 1][0] + 1)
+                            tmph = min(dp_ver[i][j], dp[i - 1][j - 1][1] + 1)
+                            tmp = tmpv * tmph
+                            dp[i][j] = [tmpv, tmph]
+                        if dp_hor[i][j] > tmp:
+                            tmp = dp_hor[i][j]
+                            dp[i][j] = [dp_hor[i][j], 1]
+                        if dp_ver[i][j] > tmp:
+                            tmp = dp_ver[i][j]
+                            dp[i][j] = [1, dp_ver[i][j]]
+                        res = max(res, tmp)
+        return res

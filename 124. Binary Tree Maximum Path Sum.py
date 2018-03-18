@@ -1,3 +1,5 @@
+# Time:  O(n)
+# Space: O(h)
 # Definition for a binary tree node.
 # class TreeNode(object):
 #     def __init__(self, x):
@@ -25,11 +27,11 @@ class Solution(object):
         if root == None:
             return 0
         cur = root.val
-        lmax = float('-inf')
-        rmax = float('-inf')
+        lmax = 0
+        rmax = 0
         if root.left:
-            lmax = self.helper(root.left)
+            lmax = max(0, self.helper(root.left))
         if root.right:
-            rmax = self.helper(root.right)
-        self.res = max(self.res, cur, cur + lmax, cur + rmax, cur + lmax + rmax, lmax, rmax)
+            rmax = max(0, self.helper(root.right))
+        self.res = max(self.res, cur + lmax + rmax)
         return max(cur, cur + lmax, cur + rmax)  # can only return root + one side

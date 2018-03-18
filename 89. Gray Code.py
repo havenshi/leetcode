@@ -5,6 +5,28 @@ class Solution(object):
         :type n: int
         :rtype: List[int]
         """
+        # Time:  O(2^n)
+        # Space: O(1)
+        #         n=3时，正确的GrayCode应该是
+        #         000
+        #         001
+        #         011
+        #         010
+        #         110
+        #         111
+        #         101
+        #         100
+
+        #         n=k时的Gray Code，相当于0加上n=k-1时的Gray Code，以及1加上n=k-1时的Gray Code逆序
+
+        if n == 0:
+            return [0]
+        res = ['0', '1']
+        while n > 1:
+            res = ['0' + x for x in res] + ['1' + x for x in res[::-1]]
+            n -= 1
+        return [int(x, 2) for x in res]
+
 
         # if n == 0:
         #     return [0]

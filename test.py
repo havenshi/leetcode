@@ -1,16 +1,16 @@
-nums = [0,0,1,1,0,1,0,1,1,1,0,0,1]
-res = 0
-s, e = -1, -1
-for i in range(len(nums)):
-
-    if nums[i] == 1:
-        if s==-1:
-            s,e = i,i
-        else:
-            e+=1
-        res = max(res, e - s + 1)
-
-    else:
-        s, e = -1, -1
-
-print res
+def match(word1, word2):
+    dp = [[True]*len(word2)]+[[False]*(len(word2)) for x in range(len(word1))]
+    print dp
+    for i in range(1,len(word1)+1):
+        for j in range(len(word2)):
+            if i == 2 and j == 1:
+                print word1[i - 1], word2[j]
+            if word1[i-1] == '*':
+                dp[i][j] = dp[i-1][j] or dp[i-1][j-1]
+            else:
+                if i==2 and j == 1:
+                    print word1[i-1],word2[j]
+                dp[i][j] = (dp[i - 1][j-1] and word1[i-1] == word2[j])
+    print dp
+    return dp[-1][-1]
+print match('b*d','bd')

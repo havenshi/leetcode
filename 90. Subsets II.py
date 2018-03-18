@@ -1,3 +1,5 @@
+# Time:  O(n * 2^n)
+# Space: O(1)
 class Solution(object):
     def subsetsWithDup(self, nums):
         """

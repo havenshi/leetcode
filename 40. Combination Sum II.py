@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+# Time:  O(k * C(n, k))
+# Space: O(k)
 class Solution(object):
     def combinationSum2(self, candidates, target):
         """

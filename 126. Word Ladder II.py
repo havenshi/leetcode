@@ -1,3 +1,5 @@
+# Time:  O(n * d), n is length of string, d is size of dictionary
+# Space: O(d)
 class Solution(object):
     def findLadders(self, beginWord, endWord, wordList):
         """

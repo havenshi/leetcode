@@ -1,3 +1,5 @@
+# Time:  O(4^n / n^(3/2)) ~= Catalan numbers -> O(n!)
+# Space: O(2^n)
 class Solution(object):
     def generateParenthesis(self, n):
         """

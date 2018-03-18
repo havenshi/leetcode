@@ -1,3 +1,5 @@
+# Time:  O(m * n * l)
+# Space: O(l)
 import copy
 class Solution(object):
     def exist(self, board, word):

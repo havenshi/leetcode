@@ -1,24 +1,26 @@
+# Time:  O(n^m) = O(3^4)
+# Space: O(n * m) = O(3 * 4)
 class Solution(object):
     def restoreIpAddresses(self, s):
         """
         :type s: str
         :rtype: List[str]
         """
-        ans = []
-        self.helper(ans, s, 4, [])
-        return ['.'.join(x) for x in ans]
+        self.res = []
+        self.dfs([], s)
+        return self.res
 
-    def helper(self, ans, s, k, temp):
-        if len(s) > k * 3:
-            return ''
-        elif k == 0:
-            ans.append(temp)
-        else:
-            for i in range(min(3, len(s) - (k - 1))):
-                if i == 2 and int(s[:3]) > 255 or i > 0 and s[0] == '0':
-                    continue
-                copytemp = temp + [s[:i + 1]]
-                self.helper(ans, s[i + 1:], k - 1, copytemp)
+    def dfs(self, tmp, remain):
+        if len(tmp) == 4 and not remain:
+            self.res.append('.'.join(tmp))
+            return
+        elif len(tmp) == 4 and remain or (len(tmp) < 4 and not remain):
+            return
+        for i in range(1, min(len(remain) + 1, 4)):
+            copytmp = tmp[:]
+            if 0 <= int(remain[:i]) <= 255 and (remain[:i] == '0' or not remain[:i].startswith('0')):
+                copytmp.append(remain[:i])
+                self.dfs(copytmp, remain[i:])
 
 if __name__ == '__main__':
     answer = Solution()
