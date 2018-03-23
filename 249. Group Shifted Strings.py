@@ -19,8 +19,13 @@ Return:
 Note: For the return value, each inner list's elements must follow the
 lexicographic order.
 '''
+# Time:  O(nlogn)
+# Space: O(n)
+
 import collections
-class Solution(object):
+class Solution:
+    # @param {string[]} strings
+    # @return {string[][]}
     def genKey(self, word):
         return ':'.join([
             str((ord(word[i]) - ord(word[i - 1])) % 26)

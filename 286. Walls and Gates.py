@@ -1,3 +1,5 @@
+# Time:  O(m * n)
+# Space: O(m * n)
 # You are given a m x n 2D grid initialized with these three possible values.
 # -1 - A wall or an obstacle.
 # 0 - A gate.
@@ -21,7 +23,8 @@ class Solution(object):
         :rtype: void Do not return anything, modify rooms in-place instead.
         """
 
-        if not rooms or not rooms[0]: return
+        if not rooms or not rooms[0]:
+            return
         m, n = len(rooms), len(rooms[0])
         for i in range(m):
             for j in range(n):

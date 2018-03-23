@@ -21,3 +21,6 @@ class Solution(object):
                 (not (i % 2) and nums[i - 1] < nums[i]):
                 # Swap unordered elements.
                 nums[i - 1], nums[i] = nums[i], nums[i - 1]
+        # return nums
+if __name__ == '__main__':
+    print Solution().wiggleSort([3, 5, 2, 1, 6, 4])

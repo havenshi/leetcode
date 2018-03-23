@@ -5,6 +5,8 @@ class Solution(object):
         :type target: int
         :rtype: bool
         """
+        # Time:  O(m + n)
+        # Space: O(1)
         m = len(matrix)
         if m == 0:
             return False
@@ -22,6 +24,9 @@ class Solution(object):
 
         # binary search
         #
+        # Time:  O(m * log(n))) 一行一行二分法
+        # Space: O(1)
+
         # m = len(matrix)
         # if m == 0:
         #     return False

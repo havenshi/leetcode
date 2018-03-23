@@ -1,3 +1,5 @@
+# Time:  O(n)
+# Space: O(1)
 def moveZeroes(nums):
     """
     :type nums: List[int]

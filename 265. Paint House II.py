@@ -24,24 +24,44 @@ class Solution(object):
         :type costs: List[List[int]]
         :rtype: int
         """
-        n = len(costs)
-        if costs==None or len(costs)==0:
-            return 0
-        k = len(costs[0])
+        # n = len(costs)
+        # if costs==None or len(costs)==0:
+        #     return 0
+        # k = len(costs[0])
+        #
+        # dp = [[0]*k for x in range(n)]
+        # dp[0] = costs[0][:]
+        # for i in range(1,n):
+        #     array = sorted(dp[i-1])
+        #     last1 = dp[i-1].index(array[0])
+        #     last2 = dp[i-1].index(array[1])
+        #     for j in range(k):
+        #         if last1 != j:
+        #             dp[i][j] = dp[i-1][last1] + costs[i][j]
+        #         else:
+        #             dp[i][j] = dp[i-1][last2] + costs[i][j]
+        #     print dp
+        # return min(dp[-1])
 
-        dp = [[0]*k for x in range(n)]
-        dp[0] = costs[0][:]
-        for i in range(1,n):
-            array = sorted(dp[i-1])
-            last1 = dp[i-1].index(array[0])
-            last2 = dp[i-1].index(array[1])
+
+        # Time:  O(n * k)
+        # Space: O(k)
+        n = len(costs)
+        k = len(costs[0])
+        min_cost = [costs[0], [0] * k] # 只用两行记录n个房子
+
+        for i in range(1, n):
+            smallest, second_smallest = float("inf"), float("inf")
             for j in range(k):
-                if last1 != j:
-                    dp[i][j] = dp[i-1][last1] + costs[i][j]
-                else:
-                    dp[i][j] = dp[i-1][last2] + costs[i][j]
-            print dp
-        return min(dp[-1])
+                if min_cost[(i - 1) % 2][j] < smallest: # [(i - 1) % 2]表示i行的上一行
+                    smallest, second_smallest = min_cost[(i - 1) % 2][j], smallest
+                elif min_cost[(i - 1) % 2][j] < second_smallest:
+                    second_smallest = min_cost[(i - 1) % 2][j]
+            for j in range(k):
+                min_j = smallest if min_cost[(i - 1) % 2][j] != smallest else second_smallest # 用最小的两个值判断j是否是上一行的j
+                min_cost[i % 2][j] = costs[i][j] + min_j
+
+        return min(min_cost[(n - 1) % 2])
 
 if __name__ == '__main__':
     answer = Solution()

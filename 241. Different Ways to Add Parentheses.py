@@ -4,9 +4,53 @@ class Solution(object):
         :type input: str
         :rtype: List[int]
         """
-        # method1, recursion, Divide and conquer
+        # 我的dp解法，beat 97.53%
+        # Time:  O(n^2)
+        # Space: O(n^2)
         if input.isdigit():
-            return [int(input[0])]
+            return [int(input)]
+        n = len(input)
+        self.dp = [[None] * n for x in range(n)]
+        return self.helper(input, 0, n - 1)
+
+    def helper(self, input, l, r):
+        if input[l:r + 1].isdigit():
+            self.dp[l][r] = [int(input[l:r + 1])]
+            return self.dp[l][r]
+        tmp = []
+        for k in range(l + 1, r):
+            if input[k] in ['-', '+', '*']:
+                if self.dp[l][k - 1] is not None:
+                    left = self.dp[l][k - 1]
+                else:
+                    left = self.helper(input, l, k - 1)
+
+                if self.dp[k + 1][r] is not None:
+                    right = self.dp[k + 1][r]
+                else:
+                    right = self.helper(input, k + 1, r)
+
+                for eachleft in left:
+                    for eachright in right:
+                        if input[k] == '-':
+                            tmp.append(eachleft - eachright)
+                        elif input[k] == '+':
+                            tmp.append(eachleft + eachright)
+                        else:
+                            tmp.append(eachleft * eachright)
+
+        self.dp[l][r] = tmp
+        return tmp
+
+
+
+
+        # method1, recursion, Divide and conquer
+        # Time:  O(3^)
+        # 因为T(n)=T(1)+T(n-1)+T(2)+T(n-2)+...+T(-11)+T(n)=2*(T(1)+...+T(n-1))，而T(n+1)=2*(T(1)+...+T(n))=T(n)+2T(n)=3T(n)
+        # Space: O(n)
+        if input.isdigit():
+            return [int(input)]
         result = []
         for k, v in enumerate(input):
             if v in ['-', '+', '*']:
@@ -23,7 +67,8 @@ class Solution(object):
         return result
 
 
-
+        # Time:  O(n*n!) 太慢，以至于没有出现在leetcode submiss图表中
+        # Space: O(n)
         # method 2, add parentheses, Backtracking, O(n!)
         import re
         nums, ops = [], []

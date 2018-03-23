@@ -1,3 +1,5 @@
+# Time:  O(n * n!)
+# Space: O(n)
 # Given a string s, return all the palindromic permutations (without duplicates) of it. Return an empty list if no palindromic permutation could be form.
 # For example:
 # Given s = "aabb", return ["abba", "baab"].
@@ -26,7 +28,7 @@ class Solution(object):
             nums += [x] * (count[x]/2)
 
         self.result = []
-        nums.sort()
+        print nums
         for i in range(len(nums)):
             length = len(nums)
             self.recursive_comb([nums[i]], nums[:i] + nums[i + 1:], length)
@@ -44,4 +46,4 @@ class Solution(object):
 
 if __name__ == '__main__':
     answer = Solution()
-    print answer.generatePalindromes("bcbc")
+    print answer.generatePalindromes("bcbccc")

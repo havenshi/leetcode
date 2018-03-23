@@ -4,7 +4,6 @@
 # Note: If the given node has no in-order successor in the tree, return null.
 
 
-
 # Inorder Successor is the leftmost element in the right subtree of 'a'
 
 # Time:  O(h)

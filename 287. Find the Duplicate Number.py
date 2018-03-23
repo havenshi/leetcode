@@ -5,6 +5,9 @@ class Solution(object):
         :type nums: List[int]
         :rtype: int
         """
+
+        # Time:  O(n)
+        # Space: O(1)
         # if len(nums) <= 1:
         #     return -1
         #
@@ -22,6 +25,8 @@ class Solution(object):
         #     fast = nums[fast]
         # return slow
 
+        # Time:  O(nlogn)
+        # Space: O(1)
         # 用二分法先选取n/2，按照抽屉原理，整个数组中如果小于等于n/2的数的数量大于n/2，说明1到n/2这个区间是肯定有重复数字的。
         low, high = 1, len(nums) - 1
         while low <= high:

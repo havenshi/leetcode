@@ -1,8 +1,15 @@
 # -*- coding:utf8 -*-
+# Given an array of numbers, verify whether it is the correct preorder traversal sequence of a binary search tree.
+#
+# You may assume each number in the sequence is unique.
+#
+# Follow up:
+# Could you do it using only constant space complexity?
+
 # Time:  O(n)
 # Space: O(h)
 
-class Solution2:
+class Solution:
     # @param {integer[]} preorder
     # @return {boolean}
     def verifyPreorder(self, preorder):
@@ -17,3 +24,6 @@ class Solution2:
                 stack.pop()
             stack.append(p) # node到最左的左子树，全部加入stack
         return True
+
+if __name__ == '__main__':
+    print Solution().verifyPreorder([5,2,1,3,6])

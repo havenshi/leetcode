@@ -7,9 +7,6 @@
 #
 # For example, the numbers “69”, “88”, and “818” are all strobogrammatic.
 #
-#
-# Hide Tags Hash Table Math
-# Hide Similar Problems (M) Strobogrammatic Number II (H) Strobogrammatic Number III.
 
 # Time:  O(n)
 # Space: O(1)

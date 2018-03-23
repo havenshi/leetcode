@@ -19,17 +19,19 @@ class Solution(object):
 
 
         # method 2
+        # 可以建立一个32位的数字，来统计每一位上1出现的个数，我们知道如果某一位上为1的话，那么如果该整数出现了三次，
+        # 对3去余为0，我们把每个数的对应位都加起来对3取余，最终剩下来的那个数就是单独的数字。
         result = 0
         for i in range(32):
             count = 0
             for num in nums:
                 count += (num >> i) & 1  # count of each bit
             rem = count % 3
-            # deal with the negative situation
+            # 如果i已经到了31而rem==1，1 << 3 为2147483648L太大了，所以要减去2147483648L
             if i == 31 and rem:
                 result -= 1 << 31
             else:
-                result |= rem << i
+                result |= rem << i # 为啥rem还要左移i？然后该位还要用|强行变1？因为最后求的是原数字
         return result
 
 if __name__ == "__main__":

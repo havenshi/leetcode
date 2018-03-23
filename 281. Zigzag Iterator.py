@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+# Time:  O(n)
+# Space: O(k)
 # Given two 1d vectors, implement an iterator to return their elements alternately.
 #
 # For example, given two 1d vectors:
@@ -25,6 +27,8 @@ class ZigzagIterator(object):
     def __init__(self, vec2d):
         # Initialize your data structure here
         self.row, self.col, self.vec2d = 0, 0, vec2d
+        self.m = len(vec2d)
+        self.n = max(len(row) for row in vec2d)
 
     # @return {int} a next element
     def next(self):
@@ -36,9 +40,29 @@ class ZigzagIterator(object):
     # or false
     def hasNext(self):
         # Write your code here
-        while self.col < len(self.vec2d[self.row]) and self.row >= len(self.vec2d):
-            self.row, self.col = 0, self.col + 1
-        return self.col < len(self.vec2d[self.row])
+        # while self.col < len(self.vec2d[self.row]) and self.row >= len(self.vec2d):
+        #     self.row, self.col = 0, self.col + 1
+        # return self.col < len(self.vec2d[self.row])
+
+        # 还是用自己的两个while方法好，哼╭(╯^╰)╮
+        while self.col < self.n:
+            while self.row < self.m:
+                if self.col < len(self.vec2d[self.row]):
+                    return True
+                self.row += 1
+            self.row = 0
+            self.col += 1
+        return False
+
+    # 这个方法自己加的
+    def iter(self):
+        i, v = self, []
+        while i.hasNext():
+            v.append(i.next())
+        return v
+
+if __name__ == '__main__':
+    print ZigzagIterator([[1,2,3],[4,5,6,7],[8,9]]).iter()
 
     # def __init__(self, v1, v2):
     #     """
@@ -69,22 +93,42 @@ class ZigzagIterator(object):
 
 
 # 普通的遍历
-def zigzag(matrix):
-    m = len(matrix)
-    n = max(len(row) for row in matrix)
-    row, col = 0, 0
-    step = 1
-    ans = []
-    while col < n:
-        while 0 <= row < m:
-            if col < len(matrix[row]):
-                ans.append(matrix[row][col])
-            row += step
-        step *= (-1)
-        row += step
-        col += 1
-    return ans
+# def zigzag(matrix):
+#     m = len(matrix)
+#     n = max(len(row) for row in matrix)
+#     row, col = 0, 0
+#     step = 1
+#     ans = []
+#     while col < n:
+#         while 0 <= row < m:
+#             if col < len(matrix[row]):
+#                 ans.append(matrix[row][col])
+#             row += step
+#         step *= (-1)
+#         row += step
+#         col += 1
+#     return ans
+#
+# print zigzag([[1,2,3],
+#                [4,5,6,7],
+#                [8,9]])
+#  [1, 4, 8, 9, 5, 2, 3, 6, 7]
 
-print zigzag([[1,2,3],
-               [4,5,6,7],
-               [8,9]])
+# def zigzag(matrix):
+#     m = len(matrix)
+#     n = max(len(row) for row in matrix)
+#     row, col = 0, 0
+#     ans = []
+#     while col < n:
+#         while row < m:
+#             if col < len(matrix[row]):
+#                 ans.append(matrix[row][col])
+#             row += 1
+#         row = 0
+#         col += 1
+#     return ans
+#
+# print zigzag([[1,2,3],
+#                [4,5,6,7],
+#                [8,9]])
+# [1, 4, 8, 2, 5, 9, 3, 6, 7]

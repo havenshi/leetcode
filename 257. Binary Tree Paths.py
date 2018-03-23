@@ -1,3 +1,5 @@
+# Time:  O(n)
+# Space: O(h)
 # Definition for a binary tree node.
 class TreeNode(object):
     def __init__(self, x):
@@ -11,24 +13,24 @@ class Solution(object):
         :type root: TreeNode
         :rtype: List[str]
         """
-        if root == None:
+        if not root:
             return []
-        result = []
-        self.dfs(root, result, tmp=[])
-        return result
+        self.res = []
+        self.dfs(root, [str(root.val)])
+        return self.res
 
-    def dfs(self, node, result, tmp):
-        tmp.append(str(node.val))
-        if not node.left and not node.right:
-            result.append('->'.join(tmp))
-
-        if node.left:
+    def dfs(self, root, tmp):
+        if not root.left and not root.right:
+            self.res.append('->'.join(tmp))
+            return
+        if root.left:
             copytmp = tmp[:]
-            self.dfs(node.left, result, copytmp)
-
-        if node.right:
+            copytmp.append(str(root.left.val))
+            self.dfs(root.left, copytmp)
+        if root.right:
             copytmp = tmp[:]
-            self.dfs(node.right, result, copytmp)
+            copytmp.append(str(root.right.val))
+            self.dfs(root.right, copytmp)
 
 if __name__ == "__main__":
     head = TreeNode(6)
