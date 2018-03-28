@@ -1,15 +1,14 @@
+# Time:  O(k), where k is the steps to be happy number
+# Space: O(k)
 class Solution(object):
     def isHappy(self, n):
         """
         :type n: int
         :rtype: bool
         """
-        hashmap = {}
-        while n not in hashmap and n != 1:
-            hashmap[n] = 1
-            total = 0
-            while n > 0:
-                total += (n%10) ** 2
-                n /= 10
-            n = total
+        visited = set([])
+        while n not in visited and n != 1:
+            visited.add(n)
+            new = sum(map(lambda x : int(x)**2, [x for x in str(n)]))
+            n = new
         return n == 1

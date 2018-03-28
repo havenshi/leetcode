@@ -1,3 +1,5 @@
+# Time:  O(nklogk)
+# Space: O(kn)
 class Solution(object):
     def groupAnagrams(self, strs):
         """

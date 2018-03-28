@@ -4,6 +4,37 @@ class Solution(object):
         :type n: int
         :rtype: List[List[int]]
         """
+        res = []
+        if n == 0: return res
+        l = [i for i in range(1, n ** 2 + 1)]
+        res = [[0 for j in range(n)] for i in range(n)]
+        up, left = 0, 0
+        bottom, right = n - 1, n - 1
+        index = 0
+        while index < n ** 2:
+            for j in range(left, right + 1):
+                res[up][j] = l[index]
+                index += 1
+            up += 1
+
+            for i in range(up, bottom + 1):
+                res[i][right] = l[index]
+                index += 1
+            right -= 1
+
+            for j in range(right, left - 1, -1):
+                res[bottom][j] = l[index]
+                index += 1
+            bottom -= 1
+
+            for i in range(bottom, up - 1, -1):
+                res[i][left] = l[index]
+                index += 1
+            left += 1
+        return res
+
+
+
         begin = 0
         nn=n*n
         nums=[]

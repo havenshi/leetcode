@@ -1,4 +1,6 @@
 # -*- coding:utf-8 -*-
+# Time:  O(n)
+# Space: O(1)
 # Given a string, find the length of the longest substring T
 # that contains at most 2 distinct characters.
 #

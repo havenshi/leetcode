@@ -4,6 +4,38 @@ class Solution(object):
         :type matrix: List[List[int]]
         :rtype: List[int]
         """
+        res = []
+        m = len(matrix)
+        if m == 0: return res
+        n = len(matrix[0])
+        up, left = 0, 0
+        bottom, right = m - 1, n - 1
+        while up <= bottom and left <= right:
+            for j in range(left, right + 1):
+                res.append(matrix[up][j])
+            up += 1
+
+            if up > bottom or left > right:
+                break
+            for i in range(up, bottom + 1):
+                res.append(matrix[i][right])
+            right -= 1
+
+            if up > bottom or left > right:
+                break
+            for j in range(right, left - 1, -1):
+                res.append(matrix[bottom][j])
+            bottom -= 1
+
+            if up > bottom or left > right:
+                break
+            for i in range(bottom, up - 1, -1):
+                res.append(matrix[i][left])
+            left += 1
+        return res
+
+
+
         begin=0
         m=len(matrix)-1
         if m<0:

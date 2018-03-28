@@ -1,16 +1,8 @@
-# 记nums1的下标为i，nums2下标为j；数组长度为size1，size2；
-#
-# 首先将“守卫元素”（MaxInt, None, None）加入堆
-#
-# 令i = j = 0
-#
+# Time:  O(k * log(min(n, m, k))), where n is the size of num1, and m is the size of num2.
+# Space: O(min(n, m, k))
 # 将nums1[0] + nums2[j]与堆顶元素top进行比较：
-#
 # 若堆顶元素较大，则将(nums1[i] + nums2[j], i, j)加入堆，i取值[0, size1)；然后令j = j + 1
-#
 # 将堆顶元素弹出加入结果集
-#
-# 循环直到结束
 
 class Solution(object):
     def kSmallestPairs(self, nums1, nums2, k):

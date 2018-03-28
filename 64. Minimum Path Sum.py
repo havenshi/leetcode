@@ -41,19 +41,18 @@ class Solution(object):
         # method2
         m = len(grid)
         n = len(grid[0])
-
-        if m < 2 or n < 2: return sum([sum(i) for i in grid])  # single row or column
-
-        for i in range(1, m):             # set first column
-            grid[i][0] += grid[i - 1][0]
-        for i in range(1, n):             # set first row
-            grid[0][i] += grid[0][i - 1]
-
-        for i in range(1, m):
-            for j in range(1, n):
-                grid[i][j] += grid[i - 1][j] if grid[i - 1][j] < grid[i][j - 1] else grid[i][j - 1]
-
-        return grid[-1][-1]
+        dp = [[0]*n for i in range(m)]
+        for i in range(m):
+            for j in range(n):
+                if i == 0 and j == 0:
+                    dp[0][0] = grid[0][0]
+                elif i == 0:
+                    dp[0][j] = dp[0][j-1] + grid[i][j]
+                elif j == 0:
+                    dp[i][0] = dp[i-1][0] + grid[i][j]
+                else:
+                    dp[i][j] = min(dp[i-1][j], dp[i][j-1]) + grid[i][j]
+        return dp[-1][-1]
 if __name__ == "__main__":
     answer=Solution()
     print answer.minPathSum([

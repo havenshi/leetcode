@@ -55,7 +55,7 @@ class HitCounter(object):
         :type timestamp: int
         :rtype: void
         """
-        self.queue.append(timestamp)
+        self.queue.insert(0, timestamp)
 
     def getHits(self, timestamp):
         """

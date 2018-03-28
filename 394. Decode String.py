@@ -1,3 +1,5 @@
+# Time:  O(n)
+# Space: O(n)
 class Solution(object):
     def decodeString(self, s):
         """
@@ -23,4 +25,4 @@ class Solution(object):
         return ''.join(stack)
 
 if __name__ == "__main__":
-    print Solution().decodeString('100[leetcode]')
+    print Solution().decodeString('2[3[leetcode]]')
