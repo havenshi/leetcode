@@ -1,0 +1,73 @@
+//Time:O(1)
+//Space:O(1)
+
+//这种方法最简洁，只要一个next变量
+class PeekingIterator implements Iterator<Integer> {  
+    private Integer next = null;
+    private Iterator<Integer> iter;
+
+    public PeekingIterator(Iterator<Integer> iterator) {
+        iter = iterator;
+        if (iter.hasNext())
+            next = iter.next();
+    }
+    
+    public Integer peek() {
+        return next; 
+    }
+
+    public Integer next() {
+        Integer res = next;
+        next = iter.hasNext() ? iter.next() : null;
+        return res; 
+    }
+
+    public boolean hasNext() {
+        return next != null;
+    }
+}
+
+
+
+
+
+// Java Iterator interface reference:
+// https://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html
+class PeekingIterator implements Iterator<Integer> {
+    Iterator<Integer> iter;
+    boolean peekFlag;
+    Integer nextElement = null;
+    
+	public PeekingIterator(Iterator<Integer> iterator) {
+	    // initialize any member here.
+	    iter = iterator;
+	}
+
+    // Returns the next element in the iteration without advancing the iterator.
+	public Integer peek() {
+        if (peekFlag==true) return nextElement;
+        else{
+            nextElement = iter.next();
+            peekFlag = true;
+            return nextElement;
+        }
+	}
+
+	// hasNext() and next() should behave the same as in the Iterator interface.
+	// Override them if needed.
+	@Override
+	public Integer next() {
+	    if (peekFlag==true){
+            Integer tmp = nextElement;
+            nextElement = null;
+            peekFlag = false;
+            return tmp;
+        }
+        else return iter.next();
+	}
+
+	@Override
+	public boolean hasNext() {
+	    return (peekFlag==true || iter.hasNext());
+	}
+}

@@ -1,0 +1,65 @@
+//Time:O(n)
+//Space:O(n)
+
+import java.util.*;
+
+class Solution {
+    public String convert(String s, int numRows) {
+        if (s.length() == 0 || numRows <= 1) return s; 
+        
+        String[] ans = new String[numRows];
+        Arrays.fill(ans, "");  //replace null with ""
+        int group = numRows * 2 - 2;
+        for (int i=0; i<s.length(); i++){
+            if (i%group < numRows){
+                ans[i%group] += s.charAt(i);
+            }
+            else{
+                ans[group-i%group] += s.charAt(i);
+            }
+        }
+        String res = "";  
+        for (int i = 0; i < numRows; i++) { 
+            res += ans[i];  
+        }  
+        return res;
+    }
+}
+
+
+
+
+
+//Time:O(n)
+//Space:O(n)
+//直接一行一行生成
+import java.util.*;
+
+class Solution {
+    public String convert(String s, int numRows) {
+        if (s.length() == 0 || numRows <= 1) return s; 
+        
+        String res = "";
+        int group = numRows * 2 - 2;
+        for (int i=0; i<numRows; i++){
+            int j = i;
+            if (i == 0 || i == numRows-1){
+                while (j<s.length()){
+                    res += s.charAt(j);
+                    j += group;
+                }
+            }
+            else{   // 需要一次性添加两个元素
+                while (j<s.length()){
+                    res += s.charAt(j);
+                    if (j/group*group+(group-j%group)<s.length()){
+                        res += s.charAt(j/group*group+(group-j%group));
+                    }
+                    j += group;
+                }
+            }
+        
+        }
+        return res;
+    }
+}

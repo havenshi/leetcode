@@ -1,0 +1,47 @@
+//Time:O(n^3)
+//Space:(C(n,4))
+class Solution {
+    public List<List<Integer>> fourSum(int[] nums, int target) {
+        List<List<Integer>> res = new ArrayList<List<Integer>>(); 
+        if (nums.length < 4) return res;
+  
+        Arrays.sort(nums);
+        for (int i = 0; i < nums.length - 3; i++) {  
+            if (i != 0 && nums[i] == nums[i - 1]) continue;
+            
+            for (int j = i+1; j < nums.length - 2; j++) {  
+                if (j != i+1 && nums[j] == nums[j - 1]) continue;
+                
+                //加了两个判断条件，快一些
+                if(nums[i]+nums[j]+nums[j+1]+nums[j+2]>target)break; //second candidate too large
+                if(nums[i]+nums[j]+nums[nums.length-1]+nums[nums.length-2]<target)continue; //second candidate too small
+                
+                int newTarget = target-nums[i]-nums[j];
+                int start = j + 1;  
+                int end = nums.length - 1;  
+                while (start < end) { 
+                    if (nums[start]+nums[end]==newTarget) {  
+                        List<Integer> tmp = new ArrayList<Integer>();
+                        tmp.add(nums[i]);
+                        tmp.add(nums[j]);
+                        tmp.add(nums[start]);
+                        tmp.add(nums[end]);   
+                        res.add(tmp);  
+                        start++;  
+                        end--;  
+                        while (start < end && nums[start] == nums[start - 1]) {  
+                            start ++;  
+                        }  
+                        while (start < end && nums[end] == nums[end + 1]) {  
+                            end --;  
+                        }  
+                    } 
+                    else if (nums[start]+nums[end]>newTarget) end--;  
+                    else start++; 
+                }
+            }  
+        }  
+  
+        return res;  
+    }
+}

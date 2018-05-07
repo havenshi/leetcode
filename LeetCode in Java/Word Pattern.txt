@@ -1,0 +1,25 @@
+//Time:O(n)
+//Space:O(n)
+
+class Solution {
+    public boolean wordPattern(String pattern, String str) {
+        String[] strings = str.split(" ");
+        if (pattern.length() != strings.length) return false;
+
+        HashMap<String, String> map1 = new HashMap<>();
+        HashMap<String, String> map2 = new HashMap<>();
+        for (int i=0; i<pattern.length(); i++){
+            String k = pattern.substring(i,i+1);
+            String v = strings[i];
+            if (!map1.containsKey(k) && !map2.containsKey(v)){
+                map1.put(k, v);
+                map2.put(v, k);
+            }
+            else if (map1.containsKey(k) && !map1.get(k).equals(v) || (map2.containsKey(v) && !map2.get(v).equals(k))) {
+                return false;
+            }
+        }
+        return true;
+
+    }
+}

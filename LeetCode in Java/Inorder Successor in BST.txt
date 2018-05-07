@@ -1,0 +1,35 @@
+# Given a binary search tree and a node in it, find the in-order successor of that node in the BST.
+#
+# Note: If the given node has no in-order successor in the tree, return null.
+
+
+# Inorder Successor is the leftmost element in the right subtree of 'a'
+
+//Time:O(h)
+//Space:O(1)
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+
+
+public class Solution {
+    public TreeNode inorderSuccessor(TreeNode root, TreeNode p) {
+        TreeNode node = root, successor = null;
+        while (node != null) {
+            if (node.val > p.val) {
+                successor = node;
+                node = node.left;
+            } else { //注意这个条件，如果到达p点则向right遍历，这样不用另外开拓一个（如果这个节点p有右孩子，那么p的后续节点为右子树的的最左值）的情况
+                node = node.right;
+            }
+        }
+        return successor;
+    }
+}

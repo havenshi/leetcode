@@ -1,0 +1,38 @@
+//Time:O(n * 3^n)
+//Space:O(n)
+import java.util.*;
+class Solution {
+    List<String> res;
+    
+    public List<String> addOperators(String num, int target) {
+        res = new ArrayList<String>();
+        dfs(num, target, "", 0, 0);
+        return res;
+    }
+    
+    public void dfs(String num, int target, String tmp, long currRes, long prevNum){//preTotal记录之前的计算值，preNum记录之前最后一个加或减的值
+        if(currRes == target && num.length() == 0){
+            String exp = new String(tmp);
+            res.add(exp);
+            return;
+        }
+
+        for(int i = 1; i <= num.length(); i++){
+            String currStr = num.substring(0, i);
+            if(currStr.length() > 1 && currStr.charAt(0) == '0'){//排除第一位是0的情况
+                return;
+            }
+
+            long currNum = Long.parseLong(currStr);
+            String next = num.substring(i);
+            if(tmp.length() != 0){ //如果cur不是第一个数字
+                dfs(next, target, tmp+"+"+currNum, currRes + currNum, currNum);
+                dfs(next, target, tmp+"-"+currNum, currRes - currNum, -currNum);
+                dfs(next, target, tmp+"*"+currNum, (currRes - prevNum) + prevNum * currNum, prevNum * currNum);//计算2+3*2时，需要从2+3中减3，再加上3*2
+            } else {//如果cur是第一个数字
+                dfs(next, target, currStr, currNum, currNum);
+            }
+
+        }
+    }
+}

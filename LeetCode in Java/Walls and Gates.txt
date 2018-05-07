@@ -1,0 +1,146 @@
+# You are given a m x n 2D grid initialized with these three possible values.
+# -1 - A wall or an obstacle.
+# 0 - A gate.
+# INF - Infinity means an empty room. We use the value 231 - 1 = 2147483647 to represent INF as you may assume that the distance to a gate is less than 2147483647.
+# Fill each empty room with the distance to its nearest gate. If it is impossible to reach a gate, it should be filled with INF.
+# For example, given the 2D grid:
+# INF  -1  0  INF
+# INF INF INF  -1
+# INF  -1 INF  -1
+#   0  -1 INF INF
+# After running your function, the 2D grid should be:
+#   3  -1   0   1
+#   2   2   1  -1
+#   1  -1   2  -1
+#   0  -1   3   4
+
+
+//Time:  O(m * n)
+//Space: O(m * n)
+
+//DFS
+public class Solution {  
+    public void wallsAndGates(int[][] rooms) {  
+        for(int row = 0; row < rooms.length; row ++) {  
+            for(int col = 0; col < rooms[row].length; col ++) {  
+                if (rooms[row][col] == 0) dfs(rooms, row, col, 0);  
+            }  
+        }  
+    }  
+    private void dfs(int[][] rooms, int row, int col, int dist) {  
+        if (row < 0 || row >= rooms.length || col < 0 || col >= rooms[row].length) return;  
+        if (rooms[row][col] == -1 || rooms[row][col] < dist) return;  
+        rooms[row][col] = dist;  
+        dfs(rooms, row, col-1, dist+1);  
+        dfs(rooms, row, col+1, dist+1);  
+        dfs(rooms, row-1, col, dist+1);  
+        dfs(rooms, row+1, col, dist+1);  
+    }  
+}  
+
+
+
+
+
+
+
+//这种BFS是对的
+import java.util.*;
+public class Solution {  
+    public void wallsAndGates(int[][] rooms) { 
+        Stack<int[]> stack = new Stack<int[]>();
+        for(int row = 0; row < rooms.length; row ++) {  
+            for(int col = 0; col < rooms[row].length; col ++) {  
+                if (rooms[row][col] == 0){
+                    int[] tmp = {row, col};
+                    stack.push(tmp);
+                }
+            }
+        }
+        while (stack.size()!=0){
+            int[] cur = stack.get(0);
+            stack.remove(0);
+            int i = cur[0];
+            int j = cur[1];
+            
+            int[][] steps = {{1,0},{-1,0},{0,1},{0,-1}};
+            for (int[] step : steps){
+                int ii = i+step[0];
+                int jj = j+step[1];
+                if (ii < 0 || ii >= rooms.length || jj < 0 || jj >= rooms[0].length || rooms[i][i] + 1 > rooms[ii][jj] || rooms[ii][jj]==-1 || rooms[ii][jj]==0) continue; //注意各种等于-1或0的情况都要剔除，否则答案会错误
+                rooms[ii][jj] = rooms[i][j] + 1;
+                int[] tmp = {ii, jj};
+                stack.push(tmp);
+            }  
+        }
+   
+    System.out.println(Arrays.deepToString(rooms));
+    }   
+ 
+    
+    public static void main(String[] args)
+    {
+        int[][] rooms = {{Integer.MAX_VALUE,-1,0,Integer.MAX_VALUE},{Integer.MAX_VALUE,Integer.MAX_VALUE,Integer.MAX_VALUE,-1},{Integer.MAX_VALUE,-1,Integer.MAX_VALUE,-1},{0,-1,Integer.MAX_VALUE,Integer.MAX_VALUE}};
+        Solution ans = new Solution();
+        ans.wallsAndGates(rooms);
+    }
+ 
+}
+
+
+
+
+
+
+
+//这种BFS也是对的，这我自己捏的方法
+import java.util.*;
+public class Solution {  
+    public void wallsAndGates(int[][] rooms) { 
+        Stack<int[]> stack = new Stack<int[]>();
+        for(int row = 0; row < rooms.length; row ++) {  
+            for(int col = 0; col < rooms[row].length; col ++) {  
+                if (rooms[row][col] == 0){
+                    int[] tmp = {row, col, 0};
+                    stack.push(tmp);
+                }
+            }
+        }
+        while (stack.size()!=0){
+            int[] cur = stack.get(0);//从前后pop都是一样的
+            stack.remove(0);
+            int i = cur[0];
+            int j = cur[1];
+            int dis = cur[2];
+            if (i+1<rooms.length && rooms[i+1][j] != -1 && rooms[i+1][j]>=dis+1) { //这里等号一定需要，如果是等于也需要往四个方向遍历一遍
+                rooms[i+1][j]=dis+1;
+                int[] tmp = {i+1, j, dis+1};
+                stack.push(tmp);
+            }
+            if (i-1>=0 && rooms[i-1][j] != -1  && rooms[i-1][j]>=dis+1) {
+                rooms[i-1][j]=dis+1;
+                int[] tmp = {i-1, j, dis+1};
+                stack.push(tmp);
+            }
+            if (j+1<rooms[i].length && rooms[i][j+1] != -1 && rooms[i][j+1]>=dis+1) {
+                rooms[i][j+1]=dis+1;
+                int[] tmp = {i, j+1, dis+1};
+                stack.push(tmp);
+            }
+            if (j-1>=0 && rooms[i][j-1] != -1 && rooms[i][j-1]>=dis+1) {
+                rooms[i][j-1]=dis+1;
+                int[] tmp = {i, j-1, dis+1};
+                stack.push(tmp);
+            }
+             
+        }
+   
+    System.out.println(Arrays.deepToString(rooms));
+    }   
+ 
+    
+    public static void main(String[] args)
+    {
+        int[][] rooms = {{Integer.MAX_VALUE,-1,0,Integer.MAX_VALUE},{Integer.MAX_VALUE,Integer.MAX_VALUE,Integer.MAX_VALUE,-1},{Integer.MAX_VALUE,-1,Integer.MAX_VALUE,-1},{0,-1,Integer.MAX_VALUE,Integer.MAX_VALUE}};
+        Solution ans = new Solution();
+        ans.wallsAndGates(rooms);

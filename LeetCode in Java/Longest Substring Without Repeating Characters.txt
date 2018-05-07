@@ -1,0 +1,28 @@
+//Time:O(n)
+//Space:O(26)
+//用长度为26的int[]比用hashmap快
+
+import java.lang.*;
+class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        int length = 0;
+        int start = 0;
+        int[] check = new int[26];
+        for(int i = 0; i < 26; i++){
+            check[i] = -1;
+        }
+        for (int i=0; i<s.length(); i++){
+            int index = s.charAt(i) - 'a';
+            if (0<=index && index<=25){
+                if (check[index] != -1 && check[index] >= start){
+                    start = check[index]+1;
+                }
+                check[index] = i;
+                length = Math.max(length, i-start+1);
+            }
+        }
+    
+        return length;
+        
+    }
+}

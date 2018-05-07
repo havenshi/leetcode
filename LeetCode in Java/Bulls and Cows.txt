@@ -1,0 +1,72 @@
+//Time:O(n)
+//Space:O(n)
+
+class Solution {
+    public String getHint(String secret, String guess) {
+        int[] digitSecret = new int[10];
+        int[] digitGuess = new int[10];
+        int countCow = 0;
+        int countBull = 0;
+        
+        for (int i=0; i<secret.length(); i++){
+            digitSecret[Integer.valueOf(secret.substring(i,i+1))]++;
+            digitGuess[Integer.valueOf(guess.substring(i,i+1))]++;
+            if (secret.substring(i,i+1).equals(guess.substring(i,i+1))) countBull++;
+        }
+        
+        for (int i=0; i<digitSecret.length; i++){
+            countCow += Math.min(digitSecret[i], digitGuess[i]);
+        }
+        
+        
+        String res = String.format("%dA%dB", countBull, countCow-countBull);
+        return res;
+    }
+}
+
+
+
+
+
+
+
+
+
+class Solution {
+    public String getHint(String secret, String guess) {
+        int[] digitSecret = new int[10];
+        int[] digitGuess = new int[10];
+        int countCow = 0;
+        int countBull = 0;
+        
+        for (int i=0; i<secret.length(); i++){
+            if (secret.charAt(i) == guess.charAt(i)) countBull++;
+
+            
+            else {
+                //如果在guess中发现了该位置s存在，说明有一对bulls出现了，同时guess中的s要减一；否则就在对secret老老实实计数。这种方法的好处是只需遍历一遍。
+                int s = Integer.valueOf(secret.substring(i,i+1));
+                int g = Integer.valueOf(guess.substring(i,i+1));
+                if (digitGuess[s] > 0) {
+                    countCow++;
+                    digitGuess[s]--;
+                }
+                else{
+                    digitSecret[s]++;
+                }
+                if (digitSecret[g] > 0) {
+                    countCow++;
+                    digitSecret[g]--;
+                }
+                else{
+                    digitGuess[g]++;
+                }
+            }
+            
+        }
+        
+        
+        String res = String.format("%dA%dB", countBull, countCow);
+        return res;
+    }
+}

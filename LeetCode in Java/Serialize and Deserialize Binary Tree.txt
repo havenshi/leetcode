@@ -1,0 +1,126 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+import java.util.*;
+
+
+//DFS解法，有bug，不知道为什么。。。
+//Time:O(n)
+//Space:O(n)
+
+public class Codec {
+    private static List<String> res; //java的全局变量
+    private static List<String> dataList;
+        
+    // Encodes a tree to a single string.
+    public String serialize(TreeNode root) {
+        res = new ArrayList<String>();
+        helper(root);
+        return String.valueOf(res);
+    }
+     
+    public void helper(TreeNode root){
+        if (root!=null){
+            res.add(String.valueOf(root.val));
+            helper(root.left);
+            helper(root.right);
+        }
+        else res.add("#");
+    }
+    
+    // Decodes your encoded data to tree.
+    public TreeNode deserialize(String data) {
+        if (data.isEmpty()) return null;  
+        List<String> dataList = Arrays.asList(data.substring(1,data.length()-1).split(",")); //因为split以后还是array，因此要转化为arraylist
+        System.out.println(dataList);
+        return helper2();
+    }
+    
+    public TreeNode helper2(){
+        String val = dataList.get(0);
+        dataList.remove(0);
+        if (val.equals("#")){
+            return null;
+        }
+        TreeNode root = new TreeNode(Integer.valueOf(val));
+        root.left = helper2();
+        root.right = helper2();
+        return root;
+    }
+}
+
+// Your Codec object will be instantiated and called as such:
+// Codec codec = new Codec();
+// codec.deserialize(codec.serialize(root));
+
+
+
+
+
+
+//BFS解法
+public class Codec {
+    public String serialize(TreeNode root) {
+        StringBuffer buffer = new StringBuffer();
+        Queue<TreeNode> queue = new LinkedList<TreeNode>();
+        if(root != null){
+             queue.offer(root);
+             buffer.append(root.val);
+        }
+
+        while(!queue.isEmpty()){
+            int size = queue.size();
+
+            for(int i = 0; i < size; i++){
+                TreeNode node = queue.poll();
+
+                if(node.left == null){
+                    buffer.append(",#");
+                } else {
+                    buffer.append(","+node.left.val);
+                    queue.offer(node.left);
+                }
+
+                if(node.right == null){
+                    buffer.append(",#");
+                } else {
+                    buffer.append(","+node.right.val);
+                    queue.offer(node.right);
+                }
+            }
+        }
+        return buffer.toString();
+    }
+
+    public TreeNode deserialize(String data) {
+        if(data == null || data.length() == 0) return null;
+        Queue<TreeNode> queue = new LinkedList<TreeNode>();
+
+        String[] arr = data.split(",");
+        TreeNode root = new TreeNode(Integer.parseInt(arr[0]));
+        queue.offer(root);
+        for(int i = 1; i < arr.length; i++){
+            TreeNode left = null, right = null;
+            if(!arr[i].equals("#")){
+                left = new TreeNode(Integer.parseInt(arr[i]));
+            }
+            if(++i < data.length() && !arr[i].equals("#")){
+                right = new TreeNode(Integer.parseInt(arr[i]));
+            }
+            TreeNode parent = queue.poll();
+            parent.left = left;
+            parent.right = right;
+            if(left != null)
+                queue.offer(left);
+            if(right != null)
+                queue.offer(right);
+        }
+        return root;
+    }
+}

@@ -1,0 +1,50 @@
+# Given a pattern and a string str, find if str follows the same pattern.
+#
+# Here follow means a full match, such that there is a bijection between a letter in pattern and a non-empty substring in str.
+#
+# Examples:
+#
+# pattern = "abab", str = "redblueredblue" should return true.
+# pattern = "aaaa", str = "asdasdasdasd" should return true.
+# pattern = "aabb", str = "xyzabcxzyabc" should return false.
+# Notes:
+# You may assume both pattern and str contains only lowercase letters.
+
+
+//Time:O(n * C(n-1, c-1)), C表示n个元素怎样变成c组，插间隔就行，每个组合由于要check是否match所以要*n
+//Space:O(n + c)
+
+import java.util.*;
+public class Solution {
+
+    public boolean wordPatternMatch(String pattern, String str) {
+        HashMap<String, String> map1 = new HashMap<>();
+        HashMap<String, String> map2 = new HashMap<>();
+        return dfs(pattern, str, map1, map2);
+    }
+    public boolean dfs(String pattern, String str, HashMap<String, String> map1, HashMap<String, String> map2){
+        if (pattern.length()==0 && str.length()==0) return true;
+        else if (pattern.length()==0 || str.length()==0) return false;
+        
+        String k = pattern.substring(0,1);
+        for (int len=1; len<=str.length(); len++){
+            String v = str.substring(0,len);
+            if (!map1.containsKey(k) && !map2.containsKey(v)){
+                HashMap<String, String> copy1 = new HashMap<String, String>(map1);
+                HashMap<String, String> copy2 = new HashMap<String, String>(map2);
+                copy1.put(k, v);
+                copy2.put(v, k);
+                if (dfs(pattern.substring(1,pattern.length()), str.substring(len,str.length()), copy1, copy2)) return true;
+            }
+            else if (map1.containsKey(k) && map1.get(k)!=v || (map2.containsKey(v) && map2.get(v)!=k)) continue;
+        }
+        return false;
+    }
+    
+    public static void main(String[] args)
+    {
+        Solution ans = new Solution();
+        System.out.println(ans.wordPatternMatch("aabb", "xyzabcxzyabc"));
+    }
+ 
+}

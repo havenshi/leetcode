@@ -1,0 +1,35 @@
+//Time:O(nlog)
+//Space:O(n)
+
+import java.util.*;
+class Solution {
+    public int lengthOfLIS(int[] nums) {
+        List<Integer> tmp = new ArrayList<Integer>();
+        for (int i=0; i<nums.length; i++){
+            int index = binary(tmp, nums[i]);
+            if (tmp.size()==0 || (index == tmp.size() && tmp.get(tmp.size()-1)!=nums[i]) ){ //注意如果是元素加在arraylist最后，该元素的值不能与arraylist最后值相等
+                tmp.add(nums[i]);
+            }
+            else if (index < tmp.size()){
+                tmp.set(index, nums[i]);
+            }
+            //System.out.println(Arrays.toString(tmp.toArray()));
+        }
+        return tmp.size();
+    } 
+    
+    public int binary(List<Integer> tmp, int x){
+        if (tmp.size()==0) return 0;
+        int left = 0;
+        int right = tmp.size()-1;
+        while (left+1<right){ //寻找右起最后一个大于等于它的位置，替换之。注意等于也包含，否则新来的4只替换[4,10]中的10，变成[4,4]
+            int mid = left+(right-left)/2;
+            if (tmp.get(mid)<x) left = mid+1;
+            else right = mid-1;
+        }
+        if (x<=tmp.get(left)) return left;
+        else if (x<=tmp.get(right)) return right;
+        else return right+1;
+    }
+    
+}

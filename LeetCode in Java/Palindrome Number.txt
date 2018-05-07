@@ -1,0 +1,24 @@
+//Time:O(logn)
+//Space:O(1)
+
+class Solution {
+    public boolean isPalindrome(int x) {
+        if (x < 0 || x > Integer.MAX_VALUE) return false;
+        
+        int div = 1;
+        while (x/div >= 10){
+            div *= 10;
+        } 
+        
+        int left = 0;
+        int right = 0;
+        while (x > 0){ //不能为x>=10，如1000021到舍去了中间的0最后的2就不判断，实际上为false
+            left = x/div;
+            right = x%10;
+            if (left != right) return false;
+            x = (x-left*div)/10;
+            div /= 100;
+        }
+        return true;
+    }
+}

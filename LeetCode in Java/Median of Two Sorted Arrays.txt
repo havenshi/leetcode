@@ -1,0 +1,128 @@
+//Time:O(log(m+n))
+//Space:O(1)
+    
+import java.util.*;
+
+class Solution {
+    public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        int totalLength = nums1.length+nums2.length;
+        if (totalLength%2==0){
+            return (helper(nums1, nums2, totalLength/2-1)+helper(nums1, nums2, totalLength/2))/2.0;
+        }
+        else{
+            return helper(nums1, nums2, totalLength/2);
+        }
+    }
+    
+    int helper(int[] a, int[] b, int k){
+        if (a.length==0){
+            return b[k];
+        }
+        if (b.length==0){
+            return a[k];
+        }
+        
+        if (k == 0){return Math.min(a[0], b[0]);}
+        
+        //以下两种情况都是长度为1的时候，去右边部分[1:]和去左部分[:0]都去不掉了，所以长度永远只剩1。
+        //很麻烦，所以要调整下面的函数，使每次删除section的时候剩下为空。这样a或b有一段为空，就更加好判断了。
+        
+        if (a.length==1){ //由于a[0]可以插入b，所以可能有插入前半段后的max(a[0],b[k-1])及插入后半段后仍是b[k]的情况
+            if (k==b.length){
+                return Math.max(a[0],b[k-1]);
+            }
+            else{
+                if (a[0]<=b[k]){
+                    return Math.max(a[0],b[k-1]);
+                }
+                else{
+                    return b[k];
+                }
+            
+            }
+        }
+        if (b.length==1){
+            if (k==a.length){
+                return Math.max(b[0],a[k-1]);
+            }
+            else{
+                if (b[0]<=a[k]){
+                    return Math.max(b[0],a[k-1]);
+                }
+                else{
+                    return a[k];
+                }
+            
+            }
+        }
+        
+        
+        int aMiddleLength = (a.length-1)/2+1;
+        int bMiddleLength = (b.length-1)/2+1;
+        int aMiddleValue = a[(a.length-1)/2];
+        int bMiddleValue = b[(b.length-1)/2];
+
+        if (aMiddleLength+bMiddleLength>=k+1){  
+            if (aMiddleValue>=bMiddleValue){    //因为判断条件含==，故删除某一段的时候必须保留中位数
+                return helper(Arrays.copyOfRange(a,0,aMiddleLength),b,k);
+            }
+            else{
+                return helper(a,Arrays.copyOfRange(b,0,bMiddleLength),k);
+            }
+        }
+        else{
+            if (aMiddleValue<=bMiddleValue){             
+                return helper(Arrays.copyOfRange(a,aMiddleLength,a.length),b,k-aMiddleLength);
+            }
+            else{
+                return helper(a,Arrays.copyOfRange(b,bMiddleLength,b.length),k-bMiddleLength);
+            }
+        }
+    }
+    
+}
+
+
+
+
+
+//方法二
+import java.util.*;
+
+class Solution {
+    public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        int totalLength = nums1.length+nums2.length;
+        if (totalLength%2==0){
+            return (helper(nums1, nums2, totalLength/2)+helper(nums1, nums2, totalLength/2+1))/2.0;
+        }
+        else{
+            return helper(nums1, nums2, totalLength/2+1);
+        }
+    }
+    
+    //转化为第k小的元素的问题
+    int helper(int[] a, int[] b, int k){
+        if (a.length > b.length){
+            int[] tmp = a;
+            a = b;
+            b = tmp;
+        }
+        if (a.length == 0){
+            return b[k-1];
+        }
+        if (k==1){
+            return Math.min(a[0],b[0]);
+        }
+        
+        int pa = Math.min(k/2,a.length);
+        int pb = k-pa;
+        if (a[pa-1] < b[pb-1]){ //如k/2个a都小于k/2个b，说明合并后这半段a还是很小，故舍去这pa个元素
+            return helper(Arrays.copyOfRange(a,pa,a.length),b,k-pa);
+        }
+        else if (a[pa-1] == b[pb-1]){
+            return a[pa-1];
+        }
+        else
+            return helper(a,Arrays.copyOfRange(b,pb,b.length),k-pb);
+    }
+}

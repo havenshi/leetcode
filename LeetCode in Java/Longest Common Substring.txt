@@ -1,0 +1,101 @@
+//dp[i][j]表示以此元素为结尾的子串是否为palindrome
+//Time:O(n^2)
+//Space:O(n^2)
+
+
+import java.util.*;
+
+public class Test 
+{
+    private String str1;
+    private String str2;
+    
+    public Test(String s1, String s2){
+        this.str1 = s1;
+        this.str2 = s2;
+    }
+    
+    public int lcs(){
+        int len1 = str1.length();  
+        int len2 = str2.length();  
+        int result = 0;     //记录最长公共子串长度  
+        int c[][] = new int[len1+1][len2+1];  
+        for (int i = 0; i <= len1; i++) {  
+          for( int j = 0; j <= len2; j++) {  
+            if(i == 0 || j == 0) {  
+              c[i][j] = 0;  
+            } else if (str1.charAt(i-1) == str2.charAt(j-1)) {  
+              c[i][j] = c[i-1][j-1] + 1;  
+              result = Math.max(c[i][j], result);  
+            } else {  
+              c[i][j] = 0;  
+            }  
+          }  
+        }  
+        return result;  
+        }  
+
+    public static void main(String[] args)
+    {
+        Test test = new Test("abcdc", "bcdc"); 
+        System.out.println(test.lcs());
+    }
+}
+
+
+
+
+
+
+
+//manacher算法
+首先，为了消除诸如第一个算法中出现的奇数，偶数的影响，我们先进行一下预处理，在每一个字母之前都加一个#，这样每一个都为中心的都是回文串都是奇数个。为了防止处理中出现越界情况，所以我们可以在字符串的开始和结束加入特殊字符，比如(^$);
+其次，为了更好的利用回文字符串的对称性，我们只需要对称字符串能够到达的最远位置r，以及对称中心cen.最后我们分情况讨论
+假设对称中心为i,现在需要计算i+k位置,其对应位置为（i-k),P[i]为i向右延伸的回文串的长度
+（1)i+k 大于r，那么之前的计算跟现在的没关系，只能仿照方法1计算
+（2)i+k小于r 但是i+k+P[i-k]<r  根据对称性 P[i+k]=P[i-k];
+ (3)i+k小于r,i+k+P[i-k]>=r   P[i+k]=r-(i+k)
+
+public String longestPalindrome(String s) {  
+        String str=prepare(s);  
+        int n=str.length();  
+        int cen=0;  
+        int r=0;  
+        int[] p=new int[n];  
+        char[] a=str.toCharArray();  
+        for(int i=1;i<n-1;i++)  
+        {  
+            int j=2*cen-i;  
+            p[i]=i<r?Math.min(r-i, p[j]):0;  
+            while(a[i+p[i]+1]==a[i-p[i]-1])  
+                p[i]++;  
+            if(p[i]+i>r)  
+            {  
+                cen=i;  
+                r=p[i]+i;  
+            }  
+        }  
+        /**找到长度最大的元素*/  
+          int len = 0;  
+          int centerIndex = 0;  
+          for (int i = 1; i < n-1; ++i){  
+            if(p[i] > len){  
+              len = p[i];  
+              centerIndex = i;  
+            }  
+          }  
+          return s.substring((centerIndex-len-1)/2, (centerIndex+len-1)/2);  
+          
+    }  
+    public String prepare(String s)  
+    {  
+        if(s.length()==0) return "^$";  
+        String ret="^";  
+        for(char c:s.toCharArray())  
+        {  
+            ret+="#"+c;  
+        }  
+        ret+="#$";  
+        return ret;  
+    }  
+      

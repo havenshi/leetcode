@@ -1,0 +1,45 @@
+//Time:O(logn)
+//Space:O(1)
+
+class Solution {
+    public int myAtoi(String str) {
+        str = str.trim();
+        if (str == null || str.length() == 0) return 0;
+        
+        int i = 0;
+        int flag = 1;
+        if (str.charAt(0) == '+') {  
+            i++;  
+        } else if (str.charAt(0) == '-') {  
+            flag = -1;  
+            i++;  
+        } 
+        
+        
+        int res = 0;
+        int newi = i;   //此时从当前i开始遍历
+        int count = 0;
+        for (; newi<str.length(); newi++){           
+            int digit = str.charAt(newi) - '0';  
+            
+            if (digit >= 0 && digit <= 9){
+                int tmp = res*10+digit;
+                if (tmp < 0 || (tmp-digit)/10 != res) { //做加法后超过2147483647就变成负数了；有些大数做加法后结果也会不规则变动
+                    if (flag == 1) return Integer.MAX_VALUE;
+                    else return Integer.MIN_VALUE;
+                }
+                res = res*10 + digit;
+                count++;
+            }
+            else{
+                if (newi == i) return 0; //首位不合规的情况
+                else break;
+            }
+            
+        }
+        
+        if (count == 0) return 0; //没有digit的情况
+        
+        return res*flag;
+    }
+}

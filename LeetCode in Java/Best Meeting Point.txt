@@ -1,0 +1,66 @@
+//A group of two or more people wants to meet and minimize the total travel distance. You are given a 2D grid of values 0 or 1,
+//where each 1 marks the home of someone in the group. The distance is calculated using Manhattan Distance, where distance(p1, p2) = |p2.x - p1.x| + |p2.y - p1.y|.
+//
+//For example, given three people living at (0,0), (0,4), and (2,2):
+//
+//1 - 0 - 0 - 0 - 1
+//|   |   |   |   |
+//0 - 0 - 0 - 0 - 0
+//|   |   |   |   |
+//0 - 0 - 1 - 0 - 0
+//The point (0,2) is an ideal meeting point, as the total travel distance of 2+2+2=6 is minimal. So return 6.
+//
+//Hint:
+//
+//Try to solve it in one dimension first. How can this solution apply to the two dimension case?
+
+
+
+//Time:O(nlogn)
+//Space:O(n)
+
+import java.util.*;
+
+public class Solution {  
+    public int minTotalDistance(int[][] grid) {
+        List<Integer> rows = new ArrayList<Integer>();
+        List<Integer> cols = new ArrayList<Integer>();
+        for (int i = 0; i < grid.length; ++i) {
+            for (int j = 0; j < grid[i].length; ++j) {
+                if (grid[i][j] == 1) {
+                    rows.add(i);
+                    cols.add(j);
+                }
+            }
+        }
+       
+        Collections.sort(rows);
+        Collections.sort(cols);
+        int res = 0;
+        //如果是偶数数量，横坐标distance是所有横坐标pairs的距离加总，再加纵坐标pairs的距离加总；如果是奇数数量，meeting point就在最中间的点，它自己的距离不计，因此横纵距离加总仍旧只要看pairs的距离加总即可。
+        int ithRow = 0;
+        int jthRow = rows.size()-1;
+        while (ithRow < jthRow){
+            res += rows.get(jthRow)-rows.get(ithRow);
+            ithRow ++;
+            jthRow --;
+        }
+        int ithCol = 0;
+        int jthCol = cols.size()-1;
+        while (ithCol < jthCol){
+            res += cols.get(jthCol)-cols.get(ithCol);
+            ithCol ++;
+            jthCol --;
+        }
+        return res;
+    }  
+
+    
+    public static void main(String[] args)
+    {
+        Solution ans = new Solution();
+        int grid[][]={{1,0,0,0,1},{0,0,0,0,0},{0,0,1,0,0}};
+        System.out.println(ans.minTotalDistance(grid));
+    }
+ 
+}
