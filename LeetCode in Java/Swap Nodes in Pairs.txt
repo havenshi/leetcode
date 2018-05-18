@@ -1,0 +1,43 @@
+//Time:O(n)
+//Space:O(1)
+
+//Iteration
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public ListNode swapPairs(ListNode head) {
+        if (head==null || head.next == null) return head;
+        
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode pos = dummy;
+        while (pos.next!=null && pos.next.next!=null){
+            ListNode tmp = pos.next.next;
+            pos.next.next = tmp.next;
+            tmp.next = pos.next;
+            pos.next = tmp;
+            
+            pos = pos.next.next;
+        }
+        return dummy.next;
+    }
+}
+
+
+
+//Recursion
+if (head == null || head.next == null) return head;
+
+        ListNode after = head.next;
+        head.next = swapPairs(after.next);
+        after.next = head;
+
+        return after;
+    }
+}

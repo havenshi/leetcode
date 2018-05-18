@@ -1,0 +1,44 @@
+# Time:  O(9^n * 27)
+# 每一个空都需要遍历1～9，对于填写的每一个数，都需要判断是否合理，横竖以及方格内共27次，所以需要乘27
+# Space: (1)
+
+class Solution {
+    public void solveSudoku(char[][] board) {
+        helper(board);
+    }
+            
+    public boolean helper(char[][] board){
+        int m = board.length;
+        int n = board[0].length;
+        for (int i = 0; i < m; i++){
+            for (int j = 0; j < n; j++){
+                if (board[i][j] == '.'){
+                    for (int digit = 1; digit <= 9; digit++){
+                        board[i][j] = (char)(digit + '0'); //注意这里integer转char的处理方法
+                        if (isValidSudoku(board, i, j) && helper(board)) return true;
+                        else board[i][j] = '.';
+                    }
+                    return false; //'.'应该插入数字，但试遍1-9都不为true
+                }
+            }
+        }
+        return true; //不存在'.'，满格
+    }
+    
+    public boolean isValidSudoku(char[][] board, int i, int j) {
+        int m = board.length;
+        int n = board[0].length;
+
+        for (int x = 0; x < 9; x++){
+            if (x != j && board[i][j] == board[i][x]) return false;
+            if (x != i && board[i][j] == board[x][j]) return false;
+        }
+        for (int y = 0; y < 3; y++){
+            for (int z = 0; z < 3; z++){
+                if ((i/3*3+y != i || j/3*3+z != j) && board[i][j] == board[i/3*3+y][j/3*3+z]) return false; //注意！先/3再*3
+            }
+        }
+        return true;
+    }
+
+}

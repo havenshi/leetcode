@@ -1,0 +1,45 @@
+//Time:O(n*k)
+//Space:O(n)
+//该方法比较慢
+class Solution {
+    public int hIndex(int[] citations) {
+        //用nums表示至少达到引用i次的paper数量。因为paper不超过n个，要求引用次数不少于n的所以nums用n的长度就够了
+        int[] nums = new int[citations.length+1];
+        for (int cit : citations){
+            for (int i=0; i<=Math.min(cit,nums.length-1); i++){   //cit有可能很大
+                nums[i]++;
+            }
+        }
+        // System.out.println(Arrays.toString(nums)); [5, 4, 3, 3, 2, 2]
+        for (int i=nums.length-1; i>=0; i--){
+            if (nums[i]>=i) return i;
+        }
+        return -1;
+    }
+}
+
+
+
+
+
+
+//Time:O(n*k)
+//Space:O(n)
+//改一下方法，不用第二个for，直接记录引用次数在i篇以上的文章。快了好多！
+class Solution {
+    public int hIndex(int[] citations) {
+        int[] nums = new int[citations.length+1];
+        for (int cit : citations){
+            if (cit>nums.length-1) nums[nums.length-1] ++;
+            else nums[cit] ++;    
+        }
+
+        //System.out.println(Arrays.toString(nums));  [1, 1, 0, 1, 0, 2]
+        int sum = 0;
+        for (int i=nums.length-1; i>=0; i--){  //这里稍微改了一下，变成用sum加总
+            if (sum+nums[i]>=i) return i;
+            else sum += nums[i];
+        }
+        return -1;
+    }
+}

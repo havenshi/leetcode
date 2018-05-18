@@ -1,0 +1,57 @@
+//Time:O(n)
+//Space:O(n)
+//跟第20题一个思路，用stack，但比dp方法慢
+import java.util.*;
+class Solution {
+    public int longestValidParentheses(String s) {
+        if (s.length()<=1) return 0;
+        
+        int start = 0; //记录每段valid substring的初始位置，此时"("的数量一定大于")"，否则就要更新start。
+        int res = 0;
+        Stack<Integer> stack = new Stack<Integer>();
+        for (int i=0; i<s.length(); i++){
+            if (s.charAt(i)=='('){
+                stack.push(i);
+            }
+            else{
+                if (stack.size()!=0){
+                    stack.pop();
+                    if (stack.size()==0){ //说明这段已经完成了，start被pop出。但此时start不用更新。
+                        res = Math.max(res, i-start+1);
+                    }
+                    else{ //说明start不是起点，而是stack中最后一个"("位置+1，例如"(()()"遍历到最后一个元素时，起点应是1。此时start不用更新。
+                        res = Math.max(res, i-(stack.peek()+1)+1);
+                    }
+                }
+                else start = i+1; //更新start
+            }
+        }
+        return res;
+    }
+}
+
+
+
+
+//DP，更快
+//Time:O(n)
+//Space:O(n)
+import java.util.*;
+class Solution {
+    //用一维DP表示该位置结尾的substring长度，'('则必然为0，')'则有两种情况
+    public int longestValidParentheses(String s) {
+        int res = 0;
+        int dp[] = new int[s.length()];
+        for (int i = 1; i < s.length(); i++) {
+            if (s.charAt(i) == ')') {
+                if (s.charAt(i-1) == '(') { //s[i]=')'且s[i-1]='('表示substring为....()，dp[i]=dp[i?2]+2                    
+                    dp[i] = (i >= 2 ? dp[i-2] : 0) + 2;
+                } else if (i-dp[i-1] >= 1 && s.charAt(i-dp[i-1]-1) == '(') { //s[i]=')'且s[i-1]=')'表示substring为....))，如果s[i-dp[i-1]-1]== '('，说明substring为((....))，则dp[i]=dp[i?1]+2+dp[i-dp[i-1]-2]，dp[i-dp[i-1]-2]表示在这之前的parentheses
+                    dp[i] = dp[i-1] + 2 + (i-dp[i-1] >= 2 ? dp[i-dp[i-1]-2] : 0);
+                }
+                res = Math.max(res, dp[i]);
+            }
+        }
+        return res;
+    }
+}

@@ -1,0 +1,17 @@
+//Time:O(m*n)
+//Space:O(1)
+class Solution {
+    public int strStr(String haystack, String needle) {
+        if(needle.length()==0) return 0; //needle如果为空，返回0；而haystack为空或者haystack长度较小的情况，因为后面的forloop不会执行，所以都返回-1，不用额外判断
+        for(int i=0;i<haystack.length()-needle.length()+1;i++)  
+        {   
+            int j = 0;
+            while(j<needle.length() && haystack.charAt(i+j)==needle.charAt(j))  
+            {   
+                j++; 
+            }  
+            if(j==needle.length()) return i;  
+        }  
+        return -1;  
+    }
+}

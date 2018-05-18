@@ -1,0 +1,24 @@
+//Time:O(m*n)
+//Space:O(1)
+class Solution {
+    public boolean isValidSudoku(char[][] board) {
+        int m = board.length;
+        int n = board[0].length;
+        for (int i = 0; i < m; i++){
+            for (int j = 0; j < n; j++){
+                if (board[i][j] != '.'){
+                    for (int x = 0; x < 9; x++){
+                        if (x != j && board[i][j] == board[i][x]) return false;
+                        if (x != i && board[i][j] == board[x][j]) return false;
+                    }
+                    for (int y = 0; y < 3; y++){
+                        for (int z = 0; z < 3; z++){
+                            if ((i/3*3+y != i || j/3*3+z != j) && board[i][j] == board[i/3*3+y][j/3*3+z]) return false; //×¢Òâ£¡ÏÈ/3ÔÙ*3
+                        }
+                    }
+                }          
+            }
+        }
+        return true;
+    }
+}

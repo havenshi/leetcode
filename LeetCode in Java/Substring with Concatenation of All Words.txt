@@ -1,0 +1,128 @@
+//如果用forloop遍历s的每个字母，再用indexOf检查k/n个word（长度为k），时间复杂度为n*(kn*(k/n))=n^3，易造成LTE
+//用类似于sliding window + hashmap，将时间复杂度降为n^2
+
+//Time:O(n^2)
+//Space:O(n)
+//很慢，该方法都不在runtime统计图里。。。
+class Solution {
+    public List<Integer> findSubstring(String s, String[] words) {
+        List<Integer> ans = new ArrayList<Integer>();  
+        if (s.length()==0 || words.length == 0) return ans; 
+        
+        int n = words.length;
+        int k = words[0].length();
+        HashMap<String,Integer> map = new HashMap<String,Integer>();
+        for (int j = 0; j < words.length; j++) {  //注意设立如果换成for (String word: words)会导致超时
+            if (map.containsKey(words[j])) {  
+                map.put(words[j], map.get(words[j]) + 1);  
+            } else {  
+                map.put(words[j], 1);  
+            }  
+        }  
+        
+        for (int i=0; i<s.length()-n*k+1; i++){
+            int start = i;
+            String str = s.substring(start, start+k);
+            int count = 0;
+            while (map.containsKey(str) && map.get(str)>0){ //一定用while，因为如果不连续单词则跳出
+                map.put(str,map.get(str)-1);
+                count ++; //如果发现word则计数
+                start += k;
+                if (start+k-1>=s.length()) break;
+                str = s.substring(start, start+k);
+            }
+
+            if (count==n) ans.add(i);
+            
+            if (count > 0) {  //如果count变动了，则需要初始化map
+                map.clear();  
+                for (int j = 0; j < words.length; j++) {  
+                    if (map.containsKey(words[j])) {  
+                        map.put(words[j], map.get(words[j]) + 1);  
+                    } else {  
+                        map.put(words[j], 1);  
+                    }  
+                }  
+            }  
+        }
+        
+        return ans;
+    }
+}
+
+
+
+
+
+
+//Time:O(n)，该方法快很多
+class Solution {
+    public List<Integer> findSubstring(String s, String[] words) {
+        List<Integer> res = new ArrayList<Integer>();  
+        if (s.length()==0 || words.length == 0) return res; 
+        
+        int n = words.length;
+        int k = words[0].length();
+        HashMap<String,Integer> map = new HashMap<String,Integer>();
+        for (int j = 0; j < words.length; j++) {  //注意设立如果换成for (String word: words)会导致超时
+            if (map.containsKey(words[j])) {  
+                map.put(words[j], map.get(words[j]) + 1);  
+            } else {  
+                map.put(words[j], 1);  
+            }  
+        }  
+        
+        for(int i=0;i<k;i++)  //i只遍历单个单词的长度k。两个for即k*(n/k)保证每个元素都能遍历到。
+        {  
+            HashMap<String,Integer> curMap = new HashMap<String,Integer>();  
+            int count = 0;  
+            int start = i;  
+            for(int j=i;j<s.length()-k+1;j+=k)  //j为s中每个可能单词的起始位置
+            {  
+                String str = s.substring(j,j+k);  
+
+                if(map.containsKey(str))  //如果该单词在map里
+                {  
+                    if(curMap.containsKey(str))  
+                        curMap.put(str,curMap.get(str)+1);  
+                    else  
+                        curMap.put(str,1);  
+                    
+                    if(curMap.get(str)<=map.get(str))  //该单词的数量在正常范围
+                        count++;  
+                    else                     //该单词的数量不在正常范围
+                    {  
+                        while(curMap.get(str)>map.get(str))  //用while的原因把所有从start至curMap.get(str)的单词temp都从curMap中删除，类似第3题
+                        {  
+                            String temp = s.substring(start,start+k);  
+                            if(curMap.containsKey(temp))  
+                            {  
+                                curMap.put(temp,curMap.get(temp)-1);  //curMap中该单词的数量-1
+                                if(curMap.get(temp)<map.get(temp))    //注意！只有curMap中该单词temp的数量比map小时，count才需要-1，否则表明temp在start位置之前，不影响入res的正确序列。
+                                    count--;  
+                            }  
+                            start += k; 
+                        }  
+                    }  
+                    if(count == n)  
+                    {  
+                        res.add(start);  
+                        
+                        String temp = s.substring(start,start+k);  //start移动k步从下一个单词重新开始搜索，因为count==n所以该单词一定是符合要求的，故count和curMap都要减掉。
+                        if(curMap.containsKey(temp))  
+                            curMap.put(temp,curMap.get(temp)-1);  
+                        count--;  
+                        start += k;  
+                    }  
+                }  
+                else  //如果该单词不在map里，重新记start
+                {  
+                    curMap.clear();  
+                    count = 0;  
+                    start = j+k;  
+                }  
+            }  
+        }  
+        return res;  
+    }
+}

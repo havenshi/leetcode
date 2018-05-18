@@ -1,0 +1,79 @@
+# Given a non-empty binary search tree and a target value, find k values in the BST that are closest to the target.
+#
+# Note:
+#
+# Given target value is a floating point.
+# You may assume k is always valid, that is: k ≤ total nodes.
+# You are guaranteed to have only one unique set of k values in the BST that are closest to the target.
+# Follow up:
+# Assume that the BST is balanced, could you solve it in less than O(n) runtime (where n = total nodes)?
+#0
+# Hint:
+#
+# Consider implement these two helper functions:
+#     getPredecessor(N), which returns the next smaller node to N.
+#     getSuccessor(N), which returns the next larger node to N.
+# Try to assume that each node has a parent pointer, it makes the problem much easier.
+# Without parent pointer we just need to keep track of the path from the root to the current node using a stack.
+# You would need two stacks to track the path in finding predecessor and successor node separately.
+
+
+//用中序遍历将所有节点值存入到一个一维数组中；再把数组的所有元素分别与k求差值并找到最小差值；最后用two pointer往该差值两边走，找到k个数。
+//Time:O(n)
+//Space:O(n)
+
+
+//直接在中序遍历的过程中完成比较。当遍历到一个节点时，如果此时结果数组不到k个，我们直接将此节点值加入res中；如果到了k个，分三种情况：
+//1.[0 1 2 3 4 5 6] 6，res与target的差值递减；
+//2.[0 1 2 3 4 5 6] 0，res与target的差值递增；
+//3.[0 1 2 3 4 5 6] 3，res与target的差值先减后增；
+如果该节点值和目标值的差值的绝对值小于res的首元素和目标值差值的绝对值，则将首元素删除，末尾加上当前节点值，反之的话res不变。
+//Time:O(n)
+//Space:O(n)
+
+
+//通过中序遍历获取最接近target节点的perdecessors（递增），通过逆中序遍历获取最接近target节点的successors（递减）,然后merge perdecessors和successors获取最接近target节点的 k个节点值。 
+//注意到在中序遍历时遇到比target大的节点即停止，因为由BST的性质可知后面的元素均会比target 大，即所有target的predecessors均已找到，同理逆中序遍历时遇到不大于 target的节点即可停止递归。
+//Time:O(n)
+//Space:O(n)
+
+/** 
+ * Definition for a binary tree node. 
+ * public class TreeNode { 
+ *     int val; 
+ *     TreeNode left; 
+ *     TreeNode right; 
+ *     TreeNode(int x) { val = x; } 
+ * } 
+ */  
+public class Solution {  
+    public List<Integer> closestKValues(TreeNode root, double target, int k) {  
+        List<Integer> result = new ArrayList<Integer>();  
+        LinkedList<Integer> stackPre = new LinkedList<Integer>();  
+        LinkedList<Integer> stackSucc = new LinkedList<Integer>();  
+        inorder(root, target, false, stackPre);  
+        inorder(root, target, true, stackSucc);  
+        while (k-- > 0) {  
+            if (stackPre.isEmpty()) {  
+                result.add(stackSucc.pop());  
+            } else if (stackSucc.isEmpty()) {  
+                result.add(stackPre.pop());  
+            } else if (Math.abs(stackPre.peek() - target) < Math.abs(stackSucc.peek() - target)) {  
+                result.add(stackPre.pop());  
+            } else {  
+                result.add(stackSucc.pop());  
+            }  
+        }  
+        return result;  
+    }  
+    public void inorder(TreeNode root, double target, boolean reverse, LinkedList<Integer> stack) {  
+        if (root == null) return;  
+        inorder(reverse ? root.right : root.left, target, reverse, stack);  
+        if ((reverse && root.val <= target) || (!reverse && root.val > target))  
+            return;  
+        stack.push(root.val);  
+        inorder(reverse ? root.left : root.right, target, reverse, stack);  
+    }  
+}  
+
+

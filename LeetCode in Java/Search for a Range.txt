@@ -1,0 +1,28 @@
+//Time:O(logn)
+//Space:O(1)
+class Solution {
+    public int[] searchRange(int[] nums, int target) {
+        if (nums.length==0) return new int[] {-1, -1};
+        
+        int left = 0;
+        int right = nums.length-1;
+        while (left+1 < right){
+            int mid = left+(right-left)/2;
+            if (nums[mid] < target) left = mid;
+            else right = mid;
+        }
+        int l = nums[left]==target? left : (nums[right]==target? right : (right+1<nums.length && nums[right+1]==target? right+1 : -1));
+        
+        int left2 = 0;
+        int right2 = nums.length-1;
+        while (left2+1 < right2){
+            int mid2 = left2+(right2-left2)/2;
+            if (nums[mid2] > target) right2 = mid2;
+            else left2 = mid2;
+        }
+        int r = nums[right2]==target? right2 : (nums[left2]==target? left2 : (left2-1>=0 && nums[left2-1]==target? right2+1 : -1));
+        
+        int[] res = {l, r};
+        return res;
+    }
+}

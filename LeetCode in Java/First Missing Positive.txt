@@ -1,0 +1,24 @@
+//Time:O(n)
+//Space:O(n)
+//用数组A[i]存放（i + 1），从头开始遍历数组，哪个数值没有放在正确的位置（忽略不符合要求的数），将这个数交换到正确的位置
+class Solution {
+    public int firstMissingPositive(int[] nums) {
+        for (int i = 0; i < nums.length;) {  
+            if (nums[i] != i + 1 && nums[i] >= 1 && nums[i] <= nums.length && nums[i] != nums[nums[i] - 1]) {  //nums[i] - 1表示正确的位置应该在哪里
+                int tmp = nums[nums[i] - 1];  
+                nums[nums[i] - 1] = nums[i];  
+                nums[i] = tmp;  
+            } else {  
+                i ++;  
+            }  
+        }  
+  
+        for (int i = 0; i < nums.length; i++) {  
+            if (nums[i] != i + 1) {  
+                return i + 1; 
+            }  
+        }  
+  
+        return nums.length + 1;  
+    }
+}

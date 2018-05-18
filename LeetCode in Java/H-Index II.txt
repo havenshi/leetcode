@@ -1,0 +1,59 @@
+//Time:O(logn)
+//Space:O(1)
+class Solution {
+    public int hIndex(int[] citations) {
+        if (citations.length==0) return 0;
+        
+        int length = citations.length;
+        int left = 0;
+        int right = length - 1;
+        
+        while (left + 1 < right) {
+            int mid = left + (right - left) / 2;
+            if (citations[mid] >= length - mid) { //注意！length-mid较小并不表示paper数量不符合，而是表示这些paper都符合条件，但可能有更多的paper。
+                right = mid;
+            } else {                              //表示这些数量paper的引用次数不够
+                left = mid;
+            }
+        }
+        
+        // System.out.println(left);
+        // System.out.println(right);
+        if (citations[left] >= length - left) { //从left开始判断，这样满足条件的paper数量会更多
+            return length - left;
+        } else if (citations[right] >= length - right) {
+            return length - right;
+        }
+        else return length - right - 1;
+
+    }
+}
+
+
+
+
+
+//Time:O(logn)
+//Space:O(1)
+//把while(left + 1 < right)改成while(left <= right)，好快。。。吗耶。。
+class Solution {
+    public int hIndex(int[] citations) {
+        if (citations.length==0) return 0;
+        
+        int length = citations.length;
+        int left = 0;
+        int right = length - 1;
+        
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            if (citations[mid] >= length - mid) { //注意！length-mid较小并不表示paper数量不符合，而是表示这些paper都符合条件，但可能有更多的paper。
+                right = mid-1;
+            } else {                              //表示这些数量paper的引用次数不够
+                left = mid+1;
+            }
+        }
+        
+        return length-left;
+
+    }
+}

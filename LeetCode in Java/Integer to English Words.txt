@@ -1,0 +1,47 @@
+//Time:O(logn)
+//Space:O(1)
+class Solution {
+    public String numberToWords(int num) {
+        String[] tens = {"", "Ten", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"};
+        String[] digits = {"", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine","Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"};
+        String[] simbols ={"", "Thousand", "Million", "Billion"};
+        int count = 0;
+        String res = "";
+        
+        if (num == 0) return "Zero";
+        
+        while (num>0){
+            int cur = num%1000;
+            num /= 1000;
+            
+            String tmp = "";
+            if (cur>=100){
+                tmp += digits[cur/100]+" Hundred ";
+                cur %= 100;
+            }
+            if (cur>=20){
+                tmp += tens[cur/10]+" ";
+                cur %= 10;
+            }
+            if (cur>0){ //注意这里一定不能含0
+                tmp += digits[cur]+" ";
+            }
+            
+            tmp = tmp.trim(); //重要！把百十个位后面可能存在的空格都删除
+            
+            
+            if (tmp!="" && tmp.length()!=0){ //注意分tmp是否存在及simbol是否存在的几种情况，但无论是加simbol还是加到res都要建立在tmp存在的基础上，否则会有冗余空格如1000010
+                if (count!=0){
+                    tmp += " " + simbols[count];
+                }
+                if (res != "" && res.length()!=0) res = tmp + " " + res;//注意分res是否存在的两种情况
+                else res = tmp;
+            }
+            
+            
+            count ++;
+        }
+        
+        return res;
+    }
+}

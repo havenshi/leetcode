@@ -1,0 +1,31 @@
+# There is a fence with n posts, each post can be painted with one of the k colors.
+#
+# You have to paint all the posts such that no more than two adjacent fence posts have the same color.
+#
+# Return the total number of ways you can paint the fence.
+#
+# Note: n and k are non-negative integers.
+
+//Time:O(n)
+//Space:O(1)
+public class Solution {  
+    public int numWays(int n, int k) {
+        if (n == 0) return 0;
+        if (n == 1) return k;
+        int[] dp = new int[3];
+        dp[0] = 0;
+        dp[1] = k;
+        dp[2] = k + k * (k - 1); //第二根和第一根一样颜色或不一样颜色，也就是k^2
+        for (int i = 3; i <= n; i++) {
+            dp[i%3] = (k - 1) * (dp[(i - 1)%3] + dp[(i - 2)%3]);
+        } //和第i-1个不同，或者i与i-1一体和第i-2个不同
+        return dp[n%3];
+     }
+    
+    public static void main(String[] args)
+    {
+        Solution ans = new Solution();
+        System.out.println(ans.numWays(3,2));
+    }
+ 
+}

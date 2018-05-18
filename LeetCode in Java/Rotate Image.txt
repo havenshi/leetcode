@@ -1,0 +1,47 @@
+//Time:O(m*n)
+//Space:O(1)
+class Solution {
+    public void rotate(int[][] matrix) {
+        //A[i][j]-->A[j][N-i-1]转换为：A[i][j]-->A[j][i]-->A[j][N-i-1]两步完成
+        int n=matrix.length;  
+        // 沿着副对角线反转  
+        for (int i = 0; i < n; ++i) {  
+            for (int j = 0; j < n - i; ++j) {  
+                int tmp = matrix[i][j];  
+                matrix[i][j] = matrix[n - 1 - j][n - 1 - i];  
+                matrix[n - 1 - j][n - 1 - i] = tmp;  
+            }  
+        }  
+        // 沿着水平中线反转  
+        for (int i = 0; i < n / 2; ++i){  
+            for (int j = 0; j < n; ++j) {  
+                int tmp = matrix[i][j];  
+                matrix[i][j] = matrix[n - 1 - i][j];  
+                matrix[n - 1 - i][j] = tmp;  
+            }  
+        }  
+    }
+}
+
+
+
+
+
+//Time:O(m*n) 为啥这个方法会快一些？
+//Space:O(1)
+class Solution {
+    public void rotate(int[][] matrix) {
+        int n = matrix.length;  
+        if(n<=1)  
+            return ;  
+        for(int i = 0;i < n/2;i++){  //两个forloop表示从外圈的最上一条边开始逐步往里圈的最上一条边循环
+            for(int j = i;j < n-i-1;j++){  
+                int tmp = matrix[i][j];   //这条边上的每个点分别90度转四次[n-1-j][i]，注意这里是转直角而不是沿对角线[j][i]或逆对角线[n-1-j][n-1-i]对称
+                matrix[i][j] = matrix[n-1-j][i];  
+                matrix[n-1-j][i] = matrix[n-1-i][n-1-j];  
+                matrix[n-1-i][n-1-j] = matrix[j][n-1-i];  
+                matrix[j][n-1-i] = tmp;  
+            }  
+        }   
+    }
+}

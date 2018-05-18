@@ -1,0 +1,81 @@
+# There is a new alien language which uses the latin alphabet. However, the order among letters are unknown to you.
+#  You receive a list of words from the dictionary, where words are sorted lexicographically by the rules of this new
+# language. Derive the order of letters in this language.
+#
+# For example,
+# Given the following words in dictionary,
+#
+# [
+#   "wrt",
+#   "wrf",
+#   "er",
+#   "ett",
+#   "rftt"
+# ]
+#
+# The correct order is: "wertf".
+#
+# Note:
+#
+# You may assume all letters are in lowercase.
+# If the order is invalid, return an empty string.
+# There may be multiple valid order of letters, return any one of them is fine.
+
+
+//Time:O(m*n + 26+C(26,2)) m*n表示便利words，26+C(26,2)为V+E
+//Space:O(n)
+
+//吗耶。。我的直觉就是拓扑排序
+//需要检查判断无法再继续生成字母表的情况（环路），如果使用出边来表示graph，即graph[i][j] = true <=> i-->j，则需要另外再辅助入度的变量indegrees。
+
+public class Solution {
+    public String alienOrder(String[] words) {
+        boolean[][] graph = new boolean[26][26]; //true <=> i-->j
+        int[] indegrees = new int[26]; //拓扑排列方法中edges计数
+        boolean[] alphabets = new boolean[26]; //记录所有在拓扑里面的字母
+        int alphabetsCount = 0; //记录所有在拓扑里面的字母总数
+        char[] word =new char[0]; //记words中每个word
+
+        for(int i=0; i<words.length; i++) {
+            char[] prev = word;
+            word = words[i].toCharArray();
+            for(int j=0; j<word.length; j++) {
+                if (!alphabets[word[j]-'a']) {
+                    alphabets[word[j]-'a'] = true;
+                    alphabetsCount ++;
+                }
+            }
+            for(int j=0; j<Math.min(prev.length, word.length); j++) {
+                if (prev[j] != word[j]) {
+                    if (!graph[prev[j]-'a'][word[j]-'a']) {
+                        graph[prev[j]-'a'][word[j]-'a'] = true;
+                        indegrees[word[j]-'a'] ++;
+                    }
+                    break;
+                }
+            }
+        }
+        char[] result = new char[alphabetsCount];
+        int pos = 0;
+        //下面的while为循环alphabetsCount次，每次便利一遍alphabets。如果alphabets[i]的值为true且indegrees[i]为0就需要处理该节点的每个子节点，处理完之后归为false。如果无变动changed仍为false就要跳出循环。
+        do {
+            boolean changed = false;
+            for(int i=0; i<alphabets.length; i++) {
+                if (alphabets[i]) {
+                    if (indegrees[i] == 0) {
+                        result[pos++] = (char)(i+'a'); //注意加进结果里的方法，先定位使用pos的值之后再+1
+                        changed = true;
+                        for(int j=0; j<graph[i].length; j++) {
+                            if (graph[i][j]) {
+                                indegrees[j] --;
+                            }
+                        }
+                        alphabets[i] = false; //edges全部访问完之后字母数列中记false
+                    }
+                }
+            }
+            if (!changed) break;
+        } while (pos < result.length);
+        return pos == result.length ? new String(result) : "";
+    }
+}

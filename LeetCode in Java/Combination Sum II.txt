@@ -1,0 +1,30 @@
+# Time:  O(k * C(n, k))
+# Space: O(k)
+class Solution {
+    List<List<Integer>> ans = new ArrayList<List<Integer>>();  
+    int[] cans;   
+    
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+       cans = candidates;  
+        Arrays.sort(cans);  
+        helper(new ArrayList(), 0, target);  
+        return ans;  
+    }  
+      
+    public void helper(List<Integer> cur, int from, int target) {  
+        if (target == 0) { 
+            ans.add(cur);
+            return;
+        }  
+        for (int i = from; i < cans.length; i++) { 
+            if (i > from && cans[i] == cans[i - 1]) continue; //重要！防止重复cur。当然也可以用if (!ans.contains(cur)) ans.add(cur)，但是用in很慢
+            
+            if (cans[i] <= target){
+                List<Integer> newcur = new ArrayList<Integer>(cur); //deep copy
+                newcur.add(cans[i]);  
+                helper(newcur, i+1, target - cans[i]);  
+            }
+        }   
+ 
+    }
+}

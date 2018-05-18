@@ -1,0 +1,39 @@
+//Time:O(n)
+//Space:O(1)
+class Solution {
+    public int singleNumber(int[] nums) {
+        int ans = 0;
+        for (int i = 0; i < 32; i++)
+        {
+            int cnt = 0, bit = 1 << i;
+            for (int j = 0; j < nums.length; j++)
+            {
+                if ((nums[j] & bit) != 0) cnt++;
+            }
+            if (cnt % 3 != 0)
+                ans |= bit;
+        }
+        return ans;
+    }
+}
+
+
+
+
+
+//Time:O(n) 纯n，而上面的方法是n*31，所以这个方法快一些
+//Space:O(1)
+class Solution {
+    public int singleNumber(int[] nums) {
+        int ones = 0, twos = 0, threes = 0;
+        for(int i = 0; i < nums.length; ++i) {
+            twos |= (ones & nums[i]); //用&表示该元素的某一位是否和出现一次的one的某一位相同，相同记为两次。这时用|表示计数加进two里。
+            ones ^= nums[i]; //模仿第136题，one表示出现过一次的数
+            threes = ~(ones & twos); //three表示如果one和two的相同数位上皆为1，即该数位出现了两次，~1翻转为0，表示两次后归零
+            ones &= threes; //归零
+            twos &= threes; //归零
+        }
+
+        return ones;
+    }
+}

@@ -1,0 +1,32 @@
+//Time:O(logn)
+//Space:O(1)
+class Solution {
+    public int divide(int dividend, int divisor) {
+        if (divisor == 0) {
+             return dividend >= 0? Integer.MAX_VALUE : Integer.MIN_VALUE;
+        }
+        if (dividend == 0) {
+            return 0;
+        }
+        
+        if (dividend == Integer.MIN_VALUE && divisor == -1) { //特例(-2147483648)/(-1)返回2147483647
+            return Integer.MAX_VALUE;
+        }
+        
+        boolean isNegative = (dividend < 0 && divisor > 0) || (dividend > 0 && divisor < 0);
+        long a=Math.abs((long)dividend); //注意全部换成long！可以解决最大值最小值溢出的问题
+        long b=Math.abs((long)divisor);
+        
+        int res = 0;
+        int shift = 31;
+        while (shift >= 0){
+            while (a >= b<<shift){
+                a -= b<<shift;
+                res += (1<<shift);
+            }
+            shift--;
+        }
+
+        return isNegative? -res: res;
+    }
+}

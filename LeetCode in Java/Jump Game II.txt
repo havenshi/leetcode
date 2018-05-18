@@ -1,0 +1,44 @@
+//Time:O(n*k) k为最大步长，TLE。。。怎么会。。。
+//Space:O(n)
+class Solution {
+    public int jump(int[] nums) {
+        //用数组记录到达每个点的最少步数，所以用greedy
+        //遍历每个点，从它自己到能到达的最远距离这一段，更新这一段每个点的最少步数
+        int length = nums.length;
+        int[] steps = new int[length];
+        Arrays.fill(steps, Integer.MAX_VALUE);
+        steps[0] = 0;
+        for (int i = 0; i < length; i++){
+            int far = Math.min(i + nums[i], length - 1);
+            for (int j = i + 1; j <= far; j++){
+                steps[j] = Math.min(steps[j], steps[i] + 1);
+            }
+        }
+        return steps[length-1] == Integer.MAX_VALUE? -1 : steps[length-1];
+    }
+}
+
+
+
+
+
+//Time:O(n)
+//Space:O(n)
+class Solution {
+    public int jump(int[] nums) {
+        // times就是跳了多少次
+        // reached就是当前跳了times次时能到的最远范围
+        // max是路过的位置之处再跳一次能到达的最远的位置
+        int times = 0;
+        int reached = 0;
+        int max = 0;
+        for(int i=0;i< nums.length;i++){
+            if(reached < i){ //当前步数到达不了reached了再更新步数和reached，因为加一步可以管很多个i，从当前i到reached之间的点都不用搭理
+                times++;
+                reached = max; //因为max本来就是再加一步的，而此时times也加了1，所以reached为max合理
+            }
+            max = Math.max(max,i+nums[i]); //实时更新路过的位置之处再跳一次能到达的最远的位置
+        }
+        return times;
+    }
+}

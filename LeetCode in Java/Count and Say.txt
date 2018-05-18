@@ -1,0 +1,59 @@
+//Time:O(n * 串的长度)
+//Space:O(n * 串的长度)
+//下面方法较慢
+import java.util.*;
+class Solution {
+    public String countAndSay(int n) {
+        String res = "1";
+        for (int i = 2; i <= n; i++){
+            String newres = "";
+            int count = 1;
+            String tmp = res.substring(0, 1);
+            for (int j = 1; j < res.length(); j++){
+                if (res.substring(j, j+1).equals(tmp)){
+                    count ++;
+                }
+                else{
+                    newres += String.valueOf(count) + tmp;
+                    count = 1;
+                    tmp = res.substring(j, j+1);
+                }
+            }
+            newres += String.valueOf(count) + tmp;
+            res = newres;
+        }
+        return res;
+    }
+}
+
+
+
+
+//下面这个解法思路一样，但是用了StringBuilder和toCharArray，大大提高了速度
+import java.util.*;
+class Solution {
+    public String countAndSay(int n) {
+        String input = "1";
+        for (int i = 2; i <= n; i++){
+            StringBuilder builder = new StringBuilder(); //Tip1:用StringBuilder代替String，这样可以直接append各种格式的字符，提高原先res+=的速度
+            char[] res = input.toCharArray(); //Tip2:遍历res（如"1211"）中的字符时，string转化成CharArray，这样不用equals或substring
+            int count = 1;
+            char tmp = res[0];
+            for (int j = 1; j < res.length; j++){
+                if (res[j] == tmp){
+                    count ++;
+                }
+                else{
+                    builder.append(count);
+                    builder.append(tmp);
+                    count = 1;
+                    tmp = res[j];
+                }
+            }
+            builder.append(count);
+            builder.append(tmp);
+            input = builder.toString();
+        }
+        return input;
+    }
+}

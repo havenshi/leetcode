@@ -1,0 +1,30 @@
+//Time:O(logn)
+//Space:O(1)
+class Solution {
+    public int findMin(int[] nums) {
+        if (nums.length == 0) return -1;
+        
+         int left = 0;
+         int right = nums.length - 1;
+        
+         while(left + 1 < right) {
+
+               int mid = left + (right - left) / 2; 
+               while (left<mid && nums[left]==nums[mid]) left++; //因为nums[mid]需要同时和nums[left]、nums[right]对比，所以要用两个while去掉duplicate
+               while (right>mid && nums[right]==nums[mid]) right--;  
+               if (nums[mid] >= nums[left] && nums[mid] <= nums[right]) return nums[left]; //含等于，因为虽然去掉了首位的duplicate，但mid可能跟left或right位置重叠
+               
+               else if (nums[mid] >= nums[left]) {    //含等于
+                   {
+                       left = mid;
+                   }                
+               }   
+             
+               else { 
+                   right = mid;                         
+               }             
+         } 
+        return nums[left] < nums[right] ? nums[left] : nums[right];
+        
+    }
+}

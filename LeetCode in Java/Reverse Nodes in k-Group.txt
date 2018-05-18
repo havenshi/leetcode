@@ -1,0 +1,49 @@
+//Time:O(n)
+//Space:O(1)
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public ListNode reverseKGroup(ListNode head, int k) { //0-1-2-3 把1不断的跳过后面一位，并且把原后面一位加在head后
+        if (head == null) return null;
+        if (k <= 1) return head;
+        
+        ListNode dummy = new ListNode(0);
+        ListNode start = dummy;
+        dummy.next = head;
+        while (start!=null && start.next!=null){
+            ListNode tag = start.next; //此时一定存在1
+            int count = k-1; //k==3时只要移动1两次就行了，并且要考虑1后面还有node的条件
+            
+            ListNode end = start;
+            for (int i=k; i>0; i--){
+                end = end.next;
+                if (end == null) return dummy.next;
+            }
+              
+            while (count>0 && tag.next!=null){
+                ListNode tmp = tag.next;
+                tag.next = tag.next.next;
+                tmp.next = start.next;
+                start.next = tmp;
+                count --;
+              
+                //if (tag.next==null) return dummy.next; //错误的解法。这样直接碰到group数量达不到的情况就直接返回[3,2,1,5,4]了，所以要再加个上面对于end的计数条件
+            }
+            
+            for (int i=k; i>0; i--){
+                start = start.next;
+            }
+            tag = start.next;
+            count = k-1;
+            
+        }
+        return dummy.next;
+    }
+}

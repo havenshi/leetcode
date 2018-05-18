@@ -1,0 +1,97 @@
+# Time:  O(n * n!)
+# Space: O(n)
+
+import java.util.*;
+class Solution {
+    List<List<Integer>> ans = new ArrayList<List<Integer>>();  
+    List<Integer> list = new ArrayList<Integer>();
+    
+    public List<List<Integer>> permute(int[] nums) {
+        Arrays.sort(nums);  
+        for (int num : nums) { //将全局变量array转化为arraylist。。。这样后面便于加减元素操作
+            list.add(num);
+        }
+        helper(new ArrayList(), list.size());  
+        return ans;  
+    }  
+      
+    public void helper(List<Integer> cur, int target) {  
+        if (target == 0) {  
+            ans.add(cur); 
+            return;
+        }  
+        for (int i = 0; i < list.size(); i++) { 
+            int tmp = list.get(i);
+            list.remove(i);
+
+            List<Integer> newcur = new ArrayList<Integer>(cur); //deep copy
+            newcur.add(tmp);  
+            helper(newcur, target - 1);  
+
+            list.add(i, tmp);
+        }   
+
+    }
+}
+
+
+
+
+
+
+# Time:  O(n * n!) 使用next permutation的方法，快一些
+# Space: O(n)
+    
+import java.util.*;
+class Solution {
+    public List<List<Integer>> permute(int[] nums) {
+        List<List<Integer>> ans = new ArrayList<List<Integer>>();
+        List<Integer> tmp = new ArrayList<Integer>();
+        for (int num : nums) tmp.add(num);
+        ans.add(new ArrayList<Integer>(tmp)); //add的时候需要deep copy
+        
+        int length = nums.length;
+        int count = 1;
+        while (length > 0){
+            count *= length;
+            length --;
+        }
+
+        while (count > 1) {
+            nextPermutation(nums);
+            tmp.clear();
+            for (int num : nums) tmp.add(num);
+            ans.add(new ArrayList<Integer>(tmp));
+            count --;
+        }
+        return ans;
+    }
+        
+    public void nextPermutation(int[] nums) {
+        //从最后开始一串descending的数字之前的较小数字，与这串里面最后比它大的交换，一串再ascending排序。注意相同数字的处理。
+        if (nums.length<=1) return;
+        int i = nums.length-2;
+        while (i>=0){
+            if (nums[i]<nums[i+1]){ //不含等于
+                break;
+            }
+            i--;
+        }
+        if (i==-1) Arrays.sort(nums); //nums全部是倒序，不存在i，所以返回正序即可。
+        else{
+            int j=i+1;
+            while (j<nums.length){
+                if (nums[j]>nums[i]){ //不含等于，要找到最后比它大的数
+                    j++;
+                    continue;
+                }
+                else break;
+            }
+            j--;
+            int tmp = nums[i];
+            nums[i] = nums[j];
+            nums[j] = tmp;
+            Arrays.sort(nums,i+1,nums.length);
+        }
+    }
+}
