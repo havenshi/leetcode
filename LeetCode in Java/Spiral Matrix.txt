@@ -1,0 +1,18 @@
+public List<Integer> spiralOrder(int[][] matrix) {  
+        int m=matrix.length;  
+        LinkedList<Integer> res  =  new LinkedList<Integer>();  
+        if(m==0) return res;  
+        int n=matrix[0].length;  
+        int u=0,d=m-1,l=0,r=n-1;  
+        while(true){  
+            for(int col=l;col<=r;col++) res.add(matrix[u][col]);  
+            if(++u>d) break;  
+            for(int row=u;row<=d;row++) res.add(matrix[row][r]);  
+            if(--r<l) break;  
+            for(int col=r;col>=l;col--) res.add(matrix[d][col]);  
+            if(--d<u) break;  
+            for(int row=d;row>=u;row--) res.add(matrix[row][l]);  
+            if(++l>r) break;  
+        }  
+        return res;  
+    }  

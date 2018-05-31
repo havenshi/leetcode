@@ -46,7 +46,7 @@ class Solution(object):
 
 
         # method1, recursion, Divide and conquer
-        # Time:  O(3^)
+        # Time:  O(3^n)
         # 因为T(n)=T(1)+T(n-1)+T(2)+T(n-2)+...+T(-11)+T(n)=2*(T(1)+...+T(n-1))，而T(n+1)=2*(T(1)+...+T(n))=T(n)+2T(n)=3T(n)
         # Space: O(n)
         if input.isdigit():

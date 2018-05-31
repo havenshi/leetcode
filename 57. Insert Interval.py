@@ -4,6 +4,7 @@
 #         self.start = s
 #         self.end = e
 
+#Time:O(nlogn)
 class Solution(object):
     def insert(self, intervals, newInterval):
         """
@@ -14,7 +15,7 @@ class Solution(object):
         if not intervals: return [newInterval]
         if not newInterval: return intervals
 
-        intervals.append(newInterval)
+        intervals.append(newInterval) #这里可以用二分查找插入
         intervals = sorted(intervals, key=lambda x: x.start)
         res = [intervals[0]]
         for key, val in enumerate(intervals[1:]):

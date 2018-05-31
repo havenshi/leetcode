@@ -70,19 +70,19 @@ class Trie(object):
         node = self.root
         queue = []
         for letter in word:
-            queue.append((letter, node)) # 记录位置和node
+            queue.append((letter, node)) # 记录位置和node，((a,root),(b,a),(c,ab)...)
             child = node.children.get(letter)
             if child is None:
                 return False# 未找到word
             node = child
-        if not node.isWord:
+        if not node.isWord: # 1.找到该word之后不是isWord，说明根本没有这个word
             return False
-        if len(node.children):
+        elif len(node.children): # 2.找到该word之后除了isWord之外还有其他children，直接把isWord改为False说明该单词已删除，而其他后续单词不动
             node.isWord = False
-        else: # 每当找到一个单词时，将该单词从字典树中删去。
+        else: # 3.当找到一个完整的没有任何后续分支的单词时，将该单词从字典树中删去。
             for (letter, node) in reversed(queue):
                 del node.children[letter]
-                if len(node.children) or node.isWord: # 如果有其他子节点，则不能继续往上删
+                if len(node.children) or node.isWord: # 如果删除后仍有其他子节点或者当前段就是一个完整的单词，则不能继续往上删
                     break
         return True
 

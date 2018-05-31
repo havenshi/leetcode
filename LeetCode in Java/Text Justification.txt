@@ -1,0 +1,55 @@
+
+没有什么特别算法，就是模拟，主要分情况判断。首先分两大类，末行和非末行；然后末行所有单词间放一个空格，最后面补充空格；非末行再分两类，如果只有一个单词就靠左放，右边补空格；如果有多个单词，即计算有几个间隔num和几个多余的空格extra（除每两个单词间一个空格外多余的），每个间隔再多方extra/num个，前extra%num个间隔再多放个空格。
+
+
+public class Solution {  
+    public List<String> fullJustify(String[] words, int L) {  
+        List<String> ans = new ArrayList<String>();  
+          
+        int n = words.length;  
+        int i = 0;  
+        while (i < n) {  
+            int len = words[i].length();  
+            int j = i + 1;  
+            while (j < n && len + 1 + words[j].length() <= L) {  
+                len += 1 + words[j].length();  
+                j++;  
+            }  
+              
+            String line = words[i];  
+            if (j == n) { // if this is the last line  
+                for (int k = i + 1; k < n; k++) {  
+                    line += " " + words[k];  
+                }  
+                while (line.length() < L) {  
+                    line += " ";  
+                }  
+            } else {  
+                int extraWhite = L - len;  
+                int whiteNum = j - i - 1;  
+                  
+                if (whiteNum == 0) { // if this line has only one word  
+                    while (line.length() < L) {  
+                        line += " ";  
+                    }  
+                } else {  
+                    for (int k = i + 1; k < j; k++) {  
+                        line += " ";  
+                        for (int p = 0; p < extraWhite/whiteNum; p++) {  
+                            line += " ";  
+                        }  
+                        if (k - i <= extraWhite%whiteNum) {  
+                            line += " ";  
+                        }  
+                        line += words[k];  
+                    }  
+                }  
+            }  
+            ans.add(line);  
+              
+            i = j;  
+        }  
+          
+        return ans;  
+    }  
+}  

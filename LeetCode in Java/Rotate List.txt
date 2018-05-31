@@ -1,0 +1,51 @@
+/** 
+ * Definition for singly-linked list. 
+ * public class ListNode { 
+ *     int val; 
+ *     ListNode next; 
+ *     ListNode(int x) { 
+ *         val = x; 
+ *         next = null; 
+ *     } 
+ * } 
+ */  
+public class Solution {  
+    public ListNode rotateRight(ListNode head, int n) {  
+        if (head == null || n < 1) return head;  
+          
+        //遍历链表求其长度，并找到尾部  
+        ListNode node = head;  
+        ListNode tail = null;  
+        ListNode newhead = null;  
+        int len = 0;  
+        while (node != null) {  
+            len++;  
+            tail = node;  
+            node = node.next;  
+        }  
+          
+        //只有一个结点时，返回原链表即可  
+        if (len == 1 || n % len == 0) return head;  
+          
+        //把链表首位拼接  
+        tail.next = head;  
+          
+        //找到右移后的链表尾部  
+        node = head;  
+        int i = 1;  
+        while (i != len - n % len) {  
+            i++;  
+            node = node.next;  
+        }  
+        newhead = node.next;  
+        node.next = null;  
+          
+        return newhead;  
+    }  
+}  
+
+
+
+
+
+//method2,用快慢指针来解，快指针先走k步，然后两个指针一起走，当快指针走到末尾时，慢指针的下一个位置是新的顺序的头结点，这样就可以旋转链表了

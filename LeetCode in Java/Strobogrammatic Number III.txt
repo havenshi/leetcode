@@ -1,0 +1,45 @@
+A strobogrammatic number is a number that looks the same when rotated 180 degrees (looked at upside down).
+
+Write a function to count the total strobogrammatic numbers that exist in the range of low <= num <= high.
+
+For example,
+Given low = "50", high = "100", return 3. Because 69, 88, and 96 are three strobogrammatic numbers.
+
+Note:
+
+Because the range might be a large number, the low and high numbers are represented as string.
+
+1、长度等于low，但值小于low
+
+2、长度等于high，值大于high
+
+
+
+
+//以下是c++代码，还是跟java很相近的
+class Solution {  
+private:  
+    int Max = 0;  
+    vector<string> same{"0", "1", "8"};  
+    vector<pair<char,char>> two{{'0','0'},{'1','1'},{'6','9'},{'8','8'},{'9','6'}};  
+};  
+
+public:  
+    int strobogrammaticInRange(string low, string high) {  
+        int n1 = low.size(), n2 = high.size();  
+        for(int i = n1; i <= n2; i++) DFS(low, high, i, "");  //i为长度限制
+        return Max;  
+    }  
+
+    void DFS(string& low, string& high, int n, string str)  
+    {  
+        if(n==0 && stol(str)>=stol(low) && stol(str)<=stol(high)) {Max++; return;}  
+
+        if(n%2==1) for(auto val: same) DFS(low, high, n-1, val); //如果n为奇数，把0,1,8放中间，n-1
+
+        if(n==0 || n%2==1) return; //除上述两种情况外，其他的不符合条件
+ 
+        for(int i = (n==2?1:0); i< two.size(); i++)  //排除首位为0的情况，即如果n只剩下2了，肯定不能把00分别加两边
+            DFS(low, high, n-2, two[i].first+str+two[i].second);  
+    }  //如果n为偶数，把pair放两边，n-2
+      

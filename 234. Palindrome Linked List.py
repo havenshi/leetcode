@@ -19,7 +19,7 @@ class Solution(object):
 
         cur = slow.next
         tail = None
-        while cur:
+        while cur: # 后半段翻转
             tmp = cur.next
             cur.next = tail
             tail = cur

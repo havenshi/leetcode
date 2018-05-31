@@ -12,16 +12,16 @@ class Solution(object):
         """
         dummy = ListNode(0)
         dummy.next = head
-        before = dummy
-        while before.next:
-            after = before.next
-            value = after.val
-            while after.next and after.next.val == value:
-                after = after.next
-            if before.next == after:
-                before = before.next
+        pre = dummy
+        while pre.next:
+            cur = pre.next
+            value = cur.val
+            while cur.next and cur.next.val == value: # 寻找cur之后与其值相同的最远node
+                cur = cur.next
+            if pre.next == cur: # 说明与cur值相同的node只有cur一个
+                pre = pre.next
             else:
-                before.next = after.next
+                pre.next = cur.next # 跳过值相同的整一串
         return dummy.next
 
         # if head == None:

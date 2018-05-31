@@ -36,14 +36,10 @@ class Solution(object):
             else:
                 low = mid
 
+        if low * low > x: return low - 1
         if low * low == x: return low
-        if high * high == x: return high
-        if low * low > x:
-            return low - 1
-        if low * low < x and high * high > x:
-            return low
-        if high * high < x:
-            return high
+        if low * low < x and high * high > x: return low
+        if high * high >= x: return high
 
 if __name__ == "__main__":
     answer=Solution()

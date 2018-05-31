@@ -1,0 +1,47 @@
+//Time:O(logn)
+//Space:O(1)
+//用long来代替int可避免极大值极小值的问题，而且快一些
+class Solution {
+    public double myPow(double x, int n) {
+        long nn = n;
+        return myPow(x,nn);
+    }
+    
+    private double myPow(double x, long n) {
+        if (n == 0) {
+            return 1;
+        }
+        if (n < 0) {
+            n = -n;
+            x = 1 / x;
+        }
+        return n % 2 == 0 ? myPow(x * x, n / 2) : x * myPow(x * x, n/2);
+    }
+}
+
+
+
+
+//比较慢
+class Solution {
+    public double myPow(double x, int n) {
+        if(n == 0)
+            return 1;
+
+        if(n<0){         
+            if(n == Integer.MIN_VALUE) { //每次n为负值时，MIN_VALUE都要单独处理。此时-MIN_VALUE又会变为负数，所以直接处理为MAX_VALUE
+                n = Integer.MAX_VALUE;
+                if(x<0) x = -x; //如-1的-2147483648为1，如-5的-2147483648为0因为-1~0之间的负小数的次方接近0，所以要忽略负号
+            }
+            else n = -n;
+            
+            x = 1/x;
+        }
+        return (n%2 == 0) ? myPow(x*x, n/2) : x*myPow(x*x, n/2);
+    }
+}
+
+
+
+
+//还可以用二分查找

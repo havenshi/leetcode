@@ -32,3 +32,11 @@ class Solution:
                 e += 1
 
         return min_rooms
+
+# Time:O(n)
+# Space:O(n)
+# 画图！还可以用栈记录end点
+# 遍历start：
+# 1.栈为空或者该start小于栈内最后一个end，count+1
+# 2.否则，用while不断把栈内较小的end出栈
+# end入栈
