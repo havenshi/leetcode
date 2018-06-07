@@ -6,7 +6,21 @@ class Solution(object):
         :type t: int
         :rtype: bool
         """
-
+        # Time: O(logn)
+        # Space: O(k)
+        # 长度为k的滑动窗口+平衡二叉树。具体参照java解法
+        if k < 1 or t < 0:
+            return False
+        numDict = collections.OrderedDict()
+        for x in range(len(nums)):
+            key = nums[x] / max(1, t)
+            for m in (key, key - 1, key + 1):
+                if m in numDict and abs(nums[x] - numDict[m]) <= t:
+                    return True
+            numDict[key] = nums[x]
+            if x >= k:
+                numDict.popitem(last=False)
+        return False
 
 
         # Time: O(n)

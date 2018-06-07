@@ -149,6 +149,8 @@ class Solution:
         return ans
 
 
+# 简而言之，就是碰到's'就加到heap里，碰到'e'就全部减掉，并且在结果中添加当前heap中的maxheight。
+
 if __name__=='__main__':
     answer = Solution()
     print answer.getSkyline([ [2, 9, 10], [3, 7, 15], [5, 12, 12], [15, 20, 10], [19, 24, 8] ] )

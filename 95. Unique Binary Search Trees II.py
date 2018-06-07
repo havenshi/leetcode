@@ -1,3 +1,5 @@
+# Time:O(n!)，卡特兰数，∑n,i=0 CiCn-i
+# Space:O(n)
 # Definition for a binary tree node.
 # class TreeNode(object):
 #     def __init__(self, x):

@@ -1,3 +1,5 @@
+# Time: O(nlogn)
+# Space:O(1)
 import random
 class Solution(object):
     def findKthLargest(self, nums, k):
@@ -32,3 +34,8 @@ class Solution(object):
 
 if __name__ == '__main__':
     print Solution().findKthLargest([3,5,2,1,6], 4)
+
+
+
+
+# 还可以用堆，时间复杂度一样，但空间复杂度为O(n)

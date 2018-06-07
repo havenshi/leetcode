@@ -1,3 +1,5 @@
+# Time: O(n^2)，时间上每次求解i个结点的二叉查找树数量的需要一个i步的循环，总体要求n次，所以总时间复杂度是O(1+2+...+n)=O(n^2)
+# Space: O(n)
 class Solution(object):
     def numTrees(self, n):
         """

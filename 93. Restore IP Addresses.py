@@ -1,5 +1,5 @@
-# Time:  O(n^m) = O(3^4)
-# Space: O(n * m) = O(3 * 4)
+# Time:  O(n^m) = O(n^3)，这个搜索相当于用三个. 分割这个字符串，枚举三个dot的时间复杂度是O(n^3)
+# Space: O(n * m) = O(n)
 class Solution(object):
     def restoreIpAddresses(self, s):
         """

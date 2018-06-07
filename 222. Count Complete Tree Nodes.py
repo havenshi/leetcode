@@ -28,8 +28,9 @@ class Solution(object):
         return 1 + self.countNodes(root.left) + self.countNodes(root.right)  # number of left and right plus root
 
         # binary search
+        # Time:  O(h * logn) = O((logn)^2)
+        # Space: O(1)
         # 高度为h的完全二叉树，其节点个数等于高度为h - 1的满二叉树的节点个数 + 最后一层的节点个数。
         # 因此，只需要二分枚举第h层的节点个数即可。
         # 如四层高的二叉树，第四层编号为000 001 010 011 100 101 110 111,0和1分别代表left和right。
         # 即不断二分查找mid并转成二进制数字，按照该二进制数字的指令从root开始往下查找，查到了就left=mid+1，查的时候中间断了就right=mid-1
-        # 二分法查找的时间复杂度为O(log(2^h))=O(hlog2)，但为了到达底层，中间需要经过最大h层节点，这样相当于O(h^2)的时间复杂度，即O(logn*logn)

@@ -1,3 +1,5 @@
+# Time:O(2^9)
+# Space:O(n)
 class Solution(object):
     def combinationSum3(self, k, n):
         """
