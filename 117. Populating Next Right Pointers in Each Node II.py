@@ -44,3 +44,8 @@ class Solution:
                     tmp = tmp.next
             self.connect(root.right) # right recursion should be the first
             self.connect(root.left)
+
+            #  4->5->6
+            # /       \
+            #7         8
+            # 为什么先要遍历root.right呢？例如4->5->6，如果right的5没有跟next的6接上，在递归left的4时，寻找root.next就会在5停止。而实际上4的child7是可以跟next.next6的child8接上的，出现错误。

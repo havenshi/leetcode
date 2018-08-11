@@ -30,7 +30,13 @@ class Solution(object):
         self.dfs(map, x - 1, y)
         self.dfs(map, x, y - 1)
 
+
+    # bfs, 遇到1且未访问，就用bfs遍历并标记visited，最后有几次bfs就有几个island
+
+
     # method 2 union find
+    # Time:  O(m * n)
+    # Space: O(m * n)
         grid = [map(lambda x: int(x), row) for row in grid]
         if not grid:
             return 0
@@ -48,7 +54,7 @@ class Solution(object):
                     else:
                         if i > 0 and grid[i - 1][j] and j > 0 and grid[i][j - 1]:
                             grid[i][j] = grid[i - 1][j]
-                            root = [grid[i][j] if x == grid[i][j - 1] else x for x in root]
+                            root = [grid[i][j] if x == grid[i][j - 1] else x for x in root] # 这样比较慢，其实可以不更改grid的数据，可以把root做成hashmap，再根据grid原值在root的hashmap中索引新值，再更改该位置的root值
                             # replace left value with upper value
                         elif i > 0 and grid[i - 1][j]:
                             grid[i][j] = root[grid[i - 1][j]]
