@@ -14,3 +14,7 @@ class Solution(object):
             if prices[i] < low:
                 low = prices[i]
         return result
+
+# dp
+# local = Math.max(local+prices[i+1]-prices[i],0);
+# global = Math.max(local, global);
