@@ -1,3 +1,5 @@
+# Time: O(n^2)
+# Space: O(1)
 class Solution(object):
     def longestPalindrome(self, s):
         """
@@ -53,6 +55,39 @@ class Solution(object):
                 start = start2
         return s[start:start + length]
 
+
+# dp
+# Time: O(n^2)
+# Space: O(1)
+class Solution(object):
+    def longestPalindrome(self, s):
+        """
+        :type s: str
+        :rtype: str
+        """
+        if not s: return ""
+
+        max_len = 1
+        res = s[0]
+        dp = [[0] * len(s) for _ in range(len(s))]
+        for i in range(len(s)):
+            dp[i][i] = 1
+        for i in range(len(s) - 1):
+            if s[i] == s[i + 1]:
+                dp[i][i + 1] = 2
+                max_len = 2
+                res = s[i: i + 2]
+
+        for length in range(2, len(s)):
+            for i in range(len(s) - length):
+                j = i + length
+                if s[i] == s[j] and i + 1 <= j - 1 and dp[i + 1][j - 1] > 0:
+                    dp[i][j] = dp[i + 1][j - 1] + 2
+                    if max_len < dp[i][j]:
+                        max_len = dp[i][j]
+                        res = s[i: j + 1]
+
+        return res
 
 if __name__=="__main__":
     answer=Solution()

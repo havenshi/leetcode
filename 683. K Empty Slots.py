@@ -177,20 +177,27 @@ class Solution(object):
 
 
         # method2
-        # days = [0] * len(flowers)
-        # for i in range(len(flowers)):
-        #     days[flowers[i]-1] = i # days = [1, 4, 0, 3, 2], which flower bloom on that day
-        #
-        # result = float("inf")
-        # i, left, right = 0, 0, k+1
-        # while right < len(days):
-        #     if days[i] < days[left] or days[i] <= days[right]:
-        #         if i == right:
-        #             result = min(result, max(days[left], days[right]))
-        #         left, right = i, k+1+i
-        #     i += 1
-        #
-        # return -1 if result == float("inf") else result+1
+class Solution(object):
+    def kEmptySlots(self, flowers, k):
+        """
+        :type flowers: List[int]
+        :type k: int
+        :rtype: int
+        """
+        days = [0] * len(flowers)
+        for i in range(len(flowers)):
+            days[flowers[i]-1] = i # days = [1, 4, 0, 3, 2], which flower bloom on that day
+
+        result = float("inf")
+        i, left, right = 0, 0, k+1
+        while right < len(days):
+            if days[i] < days[left] or days[i] <= days[right]: # 如果i天的开花位置小于left或left+k+1天中的某一天的开花位置
+                if i == right:
+                    result = min(result, max(days[left], days[right])) # 取符合条件的最小i天，这个天数为left和left+k+1天的开花位置最大值
+                left, right = i, k+1+i
+            i += 1
+
+        return -1 if result == float("inf") else result+1
 
 if __name__ == "__main__":
     answer=Solution()

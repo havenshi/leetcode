@@ -1,3 +1,5 @@
+# Time: O(logn)
+# Space: O(1)
 class Solution(object):
     def divide(self, dividend, divisor):
         """

@@ -47,5 +47,37 @@ class Solution(object):
             else:
                 return self.findKth(A[m/2 + 1:], B, k - (m/2 + 1))
 
+
+# method2
+class Solution(object):
+    def findMedianSortedArrays(self, nums1, nums2):
+        """
+        :type nums1: List[int]
+        :type nums2: List[int]
+        :rtype: float
+        """
+        len_nums1 = len(nums1)
+        len_nums2 = len(nums2)
+        if (len_nums1 + len_nums2) % 2:
+            return self.find_k_in_array(nums1, nums2, (len_nums1 + len_nums2) / 2 + 1)
+        else:
+            return (self.find_k_in_array(nums1, nums2, (len_nums1 + len_nums2) / 2) + self.find_k_in_array(nums1, nums2,(len_nums1 + len_nums2) / 2 + 1)) / 2.0
+
+    def find_k_in_array(self, nums1, nums2, k):
+        len_nums1 = len(nums1)
+        len_nums2 = len(nums2)
+        if len_nums1 == 0:
+            return nums2[k - 1]
+        if len_nums2 == 0:
+            return nums1[k - 1]
+        if k == 1:
+            return min(nums1[0], nums2[0])
+        if len_nums2 < k / 2 or (len_nums1 >= k / 2 and (nums1[k / 2 - 1] < nums2[k / 2 - 1])):
+            # 如果len_nums2的长度比k/2要短， 那么nums1[k/2]至少比k/2个数要大，他最大有可能比k/2+len_nums2<k个数要大，都不够k，所以可以把nums1前k/2半段给截了
+            # 第二个条件更明显
+            return self.find_k_in_array(nums1[k / 2:], nums2, k - k / 2)
+        else:
+            return self.find_k_in_array(nums1, nums2[k / 2:], k - k / 2)
+
 if __name__ == "__main__":
     print Solution().findMedianSortedArrays([1, 3], [2])

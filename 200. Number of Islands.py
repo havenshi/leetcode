@@ -63,6 +63,35 @@ class Solution(object):
                             # print i,j,root
         return sum([1 for i in range(len(root)) if i == root[i]]) - 1
 
+# union find 正解
+class Solution(object):
+    def numIslands(self, grid):
+        """
+        :type grid: List[List[str]]
+        :rtype: int
+        """
+        m = len(grid)
+        if m == 0: return 0
+        n = len(grid[0])
+
+        count = 0
+        dictionary = {}
+        for i in range(m):
+            for j in range(n):
+                if grid[i][j] == "1":
+                    if (i == 0 or grid[i - 1][j] == "0") and (j == 0 or grid[i][j - 1] == "0"):
+                        count += 1
+                        grid[i][j] = count
+                        dictionary[count] = count  # hashmap保存该位置count的原始值和变化后的值
+                    elif (i == 0 or grid[i - 1][j] == "0") and (j > 0 and grid[i][j - 1] != "0"):
+                        grid[i][j] = grid[i][j - 1]  # 直接取左原始值
+                    elif (i != 0 and grid[i - 1][j] != "0") and (j == 0 or grid[i][j - 1] == "0"):
+                        grid[i][j] = grid[i - 1][j]  # 直接取上原始值
+                    else:
+                        grid[i][j] = dictionary[grid[i][j - 1]]  # 取左值，并更改上值
+                        dictionary[grid[i - 1][j]] = grid[i][j]
+
+        return len(set(dictionary.values())) if dictionary else 0  # 不能取最大count值，只能取dictionary里面有多少个distinct值
 
 if __name__ == '__main__':
     print Solution().numIslands(["11110","11010","11000","00000"])

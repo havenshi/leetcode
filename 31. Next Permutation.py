@@ -9,16 +9,15 @@ class Solution(object):
         :type nums: List[int]
         :rtype: void Do not return anything, modify nums in-place instead.
         """
-        for i in range(len(nums) - 2, -1, -1):
-            if nums[i] < nums[i + 1]:
+        if len(nums) <= 1: return
+        for i in range(len(nums)-2, -1, -1):
+            if nums[i] < nums[i+1]:
                 for j in range(len(nums) - 1, i, -1):
                     if nums[j] > nums[i]:
-                        nums[i], nums[j] = nums[j], nums[i]
+                        nums[j], nums[i] = nums[i], nums[j]
                         break
-                        # can't use nums[i+1:].reverse() to swap
-                for j in range(0, (len(nums) - i) // 2):
-                    nums[0 + j + (i + 1)], nums[len(nums) - 1 - (i + 1) - j + (i + 1)] = nums[len(nums) - 1 - (
-                    i + 1) - j + (i + 1)], nums[0 + j + (i + 1)]
+                for x in range((len(nums)-1-(i+1))/2+1):
+                    nums[i+1+x], nums[len(nums)-1-x] = nums[len(nums)-1-x], nums[i+1+x]
                 break
         else:
             nums.reverse()

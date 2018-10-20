@@ -19,7 +19,7 @@ class Solution(object):
         self.n1.val, self.n2.val = self.n2.val, self.n1.val
 
     # 只有一组逆序，如124356的43，把p=3，q=4，那么最后交换p和q即可。
-    # 如果有两个逆序，如163452的63和52，当我们发现第一个逆序63时，把p=6，q=3，然后发现第二个逆序52时，把q=2，最后交换p和q。
+    # 如果有两个逆序，如163452的63和52，当我们发现第一个逆序63时，令p=6，q=3，然后发现第二个逆序52时，令q=2，最后交换p和q。
     def FindTwoNodes(self, root):
         if not root:
             return
