@@ -40,3 +40,28 @@ class Solution(object):
             self.dfs(end, tickets, copytmp)
 
             self.routes[start].insert(ind, end)
+
+
+class Solution(object):
+    def findItinerary(self, tickets):
+        """
+        :type tickets: List[List[str]]
+        :rtype: List[str]
+        """
+        self.routes = collections.defaultdict(list)
+        for s, e in tickets:
+            self.routes[s].append(e)
+        return self.solve("JFK")
+
+    def solve(self, start):
+        left, right = [], []
+        for end in sorted(self.routes[start]):
+            if end not in self.routes[start]:
+                continue
+            self.routes[start].remove(end)
+            subroutes = self.solve(end)
+            if start in subroutes:
+                left += subroutes
+            else:
+                right += subroutes
+        return [start] + left + right

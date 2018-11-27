@@ -191,13 +191,15 @@ class Solution(object):
         result = float("inf")
         i, left, right = 0, 0, k+1
         while right < len(days):
-            # 如果i天的开花位置小于left或left+k+1天中的某一天的开花位置，left和right天需要成对移动1
-            # 如果i天的开花位置大于left和left+k+1两天的开花位置，说明这个第i天在当前left和right天区间内不用考虑，可以直接i+1进行新一轮判断
+            # 1.如果i天的开花位置小于left或left+k+1天中的某一天的开花位置，说明很有可能有其他花开在这k天之内导致不符合条件，
+            # 所以当前left和right天区间不用考虑（除非i==right），left和right需要成对移动1并且i+1进行新一轮判断
+            # 2.如果i天的开花位置大于等于left和left+k+1两天的开花位置，说明这k天内没有其他花，
+            # 可继续i+1将区间内的i都遍历一遍看看有没有不符合条件的其他花
             if days[i] < days[left] or days[i] <= days[right]:
                 # 如果i天已经到达了right天
                 if i == right:
-                    result = min(result, max(days[left], days[right])) # 取符合条件的最小天数，这个天数为left和left+k+1天的开花位置最大值
-                    print i,left,right,result
+                    # 取符合条件的最小天数，这个天数为left和left+k+1天的开花位置最大值
+                    result = min(result, max(days[left], days[right]))
                 left, right = i, k+1+i
             i += 1
 

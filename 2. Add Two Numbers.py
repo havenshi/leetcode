@@ -13,26 +13,23 @@ class Solution(object):
         :type l2: ListNode
         :rtype: ListNode
         """
-        head = ListNode(0)
-        ptr = head
+        dummy = ListNode(0)
+        head = dummy
         carry = 0
-        while True:
-            if l1 != None:
-                carry += l1.val
+        while l1 or l2 or carry:
+            value = 0
+            if l1:
+                value += l1.val
                 l1 = l1.next
-            if l2 != None:
-                carry += l2.val
+            if l2:
+                value += l2.val
                 l2 = l2.next
-            ptr.val = carry % 10
-            carry /= 10
+            value += carry
+            head.next = ListNode(value % 10)
+            carry = value / 10
+            head = head.next
 
-            if l1 != None or l2 != None or carry != 0:
-                ptr.next = ListNode(0)
-                ptr = ptr.next
-            else:
-                break
-        return head
-
+        return dummy.next
 if __name__ == "__main__":
     answer = Solution()
     l1 = ListNode(2)

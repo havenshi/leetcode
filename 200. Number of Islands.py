@@ -63,7 +63,7 @@ class Solution(object):
                             # print i,j,root
         return sum([1 for i in range(len(root)) if i == root[i]]) - 1
 
-# union find 正解
+# union find 为啥是错的不知
 class Solution(object):
     def numIslands(self, grid):
         """

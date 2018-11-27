@@ -62,6 +62,21 @@ class Solution(object):
                 heapq.heappush(heap, (pop[1].next.val, pop[1].next)) #向堆中增加该node的next
         return dummy.next
 
+        # import heapq
+        #
+        # h = []
+        # dummy = ListNode(0)
+        # head = dummy
+        # for listnode in lists:
+        #     heapq.heappush(h, (listnode.val, listnode))
+        # while h:
+        #     min_node = heapq.heappop(h)
+        #     head.next = ListNode(min_node[0])
+        #     head = head.next
+        #     if min_node[1].next:
+        #         heapq.heappush(h, (min_node[1].next.val, min_node[1].next))
+        # return dummy.next
+
         # LTE
         # n = len(lists)
         # flag = [0] * n

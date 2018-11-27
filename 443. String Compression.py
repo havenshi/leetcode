@@ -61,3 +61,27 @@ class Solution(object):
             count += 1
             n /= 10
         return count
+
+
+class Solution(object):
+    def compress(self, chars):
+        """
+        :type chars: List[str]
+        :rtype: int
+        """
+        last, count, res = chars[0], 1, 0
+        for i in range(1, len(chars)):
+            cur = chars[i]
+            if cur == last:
+                count += 1
+            else:
+                for ch in last + str(count > 1 and count or ''): # ch = "a", "2"
+                    chars[res] = ch
+                    res += 1
+                last, count = cur, 1
+        for ch in last + str(count > 1 and count or ''): #处理最后的一段
+            chars[res] = ch
+            res += 1
+        while len(chars) > res:
+            chars.pop()
+        return res

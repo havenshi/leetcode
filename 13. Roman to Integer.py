@@ -35,6 +35,8 @@ class Solution(object):
                 res += dictionary[s[i]]
                 i -= 1
         return res
+
+    # 或者先遍历一遍，碰到IV就-2；再遍历一遍，每位数字加对应值到sum
 if __name__ == "__main__":
     answer=Solution()
     print answer.romanToInt("MCMXCVI")

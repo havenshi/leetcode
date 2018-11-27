@@ -39,3 +39,15 @@ class Solution(object):
                 j = p[j - 1]
             p[i] = j + (l[i] == l[j])
         return rev_s[: len(s) - p[-1]] + s
+
+
+class Solution(object):
+    def shortestPalindrome(self, s):
+        """
+        :type s: str
+        :rtype: str
+        """
+        r = s[::-1]
+        for i in range(len(s) + 1):
+            if s.startswith(r[i:]):
+                return r[:i] + s
