@@ -6,6 +6,7 @@ class Solution(object):
         """
         ans = ''
         while n > 0:
+            print n
             char = chr(ord('A') + (n - 1) % 26)
             ans = char + ans
             n = (n - 1) / 26

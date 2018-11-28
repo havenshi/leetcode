@@ -31,26 +31,27 @@ if __name__ == "__main__":
 
 
 
-
-class Solution:
-    # @return an integer
+class Solution(object):
     def uniquePaths(self, m, n):
-        if m == 1 and n == 1:
-            list = [[1]]
-        elif m == 1 and n > 1:
-            list = [[1 for i in range(n)]]
-        elif m > 1 and n == 1:
-            list = [[1] for i in range(m)]
-        else:
-            list = [[0 for i in range(n)] for i in range(m)]
-            for i in range(0, n):
-                list[0][i] = 1
-            for i in range(0, m):
-                list[i][0] = 1
-            for i in range(1, m):
-                for j in range(1, n):
-                    list[i][j] = list[i-1][j] + list[i][j-1]
-        return list[m-1][n-1]
+        """
+        :type m: int
+        :type n: int
+        :rtype: int
+        """
+        if m == 0:
+            return 0
+        dp = [[0] * n for i in range(m)]
+        for i in range(m):
+            for j in range(n):
+                if i == 0 and j == 0:
+                    dp[i][j] = 1
+                if i > 0 and j > 0:
+                    dp[i][j] += dp[i-1][j] + dp[i][j-1]
+                elif i > 0:
+                    dp[i][j] += dp[i-1][j]
+                elif j > 0:
+                    dp[i][j] += dp[i][j-1]
+        return dp[m-1][n-1]
 
 
 # 或者用C(n,k)，n为m+n-2，k为m-1
