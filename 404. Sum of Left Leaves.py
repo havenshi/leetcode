@@ -14,7 +14,7 @@ class Solution(object):
         ans = 0
         if root:
             l, r = root.left, root.right
-            if l and (l.left or l.right) is None:
+            if l and (l.left or l.right) is None: # 说明该node是个leaf
                 ans += l.val
             ans += self.sumOfLeftLeaves(l) + self.sumOfLeftLeaves(r)
         return ans

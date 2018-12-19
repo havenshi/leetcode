@@ -46,9 +46,12 @@ class Solution(object):
     def dfs(self, node, mp):
         if not node: return -1
         leftLayer, rightLayer = -1, -1
-        if node.left: leftLayer = self.dfs(node.left, mp)
-        if node.right: rightLayer = self.dfs(node.right, mp)
+        if node.left:
+            leftLayer = self.dfs(node.left, mp)
+        if node.right:
+            rightLayer = self.dfs(node.right, mp)
         curLayer = max(leftLayer, rightLayer) + 1
-        if curLayer not in mp: mp[curLayer] = []
+        if curLayer not in mp:
+            mp[curLayer] = []
         mp[curLayer].append(node.val)
         return curLayer

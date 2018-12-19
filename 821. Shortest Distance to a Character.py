@@ -5,16 +5,18 @@ class Solution(object):
         :type C: str
         :rtype: List[int]
         """
-        INF = 0x7FFFFFFF
         N = len(S)
-        ans = [INF] * N
-        lastC = -INF
-        for i in range(N):
-            if S[i] == C: lastC = i
+        ans = [float("inf")] * N
+
+        lastC = float("-inf")
+        for i in range(N):  # 先从左边遍历，不断更新C的最右位置
+            if S[i] == C:
+                lastC = i
             ans[i] = min(ans[i], i - lastC)
 
-        lastC = INF
-        for i in range(N - 1, -1, -1):
-            if S[i] == C: lastC = i
+        lastC = float("inf")
+        for i in range(N - 1, -1, -1):  # 再从右边遍历，不断更新C的最左位置
+            if S[i] == C:
+                lastC = i
             ans[i] = min(ans[i], lastC - i)
         return ans

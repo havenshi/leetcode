@@ -1,10 +1,11 @@
+# -*- coding: utf-8 -*-
 class Solution(object):
     def lengthLongestPath(self, input):
         """
         :type input: str
         :rtype: int
         """
-        # 利用栈（Stack）数据结构。
+        # 利用栈（Stack）数据结构。保存一个递增的栈。
         #
         # 首先将字符串以'\n'进行分割，得到目录 / 文件的列表，记为parts
         #
@@ -15,20 +16,23 @@ class Solution(object):
         # 然后将新的深度压入栈中，顺便统计当前目录的总长度。
         ans = lengthSum = 0
         stack = [(-1, 0)]
-        for p in input.split('\n'):
-            depth = p.count('\t')
+        for p in input.split('\n'): # ['dir', '\tsubdir1', '\t\tfile1.ext', '\t\tsubsubdir1', '\tsubdir2', '\t\tsubsubdir2', '\t\t\tfile2.ext']
+            depth = p.count('\t') # 计算深度
             name = p.replace('\t', '')
-            topDepth, topLength = stack[-1]
+            topDepth, topLength = stack[-1] # stack中的深度及字符长度pair
             while depth <= topDepth:
                 stack.pop()
                 lengthSum -= topLength
                 topDepth, topLength = stack[-1]
-            length = len(name) + (depth > 0)
+            length = len(name) + (depth > 0) # 例如深度为1，则结果字符串中加"/"
             lengthSum += length
             stack.append((depth, length))
             if name.count('.'):
                 ans = max(ans, lengthSum)
         return ans
+
+if __name__ == "__main__":
+    print Solution().lengthLongestPath("dir\n\tsubdir1\n\t\tfile1.ext\n\t\tsubsubdir1\n\tsubdir2\n\t\tsubsubdir2\n\t\t\tfile2.ext")
 
     #     if not input:
     #         return 0

@@ -29,12 +29,12 @@ class Solution(object):
         for i in range(m):
             for j in range(n):
                 if rooms[i][j] == 0:
-                    self.bfs(rooms, i, j, m, n, 1)
+                    self.dfs(rooms, i, j, m, n, 1)
 
-    def bfs(self, rooms, i, j, m, n, distance):
+    def dfs(self, rooms, i, j, m, n, distance):
         coords = [(-1, 0), (1, 0), (0, -1), (0, 1)]
         for coord in coords:
             newI, newJ = i + coord[0], j + coord[1]
             if newI in range(0, m) and newJ in range(0, n) and rooms[newI][newJ] > distance:
                 rooms[newI][newJ] = distance
-                self.bfs(rooms, newI, newJ, m, n, distance + 1)
+                self.dfs(rooms, newI, newJ, m, n, distance + 1)
