@@ -92,6 +92,24 @@ class MedianFinder(object):
 
         return median
 
+
+    # method 2，更加简洁
+    # def __init__(self):
+    #     self.small = []  # the smaller half of the list, min-heap with invert values, (-3,-2,-1)
+    #     self.large = []  # the larger half of the list, min heap, (4,5,6,7)
+    #
+    # def addNum(self, num):
+    #     if len(self.small) == len(self.large):
+    #         heapq.heappush(self.large, -heapq.heappushpop(self.small, -num)) # heappushpop means push item on the heap, then pop and return the smallest item from the heap.
+    #     else:
+    #         heapq.heappush(self.small, -heapq.heappushpop(self.large, num))
+    #
+    # def findMedian(self):
+    #     if len(self.small) == len(self.large):
+    #         return float(self.large[0] - self.small[0]) / 2.0
+    #     else:
+    #         return float(self.large[0])
+
 # Your MedianFinder object will be instantiated and called as such:
 # obj = MedianFinder()
 # obj.addNum(num)

@@ -1,35 +1,25 @@
 class Solution(object):
-    def findCircleNum(self, M):
+    def kDifference(self, a, k):
         """
-        :type M: List[List[int]]
-        :rtype: int
+        input nums: List[int]
+        input ex: int
+        output: List[List[int]]
         """
-        if not M or not M[0]:
-            return 0
-        len_M = len(M)
-        group = [i for i in range(len_M)]
-        count = len_M
-
-        for i in range(len_M):
-            for j in range(i + 1, len_M):
-                if M[i][j] == 1:
-                    p1 = self.find(i, group)
-                    p2 = self.find(j, group)
-                    if p1 != p2:
-                        group[p2] = p1
-                        count -= 1
-
-                print group
-        return count
-
-    def find(self, x, lst):
-        while x != lst[x]:
-            x = lst[x]
-        return x
+        dic = {}
+        ans = 0
+        for i in a:
+            dic[i] = False                             # use dictionary to record abs(item-k)
+        for i in dic:
+            if dic[i] == False:
+                if i-k in dic and dic[i-k] == False:  # if abs(current item-k) is in dictionary, index of current item and original index will be a pair
+                    ans += 1                           # increasing result by 1
+                if i+k in dic and dic[i+k] == False:
+                    ans += 1
+                dic[i] = True                          # mark as True
+        return ans
 if __name__ == "__main__":
     answer=Solution()
-    print answer.findCircleNum([[1,0,0,1],
-     [0,1,1,0],
-     [0,1,1,1],
-     [1,0,1,1]]
- )
+    print answer.kDifference([2,6,3,1,5,4,9,5,2], 3) # 4
+    print answer.kDifference([1,5,3,4,2], 2)         # 3
+    print answer.kDifference([5,5,2], 3)   # 1
+

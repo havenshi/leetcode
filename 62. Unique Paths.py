@@ -46,13 +46,15 @@ class Solution(object):
                 if i == 0 and j == 0:
                     dp[i][j] = 1
                 if i > 0 and j > 0:
-                    dp[i][j] += dp[i-1][j] + dp[i][j-1]
+                    dp[i][j] = dp[i-1][j] + dp[i][j-1]
                 elif i > 0:
-                    dp[i][j] += dp[i-1][j]
+                    dp[i][j] = dp[i-1][j]
                 elif j > 0:
-                    dp[i][j] += dp[i][j-1]
+                    dp[i][j] = dp[i][j-1]
         return dp[m-1][n-1]
 
-
-# 或者用C(n,k)，n为m+n-2，k为m-1
-reduce((lambda x, y: x * y), range(1,5))
+    class Solution(object):
+        def uniquePaths(self, m, n):
+            # 或者用C(n,k)，n为m+n-2，k为m-1
+            if m == 1: return 1
+            return reduce((lambda x, y: x * y), range((m+n-2)-(m-1)+1,m+n-1))/reduce((lambda x, y: x * y), range(1,m))

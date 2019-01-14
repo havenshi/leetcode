@@ -5,6 +5,8 @@ class Solution(object):
         :type amount: int
         :rtype: int
         """
+        # Time: O(amount * k)
+        # Space: O(amount * k)
         # method1 因为横坐标amount所有可能性，所以TLE
         # if amount == 0:
         #     return 0
@@ -21,6 +23,8 @@ class Solution(object):
         #     dp = newdp
         # return dp[-1] if dp[-1]!=0 else -1
 
+        # Time: O(amount * k)
+        # Space: O(amount * k)
         # method2 为什么不超时？因为dp[x + c]由dp[x]推导出，因此省了很多中间值
         # bfs，因为一找到就停止，所以比dp更快
         # 将问题转化为求X轴0点到坐标点amount的最短距离

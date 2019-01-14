@@ -28,7 +28,6 @@
 # 3. go to #1
 
 # DFS
-import sets
 class Solution(object):
     def alienOrder(self, words):
         """
@@ -36,16 +35,15 @@ class Solution(object):
         :rtype: str
         """
         # Find ancestors of each node by DFS.
-        nodes, ancestors = sets.Set(), {}
-        for i in xrange(len(words)):
+        nodes, ancestors = set(), {}
+        for i in range(len(words)):
             for c in words[i]:
                 nodes.add(c)
         # nodes = Set(['r', 'e', 't', 'w', 'f'])
         for node in nodes:
             ancestors[node] = []
-        for i in xrange(1, len(words)):
-            if len(words[i - 1]) > len(words[i]) and \
-                            words[i - 1][:len(words[i])] == words[i]:
+        for i in range(1, len(words)):
+            if len(words[i - 1]) > len(words[i]) and words[i - 1][:len(words[i])] == words[i]:
                 return ""
             self.findEdges(words[i - 1], words[i], ancestors)
         # ancestors = {'r': ['e'], 'e': ['w'], 't': ['r'], 'w': [], 'f': ['t']}
@@ -56,13 +54,19 @@ class Solution(object):
         for node in nodes:
             if self.topSortDFS(node, node, ancestors, visited, result):
                 return ""
+            # result changed from
+            # ['w', 'e', 'r']
+            # ['w', 'e', 'r']
+            # ['w', 'e', 'r', 't']
+            # ['w', 'e', 'r', 't']
+            # ['w', 'e', 'r', 't', 'f']
 
         return "".join(result)
 
     # Construct the graph.
     def findEdges(self, word1, word2, ancestors):
         min_len = min(len(word1), len(word2))
-        for i in xrange(min_len):
+        for i in range(min_len):
             if word1[i] != word2[i]:
                 ancestors[word2[i]].append(word1[i])
                 break

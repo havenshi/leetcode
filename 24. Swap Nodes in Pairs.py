@@ -1,4 +1,4 @@
-# Time:  O(n)
+ # Time:  O(n)
 # Space: O(1)
 class Solution(object):
     def fourSum(self, nums, target):
@@ -9,7 +9,7 @@ class Solution(object):
         """
         if head == None or head.next == None:
             return head
-        dummy = ListNode(0);
+        dummy = ListNode(0)
         dummy.next = head
         p = dummy
         while p.next and p.next.next:

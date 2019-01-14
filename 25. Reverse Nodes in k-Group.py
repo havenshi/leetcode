@@ -31,7 +31,7 @@ class Solution(object):
         return dummy.next
 
     def helper(self, head, start,
-               end):  # 0,1,2,3, exchange 1 and 2 then put 2 to front; exchange 2 and 3 then put 3 to front
+               end):  # 0,1,2,3, 1 is always the "start", make 1 jusmp after 2 then put 2 to front; make 1 jump after 3 then put 3 to front
         while head.next != end:
             mid = start.next
             start.next = mid.next
