@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class Solution(object):
     def leastInterval(self, tasks, n):
         """
@@ -18,6 +19,7 @@ class Solution(object):
         while dictionary:
             max_key = max(dictionary, key=dictionary.get)
             max_val = max(dictionary.values())
+            #  dictionary,array = Counter({'B': 3}) [1, 1, 1]
 
             if not array:  # 如果array全部被删完了，重新构造，并跳过后面的步骤
                 array = [1] * max_val
@@ -43,3 +45,5 @@ class Solution(object):
             res += array[len(array) - 1]
         return res
 
+if __name__ == "__main__":
+    print Solution().leastInterval(["A","A","A","B","B","B"], 2)

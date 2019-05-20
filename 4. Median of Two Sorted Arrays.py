@@ -73,8 +73,8 @@ class Solution(object):
         if k == 1:
             return min(nums1[0], nums2[0])
         if len_nums2 < k / 2 or (len_nums1 >= k / 2 and (nums1[k / 2 - 1] < nums2[k / 2 - 1])):
-            # 如果len_nums2的长度比k/2要短， 那么nums1[k/2]至少比k/2个数要大，他最大有可能比k/2+len_nums2<k个数要大，都不够k，所以可以把nums1前k/2半段给截了
-            # 第二个条件更明显
+            # 如果len_nums2的长度比k/2要短， 那么nums1[k/2]至少比它自己的前k/2-1个数要大，因此它最大有可能比k/2-1+len_nums2<k个数要大，都不够k，所以可以把nums1前k/2半段给截了
+            # num1的第k/2个数最多比它自己的前k/2-1个和num2的前k/2-1个数要大，加起来都不够k
             return self.find_k_in_array(nums1[k / 2:], nums2, k - k / 2)
         else:
             return self.find_k_in_array(nums1, nums2[k / 2:], k - k / 2)

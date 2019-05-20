@@ -37,6 +37,18 @@ class Solution(object):
         return res
 
     # 或者先遍历一遍，碰到IV就-2；再遍历一遍，每位数字加对应值到sum
+class Solution(object):
+    def romanToInt(self, s):
+        add_dictionary = {'I': 1, 'V': 5, 'X': 10, 'L': 50, 'C': 100, 'D': 500, 'M': 1000}
+        sub_dictionary = {'IV': 2, 'IX': 2, 'XL': 20, 'XC': 20, 'CD': 200, 'CM': 200}
+        res = 0
+        for i in range(len(s) - 1):
+            if s[i:i + 2] in sub_dictionary:
+                res -= sub_dictionary[s[i:i + 2]]
+        for i in range(len(s)):
+            res += add_dictionary[s[i]]
+
+        return res
 if __name__ == "__main__":
     answer=Solution()
     print answer.romanToInt("MCMXCVI")
