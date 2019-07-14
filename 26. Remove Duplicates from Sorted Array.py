@@ -22,6 +22,7 @@ class Solution(object):
         # for i in range(1, len(nums)):
         #     if nums[i] != nums[i - 1]:
         #         nums[count] = nums[i] #有效的数放入nums前面部分，因为初始count已经为1，所以在count+1之前放。
+        #         注意不能用交换，否则交换到很后面的x，它再跟它之前x-1的数值对比，大概率不相等，但实际上不能这样比较
         #         count += 1
         # return count
 
