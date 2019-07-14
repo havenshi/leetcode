@@ -115,3 +115,23 @@ class Solution(object):
 if __name__ == "__main__":
     answer=Solution()
     answer.operateBox()
+
+# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+# In zhoumu 0:
+# Haruto pressed any button Blue.
+# Aoi pressed the correct button Red.
+# Aoi opened the box.
+# Haruto is dead...
+# Aoi is alive.
+# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+# In zhoumu 1:
+# Aoi pressed any button Red.
+# Haruto pressed the correct button Blue.
+# Haruto opened the box.
+# Aoi pressed both buttons Blue and Red!
+# Haruto is alive.
+# Aoi is dead...
+# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+# In zhoumu 2:
+# Haruto pressed both buttons Blue and Red!
+# Both of Haruto and Aoi are alive!
