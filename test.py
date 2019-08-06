@@ -1,27 +1,21 @@
-class Solution(object):
-    def missingWords(self, s, t):
-        """
-        input s: string
-        input t: string
-        output: string
-        """
-        res = []
-        ss = s.split()
-        tt = t.split()
-        i, j = 0, 0
-        while i < len(ss) and j < len(tt):  # use two pointers for both of strings, do iteration
-            if ss[i] == tt[j]:
-                i += 1
-                j += 1
-            else:
-                res.append(ss[i])
-                i += 1
-        if i < len(ss):                       # if pointer of s does not arrive the end, append all items to result
-            res.extend(ss[i:])
-        return " ".join(res)
+def trim(L):
+  l=len(L)
+  for i in range(0, l):
+    if L[i]==" ":
+       a=i
+    else:
+        break
+  L=L[a+1:]
+  l=len(L)
+  print a
 
-if __name__ == "__main__":
-    answer=Solution()
-    s = "I am using hackerrank to improve programming"
-    t = "am hackerrank to improve"
-    print answer.missingWords(s, t)
+  b=0
+  for j in range(l-1, -1, -1):
+    if L[j]==" ":
+       b=j
+    else:
+       break
+  print b
+  return L[0:b]
+
+print(trim(" hello  "))

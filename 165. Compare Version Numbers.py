@@ -11,6 +11,7 @@ class Solution(object):
         len2 = len(v2Arr)
         lenMax = max(len1, len2)
         for x in range(lenMax):
+            print x
             v1Token = 0
             if x < len1:
                 v1Token = int(v1Arr[x])

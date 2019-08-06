@@ -15,10 +15,15 @@ class Solution(object):
             in_degree[item[1]] += 1
             graph[item[0]].append(item[1])
 
+        print in_degree
+        print graph
+
         Q = []
         for u in in_degree:
             if in_degree[u] == 0:
                 Q.insert(0, u)
+
+        print Q
 
         while Q:
             u = Q.pop()
@@ -33,3 +38,7 @@ class Solution(object):
             return False
         else:
             return True
+
+if __name__ == "__main__":
+    answer = Solution()
+    print answer.canFinish(2, [[1,0]])
