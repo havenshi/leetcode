@@ -43,8 +43,41 @@
 # The given maze does not contain border (like the red rectangle in the example pictures), but you could assume the border of the maze are all walls.
 # The maze contains at least 2 empty spaces, and both the width and height of the maze won't exceed 100.
 #
-# 这道题让我们遍历迷宫，但是与以往不同的是，这次迷宫是有一个滚动的小球，这样就不是每次只走一步了，而是朝某一个方向一直滚，
-# 直到遇到墙或者边缘才停下来，我记得貌似之前在手机上玩过类似的游戏。那么其实还是要用DFS或者BFS来解，只不过需要做一些修改。
-# 先来看DFS的解法，我们用DFS的同时最好能用上优化，即记录中间的结果，这样可以避免重复运算，提高效率。
-# 我们用二维数组dp来保存中间结果，然后用maze数组本身通过将0改为-1来记录某个点是否被访问过，这道题的难点是在于处理一直滚的情况，
-# 其实也不难，只要我们有了方向，只要一直在那个方向上往前走，每次判读是否越界了或者是否遇到墙了即可，然后对于新位置继续调用递归函数
+
+# DFS
+# 定义dfs函数, 返回球从(x, y)出发, 是否能停在目的地. 回溯的条件是如果(x,y) 等于目的地, 返回True.如果(x, y)是已经访问过的,
+# 返回False. 我们将访问过的位置放入visited, 然后在上下左右四个方向检查, 让球一直滚, 检查停住的地方是否为目的地, 如果有一个是,
+# 那么返回True, 如果遍历完了之后球不会停在目的地, 返回False.
+#
+# Time: O(mn)
+# Space: O(mn)
+
+class Solution(object):
+    def hasPath(self, maze, start, destination):
+        """
+        :type maze: List[List[int]]
+        :type start: List[int]
+        :type destination: List[int]
+        :rtype: bool
+        """
+
+        def dfs(x, y):
+            # return if the ball can stop at destination if starting at (x, y)
+            if [x, y] == destination:
+                return True
+            if (x, y) in visited:
+                return False
+            visited.add((x, y))
+            for dx, dy in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
+                new_x, new_y = x, y
+                # the ball rolls until hitting a wall
+                while 0 <= new_x + dx < row and 0 <= new_y + dy < col and maze[new_x + dx][new_y + dy] == 0:
+                    new_x += dx
+                    new_y += dy
+                if dfs(new_x, new_y):
+                    return True
+            return False
+
+        row, col = len(maze), len(maze[0])
+        visited = set()
+        return dfs(start[0], start[1])

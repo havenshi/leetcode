@@ -16,3 +16,25 @@ class Solution(object):
 
         return res
 
+
+# MLE
+class Solution(object):
+    def subarraySum(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: int
+        """
+        m = len(nums)
+        if not m: return 0
+        dp = [[0] * m for _ in range(m)]
+        count = 0
+        for i in range(m):
+            for l in range(m-i):
+                if i == 0:
+                    dp[i][i+l] = dp[i][i+l-1] + nums[i+l]
+                else:
+                    dp[i][i+l] = dp[0][i+l] - dp[0][i-1]
+                if dp[i][i+l] == k:
+                    count += 1
+        return count

@@ -6,15 +6,17 @@ class Solution(object):
         :rtype: int
         """
         # method 1
+        # 00 01 10 11 00
         one = 0
         two = 0
         three = 0
         for i in range(len(nums)):
-            two |= nums[i] & one  # one为1时，不管A[i]为什么，two都为1
+            two |= nums[i] & one  # one为1时，此时two一定是0，无论A[i]为什么two都变为1；one为0时，two不会变一直为0
             one = nums[i] ^ one  # 异或操作，都是1就进位
+            # 通过上面两步，01+0->10，01+1->11
             three = ~(one & two)  # 以下三步的意思是：如果one和two都为1时，就清0，反之则保持原来状态。
-            one &= three
-            two &= three
+            one &= three  # 如果three清零了则清零
+            two &= three  # 如果three清零了则清零
         return one
 
 

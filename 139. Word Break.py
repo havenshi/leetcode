@@ -21,6 +21,20 @@ class Solution(object):
         else:
             return False
 
+# dfs LTE
+# class Solution(object):
+#     def wordBreak(self, s, wordDict):
+#         """
+#         :type s: str
+#         :type wordDict: List[str]
+#         :rtype: bool
+#         """
+#         if s in wordDict:
+#             return True
+#         for i in range(len(s)):
+#             if s[:i + 1] in wordDict and self.wordBreak(s[i + 1:], wordDict):
+#                 return True
+#         return False
 
         # method2 DP
         # if s == '':
